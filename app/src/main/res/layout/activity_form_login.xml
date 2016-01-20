@@ -100,23 +100,6 @@
                             android:textSize="@dimen/textfield_textsize" />
 
                     </android.support.design.widget.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/buttonSignLogin"
-                        style="?android:textAppearanceSmall"
-                        android:layout_marginLeft="200dp"
-                        android:layout_width="150dp"
-                        android:layout_height="@dimen/button_size"
-                        android:layout_marginTop="@dimen/vertical_padding_button"
-                        android:background="@color/colorAccent"
-                        android:elevation="2dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="@dimen/button_horizontal_padding"
-                        android:paddingRight="@dimen/button_horizontal_padding"
-                        android:text="@string/action_register"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/textButton_size" />
-
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
