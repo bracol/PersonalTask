@@ -1,5 +1,6 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -61,9 +62,9 @@ public class LoginFormActivity extends AppCompatActivity{
             login.setLogin(mEditTextUsername.getText().toString());
             login.setPassword(mEditTextPassword.getText().toString());
             LoginBusinessService.save(login);
+            startActivity(new Intent(this, LoginMainActivity.class));
         } catch (Exception e){
             Toast.makeText(getBaseContext(), "Ocorreu um erro e o login não foi salvo!", Toast.LENGTH_SHORT).show();
         }
-        String ae = "a";
     }
 }

@@ -2,17 +2,22 @@
     package="com.example.waniltonfilho.personaltasks">
 
     <application
+        android:name=".util.TaskManagerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".controller.activities.LoginListActivity"
+            android:name=".controller.activities.LoginMainActivity"
             android:label="@string/app_name">
+
         </activity>
         <activity android:name=".controller.activities.LoginFormActivity"
             android:label="@string/app_name">
+        </activity>
+
+        <activity android:name=".model.TesteCustomView" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -3,4 +3,8 @@
     <color name="colorPrimary">#cddc39</color>
     <color name="colorPrimaryDark">#afb42b</color>
     <color name="colorAccent">#510D0A</color>
+    <color name="divisor">#12000000</color>
+    <color name="orange">#FF9900</color>
+    <color name="green">#009900</color>
+    <color name="blue">#000099</color>
 </resources>

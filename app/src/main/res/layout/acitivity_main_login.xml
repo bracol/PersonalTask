@@ -49,10 +49,10 @@
                     android:text="Login"
                     android:textSize="@dimen/headline_text_size" />
 
-                <View
+                <com.example.waniltonfilho.personaltasks.util.OurView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#12000000" />
+                     />
 
 
                 <android.support.design.widget.TextInputLayout
