@@ -3,7 +3,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="login_register">Login register</string>
+    <string name="login_register">Register</string>
     <string name="action_register">Register</string>
     <string name="action_save_login">Save</string>
     <string name="string_money">Money: </string>

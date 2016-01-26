@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <TextView
+        android:id="@+id/textViewLoginInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/textView_height"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/app_bar"
+        android:drawableLeft="@drawable/ic_action_username"
+        android:gravity="bottom"
+        android:padding="@dimen/textView_padding_vertical"
+        android:text="Fulano de Tal"
+        android:textSize="25sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_money"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/money_layout_height"
+        android:layout_below="@+id/textViewLoginInfo"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/relative_layout_money_padding">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewLoginInfo"
+            android:text="99.999,00"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewMoney_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutButtons"
+        android:layout_below="@+id/relativeLayout_money"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/padding_layout_button"
+        android:gravity="right"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@color/colorPrimary"
+            android:elevation="@dimen/elevation_button"
+            android:gravity="center"
+            android:text="PUT"
+            android:layout_marginRight="@dimen/margim_button_put"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@color/colorPrimary"
+            android:elevation="@dimen/elevation_button"
+            android:gravity="center"
+            android:text="REMOVE"
+            />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@id/layoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_scrollview_wallet"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
+</RelativeLayout>
+

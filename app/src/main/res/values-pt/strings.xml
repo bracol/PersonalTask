@@ -4,7 +4,7 @@
     <string name="action_sign_in">Entrar</string>
     <string name="prompt_username">Usuário</string>
     <string name="prompt_password">Senha</string>
-    <string name="login_register">Cadastro de login</string>
+    <string name="login_register">Cadastro</string>
     <string name="action_register">Registrar</string>
     <string name="action_save_login">Salvar</string>
     <string name="string_money">Dinheiro: </string>
