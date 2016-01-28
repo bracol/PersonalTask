@@ -7,6 +7,9 @@
     <string name="action_register">Register</string>
     <string name="action_save_login">Save</string>
     <string name="string_money">Money: </string>
+    <string name="prompt_name">Name</string>
+    <string name="button_string_put">PUT</string>
+    <string name="button_string_remove">REMOVE</string>
     <string-array name="cat_names">
         <item>George</item>
         <item>Zubin</item>
@@ -17,5 +20,10 @@
         <item>Fezra</item>
         <item>Henry</item>
         <item>Schuster</item>
+    </string-array>
+    <string-array name="tabs">
+        <item>Wallet</item>
+        <item>Debts</item>
+        <item>Personal</item>
     </string-array>
 </resources>

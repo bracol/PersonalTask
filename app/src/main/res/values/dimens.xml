@@ -16,7 +16,7 @@
     <dimen name="textfield_textsize">16sp</dimen>
     <dimen name="textView_height">60dp</dimen>
     <dimen name="textView_padding_vertical">16dp</dimen>
-    <dimen name="money_layout_height">200dp</dimen>
+    <dimen name="money_layout_height">180dp</dimen>
     <dimen name="textViewMoney_size">80sp</dimen>
     <dimen name="button_height_size">36dp</dimen>
     <dimen name="relative_layout_money_padding">16dp</dimen>

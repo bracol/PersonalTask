@@ -11,17 +11,24 @@
         <activity
             android:name=".controller.activities.LoginMainActivity"
             android:label="@string/app_name">
-
-        </activity>
-        <activity android:name=".controller.activities.LoginFormActivity"
-            android:label="@string/app_name">
-        </activity>
-
-        <activity android:name=".model.TesteCustomView" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".controller.activities.LoginFormActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".model.TesteCustomView"
+            android:label="@string/app_name">
+
+        </activity>
+        <activity
+            android:name=".controller.activities.ActivityCategory"
+            android:label="@string/app_name">
         </activity>
     </application>
 

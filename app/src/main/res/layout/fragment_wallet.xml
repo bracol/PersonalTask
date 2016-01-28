@@ -1,70 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ae"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
+    android:orientation="vertical"
+    android:background="?android:colorBackground"
+    >
 
     <TextView
-        android:id="@+id/textViewLoginInfo"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewNameInfo"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/textView_height"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/app_bar"
         android:drawableLeft="@drawable/ic_action_username"
-        android:gravity="bottom"
         android:padding="@dimen/textView_padding_vertical"
         android:text="Fulano de Tal"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:gravity="bottom"
+        android:background="@color/blue"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-medium"
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textViewNameInfo"
+        android:background="@android:color/white"
+        />
 
     <RelativeLayout
         android:id="@+id/relativeLayout_money"
         android:layout_width="match_parent"
         android:layout_height="@dimen/money_layout_height"
-        android:layout_below="@+id/textViewLoginInfo"
+        android:layout_below="@+id/divider"
         android:background="@color/blue"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/relative_layout_money_padding">
         <TextView
+            android:id="@+id/textViewMoneyInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewLoginInfo"
-            android:text="99.999,00"
+            android:layout_marginTop="10dp"
+            android:text="100,00"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/textViewMoney_size" />
+            android:textSize="@dimen/textViewMoney_size"
+            android:fontFamily="sans-serif-medium"
+            />
 
     </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/layoutButtons"
         android:layout_below="@+id/relativeLayout_money"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="54dp"
         android:orientation="horizontal"
         android:paddingRight="@dimen/padding_layout_button"
-        android:gravity="right"
+        android:background="@color/blue"
+        android:gravity="center|right"
         >
         <Button
+            android:id="@+id/buttonPut"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:background="@color/colorPrimary"
             android:elevation="@dimen/elevation_button"
-            android:gravity="center"
-            android:text="PUT"
+            android:text="@string/button_string_put"
+            android:layout_marginLeft="@dimen/margim_button_put"
             android:layout_marginRight="@dimen/margim_button_put"
+            android:background="?android:colorBackground"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#DE000000"
             />
         <Button
+            android:id="@+id/buttonRemove"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:background="@color/colorPrimary"
             android:elevation="@dimen/elevation_button"
-            android:gravity="center"
-            android:text="REMOVE"
+            android:text="@string/button_string_remove"
+            android:fontFamily="sans-serif-medium"
+            android:background="@color/colorAccent"
+            android:textColor="#DE000000"
             />
 
     </LinearLayout>

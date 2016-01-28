@@ -2,6 +2,7 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,9 +19,11 @@ import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessServic
  */
 public class LoginFormActivity extends AppCompatActivity{
 
+    private EditText mEditTextName;
     private EditText mEditTextUsername;
     private EditText mEditTextPassword;
     private Toolbar toolbar;
+
 
 
 
@@ -33,6 +36,7 @@ public class LoginFormActivity extends AppCompatActivity{
     }
 
     private void bindElements() {
+        mEditTextName = (EditText) findViewById(R.id.editTextName);
         mEditTextUsername = (EditText) findViewById(R.id.editTextUsername);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -61,6 +65,7 @@ public class LoginFormActivity extends AppCompatActivity{
             Login login = new Login();
             login.setLogin(mEditTextUsername.getText().toString());
             login.setPassword(mEditTextPassword.getText().toString());
+            login.setName(mEditTextName.getText().toString());
             LoginBusinessService.save(login);
             startActivity(new Intent(this, LoginMainActivity.class));
         } catch (Exception e){

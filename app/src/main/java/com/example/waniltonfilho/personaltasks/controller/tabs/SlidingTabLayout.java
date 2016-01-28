@@ -1,7 +1,9 @@
 package com.example.waniltonfilho.personaltasks.controller.tabs;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -16,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Created by c1284518 on 09/12/2015.
+ * Created by wanilton.filho on 27/01/2016.
  */
 public class SlidingTabLayout extends HorizontalScrollView {
     /**
@@ -133,6 +135,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Create a default view to be used for tabs. This is called if a custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
      */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     protected TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);

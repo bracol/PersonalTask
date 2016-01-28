@@ -1,7 +1,11 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +30,7 @@ public class LoginMainActivity extends AppCompatActivity{
     private EditText mEditTextPassword;
     private Button mButtonLogin;
     private Toolbar toolbar;
-
+    private FloatingActionButton mFabAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,14 @@ public class LoginMainActivity extends AppCompatActivity{
                 teste = false;
             }
         });
+        mFabAdd = (FloatingActionButton) findViewById(R.id.fabAddLogin);
+        mFabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginMainActivity.this, LoginFormActivity.class));
+            }
+        });
+
 
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -69,7 +81,7 @@ public class LoginMainActivity extends AppCompatActivity{
 
         for(Login l : loginList) {
             if (l.getLogin().equals(login.getLogin()) && l.getPassword().equals(login.getPassword())) {
-                return true;
+                startActivity(new Intent(LoginMainActivity.this, ActivityCategory.class));
             }
         }
         return false;

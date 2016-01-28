@@ -14,7 +14,6 @@ import android.text.style.ImageSpan;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.WalletFragment;
 import com.example.waniltonfilho.personaltasks.controller.tabs.SlidingTabLayout;
-import com.example.waniltonfilho.personaltasks.controller.tabs.SlidingTabStrip;
 
 /**
  * Created by wanilton.filho on 22/01/2016.
@@ -62,7 +61,7 @@ public class ActivityCategory extends AppCompatActivity {
     }
 
     class MyPageAdapter extends FragmentPagerAdapter {
-        //String[] tabText = getResources().getStringArray(R.array.tabs);
+        String[] tabText = getResources().getStringArray(R.array.tabs);
         int icons[] = {R.drawable.ic_walleticon, R.drawable.ic_debts, R.drawable.ic_lend};
 
         public MyPageAdapter(FragmentManager fm) {
@@ -71,24 +70,24 @@ public class ActivityCategory extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            WalletFragment myFragment;
-            if(position == 0){
+            Fragment myFragment = null;
+            //if(position == 0){
                 myFragment = WalletFragment.getInstance(position);
 
-            }
+            //}
 
             return myFragment;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Drawable drawable = getResources().getDrawable(icons[position]);
-            drawable.setBounds(0, 0, 100, 100);
-            ImageSpan imageSpan = new ImageSpan(drawable);
-            SpannableString spannableString = new SpannableString(" ");
-            spannableString.setSpan(imageSpan, 0, spannableString.length(), spannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            return spannableString;
+            return tabText[position];
+//            Drawable drawable = getResources().getDrawable(icons[position]);
+//            drawable.setBounds(0, 0, 100, 100);
+//            ImageSpan imageSpan = new ImageSpan(drawable);
+//            SpannableString spannableString = new SpannableString(" ");
+//            spannableString.setSpan(imageSpan, 0, spannableString.length(), spannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            return spannableString;
         }
 
         @Override

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <include android:id="@+id/app_bar"
-        layout="@layout/app_bar"/>
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -43,59 +43,76 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/headline_size"
-                    android:text="Login"
-                    android:textSize="@dimen/headline_text_size" />
-
-                <com.example.waniltonfilho.personaltasks.util.OurView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                     />
-
-
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textinput_size"
-                    android:paddingTop="@dimen/padding_input_top">
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/editTextUsername"
+                    <ImageView
+                        android:id="@+id/imageViewUserNameMain"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_action_username"
+
+                        />
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/edittext_size"
-                        android:drawableLeft="@drawable/ic_action_username"
-                        android:hint="@string/prompt_username"
-                        android:maxLines="1"
-                        android:paddingBottom="@dimen/padding_edittext_bottom"
-                        android:paddingTop="@dimen/padding_edittext_top"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textfield_textsize" />
+                        android:layout_height="@dimen/textinput_size"
+                        android:paddingTop="@dimen/padding_input_top">
 
-                </android.support.design.widget.TextInputLayout>
+                        <EditText
+                            android:id="@+id/editTextUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edittext_size"
+                            android:hint="@string/prompt_username"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/padding_edittext_bottom"
+                            android:paddingTop="@dimen/padding_edittext_top"
+                            android:singleLine="true"
+                            android:textSize="@dimen/textfield_textsize" />
 
-                <android.support.design.widget.TextInputLayout
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textinput_size"
-                    android:paddingTop="@dimen/padding_input_top">
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/editTextPassword"
+                    <ImageView
+                        android:id="@+id/imageViewPassword"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_action_password"
+
+                        />
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/edittext_size"
-                        android:drawableLeft="@drawable/ic_action_password"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@+id/login"
-                        android:imeActionLabel="@string/action_sign_in"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:paddingBottom="@dimen/padding_edittext_bottom"
-                        android:paddingTop="@dimen/padding_edittext_top"
-                        android:singleLine="true"
-                        android:textSize="@dimen/textfield_textsize" />
+                        android:layout_height="@dimen/textinput_size"
+                        android:paddingTop="@dimen/padding_input_top">
 
-                </android.support.design.widget.TextInputLayout>
+                        <EditText
+                            android:id="@+id/editTextPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edittext_size"
+                            android:hint="@string/prompt_password"
+                            android:imeActionId="@+id/login"
+                            android:imeActionLabel="@string/action_sign_in"
+                            android:imeOptions="actionUnspecified"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/padding_edittext_bottom"
+                            android:paddingTop="@dimen/padding_edittext_top"
+                            android:singleLine="true"
+                            android:textSize="@dimen/textfield_textsize" />
+
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
 
                 <Button
                     android:id="@+id/buttonSignLogin"
@@ -103,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_size"
                     android:layout_marginTop="@dimen/vertical_padding_button"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/button_pressed"
                     android:elevation="2dp"
                     android:fontFamily="sans-serif-medium"
                     android:paddingLeft="@dimen/button_horizontal_padding"
@@ -112,9 +129,19 @@
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/textButton_size" />
 
+
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddLogin"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_content_add"
+            />
+    </RelativeLayout>
 
 
 </LinearLayout>

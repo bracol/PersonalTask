@@ -8,6 +8,14 @@
     <string name="action_register">Registrar</string>
     <string name="action_save_login">Salvar</string>
     <string name="string_money">Dinheiro: </string>
+    <string name="prompt_name">Nome</string>
+    <string name="button_string_put">ADICIONAR</string>
+    <string name="button_string_remove">REMOVER</string>
+    <string-array name="tabs">
+        <item>Carteira</item>
+        <item>Dívida</item>
+        <item>Pessoal</item>
+    </string-array>
 
 
 </resources>
