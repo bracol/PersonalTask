@@ -1,10 +1,11 @@
-package com.example.waniltonfilho.personaltasks.model.persistance;
+package com.example.waniltonfilho.personaltasks.model.persistance.login;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
+import com.example.waniltonfilho.personaltasks.model.persistance.DataBaseHelper;
 
 import java.util.List;
 
@@ -91,5 +92,7 @@ public class LoginRepository {
         dataBaseHelper.close();
         return login;
     }
+
+
 
 }

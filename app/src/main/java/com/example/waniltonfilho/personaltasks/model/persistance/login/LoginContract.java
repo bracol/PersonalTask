@@ -1,4 +1,4 @@
-package com.example.waniltonfilho.personaltasks.model.persistance;
+package com.example.waniltonfilho.personaltasks.model.persistance.login;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -15,9 +15,10 @@ public class LoginContract {
 
     public static final String TABLE = "login";
     public static final String ID = "id";
+    public static final String NAME = "name";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
-    public static final String[] COLUMNS = {ID, LOGIN, PASSWORD};
+    public static final String[] COLUMNS = {ID, NAME, LOGIN, PASSWORD};
 
     private LoginContract(){}
 
@@ -26,6 +27,7 @@ public class LoginContract {
         sb.append("CREATE TABLE " + TABLE);
         sb.append(" ( ");
         sb.append(ID + " INTEGER PRIMARY KEY, ");
+        sb.append(NAME + " TEXT, ");
         sb.append(LOGIN + " TEXT, ");
         sb.append(PASSWORD + " TEXT ");
         sb.append(" ) ");
@@ -36,6 +38,7 @@ public class LoginContract {
     public static ContentValues getContentValues(Login login){
         ContentValues cv = new ContentValues();
         cv.put(LoginContract.ID, login.getId());
+        cv.put(LoginContract.NAME, login.getName());
         cv.put(LoginContract.LOGIN, login.getLogin());
         cv.put(LoginContract.PASSWORD, login.getPassword());
         return cv;
@@ -48,6 +51,7 @@ public class LoginContract {
             login.setId(cursor.getLong(cursor.getColumnIndex(LoginContract.ID)));
             login.setLogin(cursor.getString(cursor.getColumnIndex(LoginContract.LOGIN)));
             login.setPassword(cursor.getString(cursor.getColumnIndex(LoginContract.PASSWORD)));
+            login.setName(cursor.getString(cursor.getColumnIndex(LoginContract.NAME)));
 
             return login;
         }

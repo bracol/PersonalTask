@@ -2,7 +2,6 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -36,7 +35,9 @@ public class LoginFormActivity extends AppCompatActivity{
     }
 
     private void bindElements() {
+        //MaskEditTextChangedListener maskEditTextChangedListener = new MaskEditTextChangedListener("##/##/####", mEditTextName);
         mEditTextName = (EditText) findViewById(R.id.editTextName);
+       // mEditTextName.addTextChangedListener(maskEditTextChangedListener);
         mEditTextUsername = (EditText) findViewById(R.id.editTextUsername);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         toolbar = (Toolbar) findViewById(R.id.app_bar);

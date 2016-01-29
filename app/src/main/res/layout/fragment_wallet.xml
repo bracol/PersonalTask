@@ -104,7 +104,30 @@
 
     </android.support.v4.widget.NestedScrollView>
 
+    <FrameLayout
+        android:id="@+id/frameLayoutTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        >
 
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:background="@android:color/white"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                />
+
+        </LinearLayout>
+    </FrameLayout>
 
 
 </RelativeLayout>

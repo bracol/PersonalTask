@@ -31,6 +31,7 @@ public class LoginMainActivity extends AppCompatActivity{
     private Button mButtonLogin;
     private Toolbar toolbar;
     private FloatingActionButton mFabAdd;
+    public static final String PARAM_LOGIN = "LOGIN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class LoginMainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 boolean teste = attempLogin();
-                teste = false;
             }
         });
         mFabAdd = (FloatingActionButton) findViewById(R.id.fabAddLogin);
@@ -81,7 +81,9 @@ public class LoginMainActivity extends AppCompatActivity{
 
         for(Login l : loginList) {
             if (l.getLogin().equals(login.getLogin()) && l.getPassword().equals(login.getPassword())) {
-                startActivity(new Intent(LoginMainActivity.this, ActivityCategory.class));
+                Intent intent = new Intent(LoginMainActivity.this, ActivityCategory.class);
+                intent.putExtra(PARAM_LOGIN, l);
+                startActivity(intent);
             }
         }
         return false;

@@ -1,7 +1,7 @@
 package com.example.waniltonfilho.personaltasks.model.service;
 
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
-import com.example.waniltonfilho.personaltasks.model.persistance.LoginRepository;
+import com.example.waniltonfilho.personaltasks.model.persistance.login.LoginRepository;
 
 import java.util.List;
 

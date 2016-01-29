@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.waniltonfilho.personaltasks.model.persistance.login.LoginContract;
 import com.example.waniltonfilho.personaltasks.util.ApplicationUtil;
 
 /**

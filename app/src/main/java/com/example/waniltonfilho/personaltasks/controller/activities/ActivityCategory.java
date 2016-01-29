@@ -14,6 +14,7 @@ import android.text.style.ImageSpan;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.WalletFragment;
 import com.example.waniltonfilho.personaltasks.controller.tabs.SlidingTabLayout;
+import com.example.waniltonfilho.personaltasks.model.entities.Login;
 
 /**
  * Created by wanilton.filho on 22/01/2016.
@@ -23,6 +24,7 @@ public class ActivityCategory extends AppCompatActivity {
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
     private Toolbar mToolbar;
+    public static Login selectedLogin;
 
 
 
@@ -37,7 +39,15 @@ public class ActivityCategory extends AppCompatActivity {
         bindPager();
         bindTabs();
         bindToolbar();
+        initLogin();
+    }
 
+    private void initLogin() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            this.selectedLogin = getIntent().getExtras().getParcelable(LoginMainActivity.PARAM_LOGIN);
+        }
+        this.selectedLogin = this.selectedLogin == null ? new Login() : this.selectedLogin;
     }
 
     private void bindToolbar() {

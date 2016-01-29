@@ -85,7 +85,6 @@
                                 android:paddingTop="@dimen/padding_edittext_top"
                                 android:singleLine="true"
                                 android:textSize="@dimen/textfield_textsize"
-
                                 />
                         </android.support.design.widget.TextInputLayout>
 
