@@ -1,4 +1,4 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="?android:colorControlHighlight">
-    <item android:drawable="@color/colorAccent" />
+    <item android:id="@+id/mask" android:drawable="@color/colorAccent" />
 </ripple>

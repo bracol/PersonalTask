@@ -1,15 +1,26 @@
 package com.example.waniltonfilho.personaltasks.controller.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +41,13 @@ public class WalletFragment extends Fragment {
     private TextView mTextViewMoneyInfo;
     private Button mButtonAdd;
     private Button mButtonRemove;
+    private FrameLayout mFrameLayoutAdd;
+    private EditText mEditTextDate;
+    private EditText mEditTextName;
+    private EditText mEditTextPrice;
+    private Button mButtonConfirm;
+    private boolean clicked;
+    private LinearLayout mLinearLayoutAdd;
 
 
     public static WalletFragment getInstance(int position) {
@@ -48,20 +66,95 @@ public class WalletFragment extends Fragment {
         mTextViewNameInfo.setText(ActivityCategory.selectedLogin.getName());
         mTextViewMoneyInfo = (TextView) v.findViewById(R.id.textViewMoneyInfo);
         mButtonAdd = (Button) v.findViewById(R.id.buttonPut);
+        mFrameLayoutAdd = (FrameLayout) v.findViewById(R.id.frameLayoutTransaction);
+        mLinearLayoutAdd = (LinearLayout) v.findViewById(R.id.dialogAdd);
+        mEditTextDate = (EditText) v.findViewById(R.id.editTextDateWallet);
+        mEditTextName = (EditText) v.findViewById(R.id.editTextName);
+        mEditTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
+        mButtonConfirm = (Button) v.findViewById(R.id.buttonConfirm);
+        mButtonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddDialog(mButtonAdd, 1);
+            }
+        });
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddDialog();
+                showAddDialog(v, 0);
             }
 
 
         });
         mButtonRemove = (Button) v.findViewById(R.id.buttonRemove);
-        RelativeLayout relativeLayout = (RelativeLayout) v.findViewById(R.id.ae);
         return v;
     }
 
-    private void showAddDialog() {
+    private void showAddDialog(View v, int flag) {
+        int[] clickCooords = new int[2];
+        v.getLocationInWindow(clickCooords);
+        clickCooords[0] += v.getWidth() / 2;
+        clickCooords[1] += v.getHeight() / 2;
+        if (flag == 0) {
+            mFrameLayoutAdd.setVisibility(View.VISIBLE);
+            performRevealAnimationIn(mLinearLayoutAdd, clickCooords[0], clickCooords[1]);
+        } else {
+            performRevealAnimationOut(mLinearLayoutAdd, clickCooords[0], clickCooords[1]);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void performRevealAnimationIn(final View v, int x, int y) {
+        int[] animationCoords = new int[2];
+        v.getLocationInWindow(animationCoords);
+        animationCoords[0] = x - animationCoords[0];
+        animationCoords[1] = y - animationCoords[1];
+
+        Point size = new Point();
+
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        int maximunRadius = size.y;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], 0, maximunRadius);
+            animator.setDuration(1000);
+            animator.start();
+            v.setVisibility(View.VISIBLE);
+        }
+
+
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void performRevealAnimationOut(final View v, int x, int y) {
+        int[] animationCoords = new int[2];
+        v.getLocationInWindow(animationCoords);
+        animationCoords[0] = x - animationCoords[0];
+        animationCoords[1] = y - animationCoords[1];
+
+        Point size = new Point();
+
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        int maximunRadius = size.y;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], maximunRadius, 0);
+            animator.setDuration(1000);
+            animator.start();
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    v.setVisibility(View.GONE);
+                    mFrameLayoutAdd.setVisibility(View.GONE);
+                }
+            });
+
+
+        }
+    }
+
+    private void showAddDialog2() {
         final WalletTransaction walletTransaction = new WalletTransaction();
         final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         final LinearLayout linearLayout = new LinearLayout(getContext());
