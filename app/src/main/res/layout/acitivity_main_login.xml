@@ -20,7 +20,8 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".controller. .activities.MainLoginActivity">
+        tools:context=".controller. .activities.MainLoginActivity"
+        >
 
 
         <!-- Login progress -->
@@ -35,12 +36,14 @@
         <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            >
 
             <LinearLayout
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="500dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -116,18 +119,13 @@
 
                 <Button
                     android:id="@+id/buttonSignLogin"
-                    style="?android:textAppearanceSmall"
+                    style="@style/ButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_size"
                     android:layout_marginTop="@dimen/vertical_padding_button"
-                    android:background="@drawable/button_pressed"
-                    android:elevation="2dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingLeft="@dimen/button_horizontal_padding"
-                    android:paddingRight="@dimen/button_horizontal_padding"
                     android:text="@string/action_sign_in"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/textButton_size" />
+                    android:elevation="2dp"
+                    />
 
 
             </LinearLayout>
@@ -139,8 +137,8 @@
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_content_add"
-            />
+            android:elevation="6dp"
+            android:src="@drawable/ic_content_add" />
     </RelativeLayout>
 
 

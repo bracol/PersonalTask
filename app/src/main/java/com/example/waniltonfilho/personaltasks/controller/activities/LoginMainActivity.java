@@ -1,15 +1,22 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,8 +60,10 @@ public class LoginMainActivity extends AppCompatActivity{
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonLogin = (Button) findViewById(R.id.buttonSignLogin);
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+                mButtonLogin.setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
                 boolean teste = attempLogin();
             }
         });
