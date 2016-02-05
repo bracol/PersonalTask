@@ -3,7 +3,6 @@ package com.example.waniltonfilho.personaltasks.controller.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Point;
@@ -16,13 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
@@ -45,7 +41,6 @@ public class WalletFragment extends Fragment {
     private EditText mEditTextDate;
     private EditText mEditTextName;
     private EditText mEditTextPrice;
-    private Button mButtonConfirm;
     private boolean clicked;
     private LinearLayout mLinearLayoutAdd;
 
@@ -71,17 +66,10 @@ public class WalletFragment extends Fragment {
         mEditTextDate = (EditText) v.findViewById(R.id.editTextDateWallet);
         mEditTextName = (EditText) v.findViewById(R.id.editTextName);
         mEditTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
-        mButtonConfirm = (Button) v.findViewById(R.id.buttonConfirm);
-        mButtonConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAddDialog(mButtonAdd, 1);
-            }
-        });
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddDialog(v, 0);
+                showAddDialog(v);
             }
 
 
@@ -90,69 +78,88 @@ public class WalletFragment extends Fragment {
         return v;
     }
 
-    private void showAddDialog(View v, int flag) {
+    private void showAddDialog(View v){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        ChangeWalletFragment fragment = new ChangeWalletFragment(buttonAddCalculatePosition(v));
+        mFrameLayoutAdd.setVisibility(View.VISIBLE);
+        fm.beginTransaction().add(R.id.frameLayoutTransaction, fragment).commit();
+    }
+
+    private int[] buttonAddCalculatePosition(View v) {
         int[] clickCooords = new int[2];
         v.getLocationInWindow(clickCooords);
         clickCooords[0] += v.getWidth() / 2;
         clickCooords[1] += v.getHeight() / 2;
-        if (flag == 0) {
-            mFrameLayoutAdd.setVisibility(View.VISIBLE);
-            performRevealAnimationIn(mLinearLayoutAdd, clickCooords[0], clickCooords[1]);
-        } else {
-            performRevealAnimationOut(mLinearLayoutAdd, clickCooords[0], clickCooords[1]);
-        }
+        return clickCooords;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void performRevealAnimationIn(final View v, int x, int y) {
-        int[] animationCoords = new int[2];
-        v.getLocationInWindow(animationCoords);
-        animationCoords[0] = x - animationCoords[0];
-        animationCoords[1] = y - animationCoords[1];
-
-        Point size = new Point();
-
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int maximunRadius = size.y;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], 0, maximunRadius);
-            animator.setDuration(1000);
-            animator.start();
-            v.setVisibility(View.VISIBLE);
-        }
-
-
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void performRevealAnimationOut(final View v, int x, int y) {
-        int[] animationCoords = new int[2];
-        v.getLocationInWindow(animationCoords);
-        animationCoords[0] = x - animationCoords[0];
-        animationCoords[1] = y - animationCoords[1];
-
-        Point size = new Point();
-
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int maximunRadius = size.y;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], maximunRadius, 0);
-            animator.setDuration(1000);
-            animator.start();
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    v.setVisibility(View.GONE);
-                    mFrameLayoutAdd.setVisibility(View.GONE);
-                }
-            });
-
-
-        }
-    }
+//    private void showAddDialog(View v, int flag) {
+//        int[] clickCooords = new int[2];
+//        v.getLocationInWindow(clickCooords);
+//        clickCooords[0] += v.getWidth() / 2;
+//        clickCooords[1] += v.getHeight() / 2;
+//        FragmentManager fm = getActivity().getSupportFragmentManager();
+//        ChangeWalletFragment fragment = new ChangeWalletFragment();
+//        fm.beginTransaction().add(R.id.frameLayoutTransaction, fragment).commit();
+//        if (flag == 0) {
+//            mFrameLayoutAdd.setVisibility(View.VISIBLE);
+//            performRevealAnimationIn(mLinearLayoutAdd, clickCooords[0], clickCooords[1]);
+//        } else {
+//            performRevealAnimationOut(mLinearLayoutAdd, clickCooords[0], clickCooords[1]);
+//        }
+//    }
+//
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+//    private void performRevealAnimationIn(final View v, int x, int y) {
+//        int[] animationCoords = new int[2];
+//        v.getLocationInWindow(animationCoords);
+//        animationCoords[0] = x - animationCoords[0];
+//        animationCoords[1] = y - animationCoords[1];
+//
+//        Point size = new Point();
+//
+//        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+//        int maximunRadius = size.y;
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], 0, maximunRadius);
+//            animator.setDuration(1000);
+//            animator.start();
+//            v.setVisibility(View.VISIBLE);
+//        }
+//
+//
+//    }
+//
+//
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+//    private void performRevealAnimationOut(final View v, int x, int y) {
+//        int[] animationCoords = new int[2];
+//        v.getLocationInWindow(animationCoords);
+//        animationCoords[0] = x - animationCoords[0];
+//        animationCoords[1] = y - animationCoords[1];
+//
+//        Point size = new Point();
+//
+//        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+//        int maximunRadius = size.y;
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], maximunRadius, 0);
+//            animator.setDuration(1000);
+//            animator.start();
+//            animator.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animator) {
+//                    v.setVisibility(View.GONE);
+//                    mFrameLayoutAdd.setVisibility(View.GONE);
+//                }
+//            });
+//
+//
+//        }
+//    }
 
     private void showAddDialog2() {
         final WalletTransaction walletTransaction = new WalletTransaction();

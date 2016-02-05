@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayoutFragmentChange"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#99000000"
+    >
+
+    <Button
+        android:id="@+id/btnTeste"
+        android:layout_width="200dp"
+        android:layout_height="100dp" />
+
+
+    <LinearLayout
+        android:id="@+id/dialogAdd"
+        android:layout_width="280dp"
+        android:layout_height="290dp"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:elevation="24dp"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="16dp"
+        android:paddingTop="24dp"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:orientation="vertical"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/textViewTitleChangeWallet"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Wallet Manager"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextDateWallet"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/hint_date"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp" />
+
+            <EditText
+                android:id="@+id/editTextNameWallet"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/hint_name"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp" />
+
+            <EditText
+                android:id="@+id/editTextPriceWallet"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/hint_price"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonCancelChange"
+                style="@style/ButtonWithoutBackground"
+                android:layout_marginRight="8dp"
+                android:text="@string/action_cancel" />
+
+            <Button
+                android:id="@+id/buttonConfirmChange"
+                style="@style/ButtonWithoutBackground"
+                android:text="@string/action_confirm" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
