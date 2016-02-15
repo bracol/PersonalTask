@@ -64,7 +64,7 @@ public class LoginMainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 mButtonLogin.setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
-                boolean teste = attempLogin();
+                attempLogin();
             }
         });
         mFabAdd = (FloatingActionButton) findViewById(R.id.fabAddLogin);

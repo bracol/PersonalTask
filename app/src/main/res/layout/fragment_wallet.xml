@@ -108,7 +108,25 @@
         android:id="@+id/frameLayoutTransaction"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="invisible"
         >
+
+        <FrameLayout
+            android:id="@+id/dialogAdd"
+            android:layout_width="280dp"
+            android:layout_height="290dp"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:elevation="24dp"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="16dp"
+            android:paddingTop="24dp"
+            android:visibility="invisible"
+            >
+
+        </FrameLayout>
 
     </FrameLayout>
 

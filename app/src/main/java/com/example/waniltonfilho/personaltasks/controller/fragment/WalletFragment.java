@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -42,7 +43,7 @@ public class WalletFragment extends Fragment {
     private EditText mEditTextName;
     private EditText mEditTextPrice;
     private boolean clicked;
-    private LinearLayout mLinearLayoutAdd;
+    private FrameLayout mFrameLayoutFragment;
 
 
     public static WalletFragment getInstance(int position) {
@@ -62,7 +63,7 @@ public class WalletFragment extends Fragment {
         mTextViewMoneyInfo = (TextView) v.findViewById(R.id.textViewMoneyInfo);
         mButtonAdd = (Button) v.findViewById(R.id.buttonPut);
         mFrameLayoutAdd = (FrameLayout) v.findViewById(R.id.frameLayoutTransaction);
-        mLinearLayoutAdd = (LinearLayout) v.findViewById(R.id.dialogAdd);
+        mFrameLayoutFragment = (FrameLayout) v.findViewById(R.id.dialogAdd);
         mEditTextDate = (EditText) v.findViewById(R.id.editTextDateWallet);
         mEditTextName = (EditText) v.findViewById(R.id.editTextName);
         mEditTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
@@ -79,11 +80,13 @@ public class WalletFragment extends Fragment {
     }
 
     private void showAddDialog(View v){
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-
-        ChangeWalletFragment fragment = new ChangeWalletFragment(buttonAddCalculatePosition(v));
         mFrameLayoutAdd.setVisibility(View.VISIBLE);
-        fm.beginTransaction().add(R.id.frameLayoutTransaction, fragment).commit();
+        FragmentTransaction fm = getFragmentManager().beginTransaction();
+        fm.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ChangeWalletFragment fragment = new ChangeWalletFragment(buttonAddCalculatePosition(v));
+        fm.add(R.id.frameLayoutTransaction, fragment);
+        mFrameLayoutAdd.setVisibility(View.VISIBLE);
+        fm.commit();
     }
 
     private int[] buttonAddCalculatePosition(View v) {
