@@ -83,6 +83,7 @@ public class ActivityCategory extends AppCompatActivity {
             Fragment myFragment = null;
             //if(position == 0){
                 myFragment = WalletFragment.getInstance(position);
+                getFragmentManager().beginTransaction().addToBackStack(null);
 
             //}
 

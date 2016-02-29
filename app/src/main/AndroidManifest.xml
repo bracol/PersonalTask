@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.waniltonfilho.personaltasks">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:name=".util.TaskManagerApplication"
         android:allowBackup="true"
@@ -19,7 +22,7 @@
 
         <activity
             android:name=".controller.activities.LoginFormActivity"
-        android:label="@string/app_name"></activity>
+            android:label="@string/app_name"></activity>
 
         <activity
             android:name=".model.TesteCustomView"
@@ -28,7 +31,10 @@
         </activity>
         <activity
             android:name=".controller.activities.ActivityCategory"
-            android:label="@string/app_name">
+            android:label="@string/app_name"></activity>
+
+        <activity android:name=".testes.ActivityTeste">
+
         </activity>
     </application>
 

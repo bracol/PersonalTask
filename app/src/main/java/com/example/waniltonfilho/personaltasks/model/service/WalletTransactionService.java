@@ -1,5 +1,6 @@
 package com.example.waniltonfilho.personaltasks.model.service;
 
+import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 
@@ -16,8 +17,18 @@ public class WalletTransactionService {
         return WalletTransactionRepository.getAll();
     }
 
-    public static void save(WalletTransaction walletTransaction){
+    public static void save(WalletTransaction walletTransaction, int operation){
+        Double newValue;
         WalletTransactionRepository.save(walletTransaction);
+        List<Wallet> wallets = WalletService.findAll();
+        Double actualValue = wallets.get(0).getValue();
+
+        if(operation == 0){
+            newValue = actualValue - walletTransaction.getPrice();
+        } else{
+            newValue = actualValue + walletTransaction.getPrice();
+        }
+        WalletService.update(newValue);
     }
 
     public static void delete(WalletTransaction selectedWalletTransaction){

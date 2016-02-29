@@ -3,32 +3,29 @@
     android:id="@+id/ae"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?android:colorBackground"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewNameInfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/textView_height"
         android:layout_below="@+id/app_bar"
+        android:background="@color/blue"
         android:drawableLeft="@drawable/ic_action_username"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="bottom"
         android:padding="@dimen/textView_padding_vertical"
         android:text="Fulano de Tal"
-        android:textSize="25sp"
-        android:gravity="bottom"
-        android:background="@color/blue"
         android:textColor="@android:color/white"
-        android:fontFamily="sans-serif-medium"
-        />
+        android:textSize="25sp" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/textViewNameInfo"
-        android:background="@android:color/white"
-        />
+        android:background="@android:color/white" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout_money"
@@ -39,100 +36,72 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/relative_layout_money_padding">
+
         <TextView
             android:id="@+id/textViewMoneyInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="100,00"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textViewMoney_size"
             android:fontFamily="sans-serif-medium"
-            />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewMoney_size" />
 
     </RelativeLayout>
 
 
     <LinearLayout
         android:id="@+id/layoutButtons"
-        android:layout_below="@+id/relativeLayout_money"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:orientation="horizontal"
-        android:paddingRight="@dimen/padding_layout_button"
+        android:layout_below="@+id/relativeLayout_money"
         android:background="@color/blue"
         android:gravity="center|right"
-        >
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/padding_layout_button">
+
         <Button
             android:id="@+id/buttonPut"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:elevation="@dimen/elevation_button"
-            android:text="@string/button_string_put"
             android:layout_marginLeft="@dimen/margim_button_put"
             android:layout_marginRight="@dimen/margim_button_put"
             android:background="?android:colorBackground"
+            android:elevation="@dimen/elevation_button"
             android:fontFamily="sans-serif-medium"
-            android:textColor="#DE000000"
-            />
+            android:text="@string/button_string_put"
+            android:textColor="#DE000000" />
+
         <Button
             android:id="@+id/buttonRemove"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:elevation="@dimen/elevation_button"
-            android:text="@string/button_string_remove"
-            android:fontFamily="sans-serif-medium"
             android:background="@color/colorAccent"
-            android:textColor="#DE000000"
-            />
+            android:elevation="@dimen/elevation_button"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/button_string_remove"
+            android:textColor="#DE000000" />
 
     </LinearLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_below="@id/layoutButtons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/padding_scrollview_wallet"
-        >
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/layoutButtons"-->
+        <!--android:padding="@dimen/padding_scrollview_wallet">-->
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewWalletTransacion"
+            android:layout_below="@+id/layoutButtons"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
-
-
-    </android.support.v4.widget.NestedScrollView>
+    <!--</android.support.v4.widget.NestedScrollView>-->
 
     <FrameLayout
         android:id="@+id/frameLayoutTransaction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#99000000"
-        android:visibility="invisible"
-        >
-
-        <FrameLayout
-            android:id="@+id/dialogAdd"
-            android:layout_width="280dp"
-            android:layout_height="290dp"
-            android:layout_gravity="center"
-            android:background="@android:color/white"
-            android:elevation="24dp"
-            android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingRight="16dp"
-            android:paddingTop="24dp"
-            android:visibility="invisible"
-            >
-
-        </FrameLayout>
-
-    </FrameLayout>
-
-
-
-
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

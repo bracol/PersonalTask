@@ -16,6 +16,8 @@
     <string name="hint_price">Preço</string>
     <string name="action_confirm">Confirmar</string>
     <string name="action_cancel">Cancelar</string>
+    <string name="action_offline_version">Versão Offline</string>
+    <string name="action_button_transaction_confirm">Transação adicionada com sucesso!</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

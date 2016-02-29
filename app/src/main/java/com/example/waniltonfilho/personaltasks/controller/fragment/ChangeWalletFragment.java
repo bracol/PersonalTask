@@ -3,11 +3,13 @@ package com.example.waniltonfilho.personaltasks.controller.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -23,6 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
+import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 
 /**
  * Created by wanilton.filho on 04/02/2016.
@@ -38,11 +43,12 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private FrameLayout mPrincipalLinear;
     private int[] coordsButtonAdd;
     private LinearLayout mLinearLayout;
+    private WalletTransaction mWalletTransaction;
+    private int mOperation;
 
-    public ChangeWalletFragment(int[] coords) {
-        coordsButtonAdd = coords;
+    public ChangeWalletFragment(int operation){
+        mOperation = operation;
     }
-
 
     @Nullable
     @Override
@@ -64,72 +70,29 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.buttonCancelChange:
                 Toast.makeText(getActivity(), "testeCancel", Toast.LENGTH_SHORT).show();
-                getFragmentManager().beginTransaction().addToBackStack(null);
+                //getFragmentManager().beginTransaction().addToBackStack(null);
                 getActivity().getFragmentManager().popBackStack();
                 break;
             case R.id.buttonConfirmChange:
-                Toast.makeText(getActivity(), "testeConfirm", Toast.LENGTH_SHORT).show();
-                break;
+                onButtonConfirm();
+
         }
     }
 
-    private void showAddDialog(View v, int flag) {
-
-        if (flag == 0) {
-            performRevealAnimationIn(mLinearLayout, coordsButtonAdd[0], coordsButtonAdd[1]);
-        } else {
-            performRevealAnimationOut(mLinearLayout, coordsButtonAdd[0], coordsButtonAdd[1]);
-        }
+    private void onButtonConfirm() {
+        bindWalletTransaction();
+        WalletTransactionService.save(mWalletTransaction, mOperation);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                .remove(this)
+                .commit();
+        Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void performRevealAnimationIn(final View v, int x, int y) {
-        int[] animationCoords = new int[2];
-        mPrincipalLinear.getLocationInWindow(animationCoords);
-        int centerX = x - animationCoords[0];
-        int centerY = y - animationCoords[1];
-
-        Point size = new Point();
-
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int maximunRadius = size.y;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(v, centerX, centerY, 0, maximunRadius);
-            animator.setDuration(1000);
-            animator.start();
-        }
-
-
-    }
-
-
-
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void performRevealAnimationOut(final View v, int x, int y) {
-        int[] animationCoords = new int[2];
-        v.getLocationInWindow(animationCoords);
-        animationCoords[0] = x - animationCoords[0];
-        animationCoords[1] = y - animationCoords[1];
-
-        Point size = new Point();
-
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int maximunRadius = size.y;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(v, animationCoords[0], animationCoords[1], maximunRadius, 0);
-            animator.setDuration(1000);
-            animator.start();
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    v.setVisibility(View.GONE);
-                }
-            });
-
-
-        }
+    private void bindWalletTransaction() {
+        mWalletTransaction = new WalletTransaction();
+        mWalletTransaction.setAction(mOperation);
+        mWalletTransaction.setDate(editTextDate.getText().toString());
+        mWalletTransaction.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
     }
 }
