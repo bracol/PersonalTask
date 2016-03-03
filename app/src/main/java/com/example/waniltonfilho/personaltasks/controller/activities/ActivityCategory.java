@@ -22,9 +22,11 @@ import com.example.waniltonfilho.personaltasks.model.entities.Login;
  */
 public class ActivityCategory extends AppCompatActivity {
 
+
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
     private Toolbar mToolbar;
+
     public static Login selectedLogin;
 
 

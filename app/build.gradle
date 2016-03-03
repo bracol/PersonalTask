@@ -47,5 +47,4 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.android.support:recyclerview-v7:23.0.+'
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.6'
-   // compile 'br.com.jansenfelipe:androidmask:1.0.1'
 }

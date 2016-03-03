@@ -1,42 +1,23 @@
 package com.example.waniltonfilho.personaltasks.controller.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.activities.ActivityCategory;
-import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
-import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,14 +34,10 @@ public class WalletFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private Wallet mWallet;
     private List<WalletTransaction> mTransactions;
+    private int mFrameId;
 
-
-    public static WalletFragment getInstance(int position) {
-        WalletFragment walletFragment = new WalletFragment();
-        Bundle args = new Bundle();
-        args.putInt(TAB_POSITION_KEY, position);
-        walletFragment.setArguments(args);
-        return walletFragment;
+    public WalletFragment(int frameID){
+        mFrameId = frameID;
     }
 
     @Nullable
@@ -83,39 +60,38 @@ public class WalletFragment extends Fragment {
 
         });
         mButtonRemove = (Button) v.findViewById(R.id.buttonRemove);
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewWalletTransacion);
-        fillRecyclerView();
+//        fillRecyclerView();
         return v;
     }
 
-    private void fillRecyclerView() {
-        mTransactions = new ArrayList<>();
-        WalletTransactionAdapter adapter = new WalletTransactionAdapter(mTransactions, getActivity());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(adapter);
-    }
+//    private void fillRecyclerView() {
+//        mTransactions = new ArrayList<>();
+//        WalletTransactionAdapter adapter = new WalletTransactionAdapter(mTransactions, getActivity());
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerView.setAdapter(adapter);
+//    }
 
     private void showAddDialog(View v){
-        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-        fm.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        FragmentTransaction fm = getActivity().getFragmentManager().beginTransaction();
+        fm.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right);
         ChangeWalletFragment fragment = new ChangeWalletFragment(1);
-        fm.replace(R.id.frameLayoutTransaction, fragment);
+        fm.replace(mFrameId, fragment);
         fm.commit();
     }
-
-    private void updateWalletTransaction(){
-        mTransactions = WalletTransactionService.findAll();
-        WalletTransactionAdapter adapter = (WalletTransactionAdapter) mRecyclerView.getAdapter();
-        adapter.setItens(mTransactions);
-        adapter.notifyDataSetChanged();
-        mTextViewMoneyInfo.setText(mWallet.getValue().toString());
-    }
+//
+//    private void updateWalletTransaction(){
+//        mTransactions = WalletTransactionService.findAll();
+//        WalletTransactionAdapter adapter = (WalletTransactionAdapter) mRecyclerView.getAdapter();
+//        adapter.setItens(mTransactions);
+//        adapter.notifyDataSetChanged();
+//        mTextViewMoneyInfo.setText(mWallet.getValue().toString());
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateWalletTransaction();
+        //updateWalletTransaction();
     }
 
 }

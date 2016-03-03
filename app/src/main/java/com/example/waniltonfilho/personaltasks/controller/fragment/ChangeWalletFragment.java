@@ -1,22 +1,14 @@
 package com.example.waniltonfilho.personaltasks.controller.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.graphics.Point;
-import android.os.Build;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.BounceInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -26,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 
 /**
@@ -45,6 +36,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private LinearLayout mLinearLayout;
     private WalletTransaction mWalletTransaction;
     private int mOperation;
+    private FrameLayout mFrameAnimation;
 
     public ChangeWalletFragment(int operation){
         mOperation = operation;
@@ -62,7 +54,24 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         mButtonCancel.setOnClickListener(this);
         mButtonConfirm = (Button) v.findViewById(R.id.buttonConfirmChange);
         mButtonConfirm.setOnClickListener(this);
+        mFrameAnimation = (FrameLayout) v.findViewById(R.id.frameAnimation);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        startFrameAnimation();
+    }
+
+    private void startFrameAnimation() {
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+        mFrameAnimation.startAnimation(fadeInAnimation);
+    }
+
+    private void endFrameAnimation() {
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+        mFrameAnimation.startAnimation(fadeInAnimation);
     }
 
     @Override
@@ -82,8 +91,9 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private void onButtonConfirm() {
         bindWalletTransaction();
         WalletTransactionService.save(mWalletTransaction, mOperation);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+        endFrameAnimation();
+        getActivity().getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                 .remove(this)
                 .commit();
         Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
