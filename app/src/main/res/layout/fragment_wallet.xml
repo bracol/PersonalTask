@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ae"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground"
@@ -83,12 +82,6 @@
 
     </LinearLayout>
 
-    <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/layoutButtons"-->
-        <!--android:padding="@dimen/padding_scrollview_wallet">-->
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewWalletTransacion"
             android:layout_below="@+id/layoutButtons"
@@ -96,7 +89,6 @@
             android:layout_height="match_parent" />
 
 
-    <!--</android.support.v4.widget.NestedScrollView>-->
 
     <FrameLayout
         android:id="@+id/frameLayoutTransaction"

@@ -39,7 +39,7 @@ public class WalletContract {
         return cv;
     }
 
-    public static Wallet getTransaction(Cursor cursor) {
+    public static Wallet getWallet(Cursor cursor) {
         if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
             Wallet wallet = new Wallet();
             /* get column index pega o indice de acordo com o nome da coluna passado */
@@ -51,11 +51,11 @@ public class WalletContract {
     }
 
 
-    public static List<Wallet> getTransactions(Cursor cursor) {
+    public static List<Wallet> getWallets(Cursor cursor) {
         ArrayList<Wallet> wallets = new ArrayList<>();
         while (cursor.moveToNext()) {
             /* get colum index pega o indice de acordo com o nome da coluna passado */
-            wallets.add(getTransaction(cursor));
+            wallets.add(getWallet(cursor));
 
         }
         return wallets;

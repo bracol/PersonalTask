@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.controller.fragment.MyFragment;
 import com.example.waniltonfilho.personaltasks.controller.fragment.WalletFragment;
 import com.example.waniltonfilho.personaltasks.controller.tabs.SlidingTabLayout;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
@@ -82,7 +83,8 @@ public class ActivityCategory extends AppCompatActivity {
         public Fragment getItem(int position) {
             Fragment myFragment = null;
             //if(position == 0){
-                myFragment = WalletFragment.getInstance(position);
+                myFragment = new MyFragment();
+            //.getInstance(position);
                 getFragmentManager().beginTransaction().addToBackStack(null);
 
             //}

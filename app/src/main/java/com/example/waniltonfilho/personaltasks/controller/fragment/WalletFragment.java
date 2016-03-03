@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.example.waniltonfilho.personaltasks.controller.activities.ActivityCat
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
@@ -65,7 +67,7 @@ public class WalletFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         List<Wallet> wallets = WalletService.findAll();
-        mWallet = wallets.get(0);
+        mWallet = WalletRepository.getWallet();
         View v = inflater.inflate(R.layout.fragment_wallet, container, false);
         mTextViewNameInfo = (TextView) v.findViewById(R.id.textViewNameInfo);
         mTextViewNameInfo.setText(ActivityCategory.selectedLogin.getName());
@@ -107,6 +109,7 @@ public class WalletFragment extends Fragment {
         WalletTransactionAdapter adapter = (WalletTransactionAdapter) mRecyclerView.getAdapter();
         adapter.setItens(mTransactions);
         adapter.notifyDataSetChanged();
+        mTextViewMoneyInfo.setText(mWallet.getValue().toString());
     }
 
     @Override
@@ -114,4 +117,5 @@ public class WalletFragment extends Fragment {
         super.onResume();
         updateWalletTransaction();
     }
+
 }

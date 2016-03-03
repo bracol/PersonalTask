@@ -45,11 +45,6 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         Double actualValue = wallets.get(0).getValue();
         Double newValue = actualValue - walletTransaction.getPrice();
 
-        if(walletTransaction.getAction() == 1){
-            holder.mImageViewOperation.setImageDrawable(mContext.getResources().getDrawable(R.drawable.add));
-        } else {
-            holder.mImageViewOperation.setImageDrawable(mContext.getResources().getDrawable(R.drawable.remove));
-        }
 
         holder.mTextViewDate.setText(walletTransaction.getDate());
         holder.mTextViewValue.setText(walletTransaction.getPrice().toString());

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.persistance.DataBaseHelper;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet.WalletContract;
-import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 
 import java.util.List;
 
@@ -65,12 +64,24 @@ public class WalletRepository {
         /* ResultSet do Android */
         Cursor cursor = db.query(WalletContract.TABLE, WalletContract.COLUMNS, null, null, null, null, WalletContract.ID);
 
-        List<Wallet> values = WalletContract.getTransactions(cursor);
+        List<Wallet> values = WalletContract.getWallets(cursor);
 
         db.close();
         dataBaseHelper.close();
 
         return values;
+    }
+
+    public static Wallet getWallet(){
+        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
+        SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+
+        /* ResultSet do Android */
+        Cursor cursor = db.query(WalletContract.TABLE, WalletContract.COLUMNS, null, null, null, null, null);
+
+        Wallet wallet = WalletContract.getWallet(cursor);
+
+        return wallet;
     }
 
 }
