@@ -3,6 +3,8 @@ package com.example.waniltonfilho.personaltasks.controller.adapter;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +17,11 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.WalletFragment;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -27,12 +31,12 @@ public class Adapter {
 
     private List<WalletTransaction> mTransactions;
     private Activity mContext;
-    private RecyclerView mRecyclerView;
-    private FragmentManager mFragmentManager;
-    public Adapter(List<WalletTransaction> mTransactions, Activity mContext, RecyclerView mRecyclerView) {
+    public RecyclerView mRecyclerView;
+
+    public Adapter(List<WalletTransaction> mTransactions, Activity mContext, RecyclerView recyclerView) {
         this.mTransactions = mTransactions;
         this.mContext = mContext;
-        this.mRecyclerView = mRecyclerView;
+        mRecyclerView = recyclerView;
         createAdapter();
     }
 
@@ -41,15 +45,15 @@ public class Adapter {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
-        ParallaxRecyclerAdapter<WalletTransaction> adapter = new ParallaxRecyclerAdapter<WalletTransaction>(mTransactions) {
+        final ParallaxRecyclerAdapter<WalletTransaction> adapter = new ParallaxRecyclerAdapter<WalletTransaction>(mTransactions) {
 
             @Override
             public void onBindViewHolderImpl(RecyclerView.ViewHolder holder, ParallaxRecyclerAdapter<WalletTransaction> parallaxRecyclerAdapter, int i) {
                 // If you're using your custom handler (as you should of course)
                 // you need to cast viewHolder to it.
                 WalletTransaction walletTransaction = mTransactions.get(i);
-                List<Wallet> wallets = WalletService.findAll();
-                Double actualValue = wallets.get(0).getValue();
+                Wallet wallet = WalletRepository.getWallet();
+                Double actualValue = wallet.getValue();
                 Double newValue = actualValue - walletTransaction.getPrice();
 
 
@@ -72,26 +76,31 @@ public class Adapter {
                 return mTransactions.size();
             }
 
+            @Override
+            public void setData(List<WalletTransaction> data) {
+                //ParallaxRecyclerAdapter parallaxRecyclerAdapter = (ParallaxRecyclerAdapter) mRecyclerView.getAdapter();
+                mTransactions = data;
+                createAdapter();
+            }
         };
 
-        View v = LayoutInflater.from(mContext).inflate(R.layout.header, mRecyclerView, false);
-        createFragment();
-        adapter.setParallaxHeader(v, mRecyclerView);
-        mRecyclerView.setAdapter(adapter);
+
+//        View v = LayoutInflater.from(mContext).inflate(R.layout.header, mRecyclerView, false);
+//            //createFragment();
+//        adapter.setParallaxHeader(v, mRecyclerView);
+//        adapter.notifyDataSetChanged();
+//        mRecyclerView.setAdapter(adapter);
     }
 
-    private void createFragment() {
-        FragmentManager fragmentManager = mContext.getFragmentManager();
-        FragmentTransaction fm = fragmentManager.beginTransaction();
-        WalletFragment walletFragment = new WalletFragment(R.id.frameTransaction);
-        fm.replace(R.id.frameHeader, walletFragment);
-        fm.commit();
-    }
+//    private void createFragment() {
+//        FragmentManager fragmentManager = mContext.getFragmentManager();
+//        FragmentTransaction fm = fragmentManager.beginTransaction();
+//        WalletFragment walletFragment = WalletFragment.getInstance();
+//                //WalletFragment walletFragment = WalletFragment.getInstance(R.id.frameHeader, mRecyclerView);
+//        fm.replace(R.id.frameHeader, walletFragment);
+//        fm.commit();
+//    }
 
-
-    public void setItens(List<WalletTransaction> itens) {
-        mTransactions = itens;
-    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView mImageViewOperation;

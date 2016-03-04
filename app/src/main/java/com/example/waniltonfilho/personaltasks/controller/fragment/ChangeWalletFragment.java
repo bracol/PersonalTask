@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.controller.adapter.Adapter;
+import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
+import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+
+import java.util.List;
 
 /**
  * Created by wanilton.filho on 04/02/2016.
@@ -31,15 +38,16 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private EditText editTextPrice;
     private Button mButtonConfirm;
     private Button mButtonCancel;
-    private FrameLayout mPrincipalLinear;
-    private int[] coordsButtonAdd;
-    private LinearLayout mLinearLayout;
     private WalletTransaction mWalletTransaction;
     private int mOperation;
     private FrameLayout mFrameAnimation;
+    private RecyclerView mRecyclerView;
+    private TextView mTextViewMoney;
+    private static ChangeWalletFragment mInstance;
 
-    public ChangeWalletFragment(int operation){
+    public ChangeWalletFragment(int operation, TextView textViewMoney){
         mOperation = operation;
+        mTextViewMoney = textViewMoney;
     }
 
     @Nullable
@@ -57,6 +65,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         mFrameAnimation = (FrameLayout) v.findViewById(R.id.frameAnimation);
         return v;
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -78,14 +87,20 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonCancelChange:
-                Toast.makeText(getActivity(), "testeCancel", Toast.LENGTH_SHORT).show();
-                //getFragmentManager().beginTransaction().addToBackStack(null);
-                getActivity().getFragmentManager().popBackStack();
+                onButtonCancel();
                 break;
             case R.id.buttonConfirmChange:
                 onButtonConfirm();
 
         }
+    }
+
+    private void onButtonCancel() {
+        endFrameAnimation();
+        getActivity().getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+                .remove(this)
+                .commit();
     }
 
     private void onButtonConfirm() {
@@ -96,8 +111,17 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                 .remove(this)
                 .commit();
+        updateList();
         Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
     }
+
+    private void updateList() {
+        List<WalletTransaction> listTransactions = WalletTransactionService.findAll();
+        Wallet wallet = WalletRepository.getWallet();
+        mTextViewMoney.setText(wallet.getValue().toString());
+
+    }
+
 
     private void bindWalletTransaction() {
         mWalletTransaction = new WalletTransaction();

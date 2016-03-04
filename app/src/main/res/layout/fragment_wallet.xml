@@ -82,7 +82,24 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/buttonShowTransactions"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_height="100dp" />
 
+
+
+    <FrameLayout
+        android:id="@+id/frameListTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:layout_above="@+id/buttonShowTransactions"
+        android:visibility="gone"
+        />
 
     <FrameLayout
         android:id="@+id/frameLayoutTransaction"

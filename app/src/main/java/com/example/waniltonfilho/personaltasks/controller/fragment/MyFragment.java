@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.Adapter;
-import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 
 /**
@@ -23,7 +22,7 @@ public class MyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_principal, container, false);
+        View v = inflater.inflate(R.layout.fragment_transaction_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerWalletTransaction);
         return v;
     }
@@ -33,4 +32,5 @@ public class MyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Adapter adapter = new Adapter(WalletTransactionService.findAll(), getActivity(), mRecyclerView);
     }
+
 }
