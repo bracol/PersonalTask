@@ -131,6 +131,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             mWalletTransaction = new WalletTransaction();
             mWalletTransaction.setAction(mOperation);
             mWalletTransaction.setDate(editTextDate.getText().toString());
+            mWalletTransaction.setName(editTextName.getText().toString());
             mWalletTransaction.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
         }
     }

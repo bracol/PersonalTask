@@ -52,6 +52,13 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         String outputDateStr = "";
         Date inputDate;
         String s = "";
+        if(walletTransaction.getAction() == 1){
+            holder.mImageViewOperation.setBackgroundColor(mContext.getResources().getColor(R.color.positive));
+            holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowPositive);
+        } else if (walletTransaction.getAction() == 0){
+            holder.mImageViewOperation.setBackgroundColor(mContext.getResources().getColor(R.color.negative));
+            holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
+        }
 
 
         try {
@@ -67,8 +74,8 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         }
 
         holder.mTextViewDate.setText(s);
-        holder.mTextViewValue.setText(walletTransaction.getPrice().toString());
-        holder.mTextViewNewValue.setText(newValue.toString());
+        holder.mTextViewValue.setText("R$ " + walletTransaction.getPrice().toString());
+        holder.mTextViewName.setText(walletTransaction.getName().toString());
     }
 
     @Override
@@ -83,15 +90,15 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView mImageViewOperation;
         TextView mTextViewDate;
+        TextView mTextViewName;
         TextView mTextViewValue;
-        TextView mTextViewNewValue;
 
         public MyViewHolder(View v) {
             super(v);
             mImageViewOperation = (ImageView) v.findViewById(R.id.imageViewOperation);
             mTextViewDate = (TextView) v.findViewById(R.id.textViewDate);
+            mTextViewName = (TextView) v.findViewById(R.id.textViewName);
             mTextViewValue = (TextView) v.findViewById(R.id.textViewValue);
-            mTextViewNewValue = (TextView) v.findViewById(R.id.textViewNewValue);
         }
     }
 }
