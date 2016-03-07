@@ -1,7 +1,14 @@
 package com.example.waniltonfilho.personaltasks.model.entities;
 
+import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by wanilton.filho on 29/01/2016.
@@ -37,7 +44,19 @@ public class WalletTransaction implements Parcelable {
     }
 
     public void setDate(String date) {
-        this.date = date;
+        try {
+            if (date.contains("/")) {
+                DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date inputDate = inputFormat.parse(date);
+                String outputDateStr = outputFormat.format(inputDate);
+                this.date = outputDateStr;
+            } else {
+                this.date = date;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public Double getPrice() {
@@ -62,45 +81,6 @@ public class WalletTransaction implements Parcelable {
 
     public void setLogin_id(Long login_id) {
         this.login_id = login_id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        WalletTransaction that = (WalletTransaction) o;
-
-        if (action != that.action) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        return !(login_id != null ? !login_id.equals(that.login_id) : that.login_id != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + action;
-        result = 31 * result + (login_id != null ? login_id.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "WalletTransaction{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date='" + date + '\'' +
-                ", price=" + price +
-                ", action=" + action +
-                ", login_id=" + login_id +
-                '}';
     }
 
 
@@ -131,7 +111,7 @@ public class WalletTransaction implements Parcelable {
         this.login_id = (Long) in.readValue(Long.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<WalletTransaction> CREATOR = new Parcelable.Creator<WalletTransaction>() {
+    public static final Creator<WalletTransaction> CREATOR = new Creator<WalletTransaction>() {
         public WalletTransaction createFromParcel(Parcel source) {
             return new WalletTransaction(source);
         }

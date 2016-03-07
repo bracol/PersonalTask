@@ -24,6 +24,7 @@ import android.widget.EditText;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 

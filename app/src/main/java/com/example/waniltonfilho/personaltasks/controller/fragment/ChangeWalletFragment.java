@@ -13,18 +13,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.controller.adapter.Adapter;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
-import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+import com.example.waniltonfilho.personaltasks.util.EditTextMaskDate;
+import com.example.waniltonfilho.personaltasks.util.StringUtil;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,6 +57,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         textViewTitle = (TextView) v.findViewById(R.id.textViewTitleChangeWallet);
         editTextName = (EditText) v.findViewById(R.id.editTextName);
         editTextDate = (EditText) v.findViewById(R.id.editTextDateWallet);
+        editTextDate.addTextChangedListener(new EditTextMaskDate(editTextDate));
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
         mButtonCancel = (Button) v.findViewById(R.id.buttonCancelChange);
         mButtonCancel.setOnClickListener(this);
@@ -105,14 +106,16 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
 
     private void onButtonConfirm() {
         bindWalletTransaction();
-        WalletTransactionService.save(mWalletTransaction, mOperation);
-        endFrameAnimation();
-        getActivity().getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
-                .remove(this)
-                .commit();
-        updateList();
-        Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
+        if(mWalletTransaction != null) {
+            WalletTransactionService.save(mWalletTransaction, mOperation);
+            endFrameAnimation();
+            getActivity().getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+                    .remove(this)
+                    .commit();
+            updateList();
+            Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     private void updateList() {
@@ -124,9 +127,11 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
 
 
     private void bindWalletTransaction() {
-        mWalletTransaction = new WalletTransaction();
-        mWalletTransaction.setAction(mOperation);
-        mWalletTransaction.setDate(editTextDate.getText().toString());
-        mWalletTransaction.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
+        if(!StringUtil.isNullOrBlank(editTextPrice.getText().toString(), editTextPrice, getActivity()) && (StringUtil.isDouble(editTextPrice.getText().toString(), editTextPrice, getActivity()))){
+            mWalletTransaction = new WalletTransaction();
+            mWalletTransaction.setAction(mOperation);
+            mWalletTransaction.setDate(editTextDate.getText().toString());
+            mWalletTransaction.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
+        }
     }
 }

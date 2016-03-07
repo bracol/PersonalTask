@@ -4,12 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    >
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,6 +31,7 @@
         >
 
 
+
         <!-- Login progress -->
         <ScrollView
             android:id="@+id/login_form"
@@ -36,7 +44,8 @@
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textinput_size"

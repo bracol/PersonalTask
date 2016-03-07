@@ -17,6 +17,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_offline_version">Offline Version</string>
     <string name="action_button_transaction_confirm">Transaction added successfully!</string>
+    <string name="error_valid_value">Enter with a valid value.</string>
     <string-array name="cat_names">
         <item>George</item>
         <item>Zubin</item>

@@ -18,6 +18,7 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_offline_version">Versão Offline</string>
     <string name="action_button_transaction_confirm">Transação adicionada com sucesso!</string>
+    <string name="error_valid_value">Digite um valor válido.</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

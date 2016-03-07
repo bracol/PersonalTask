@@ -57,7 +57,7 @@ public class Adapter {
                 Double newValue = actualValue - walletTransaction.getPrice();
 
 
-                ((MyViewHolder)holder).mTextViewDate.setText(walletTransaction.getDate());
+                ((MyViewHolder)holder).mTextViewDate.setText(walletTransaction.getDate().toString());
                 ((MyViewHolder)holder).mTextViewValue.setText(walletTransaction.getPrice().toString());
                 ((MyViewHolder)holder).mTextViewNewValue.setText(newValue.toString());
             }

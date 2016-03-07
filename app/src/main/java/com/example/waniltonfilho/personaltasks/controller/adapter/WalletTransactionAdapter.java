@@ -12,8 +12,13 @@ import android.widget.TextView;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,12 +46,27 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         WalletTransaction walletTransaction = mTransactions.get(position);
-        List<Wallet> wallets = WalletService.findAll();
-        Double actualValue = wallets.get(0).getValue();
+        Wallet wallet = WalletRepository.getWallet();
+        Double actualValue = wallet.getValue();
         Double newValue = actualValue - walletTransaction.getPrice();
+        String outputDateStr = "";
+        Date inputDate;
+        String s = "";
 
 
-        holder.mTextViewDate.setText(walletTransaction.getDate());
+        try {
+            String data = walletTransaction.getDate();
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+            inputDate = inputFormat.parse(data);
+            outputDateStr = outputFormat.format(inputDate);
+            DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(mContext);
+            s = dateFormat.format(inputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.mTextViewDate.setText(s);
         holder.mTextViewValue.setText(walletTransaction.getPrice().toString());
         holder.mTextViewNewValue.setText(newValue.toString());
     }
