@@ -18,10 +18,9 @@ public class WalletTransaction implements Parcelable {
     private Long id;
     private String name;
     private String date;
-    private Double price;
+    private Float price;
     private int action;
     private Long login_id;
-
 
     public Long getId() {
         return id;
@@ -44,26 +43,14 @@ public class WalletTransaction implements Parcelable {
     }
 
     public void setDate(String date) {
-        try {
-            if (date.contains("/")) {
-                DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-                DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date inputDate = inputFormat.parse(date);
-                String outputDateStr = outputFormat.format(inputDate);
-                this.date = outputDateStr;
-            } else {
-                this.date = date;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        this.date = date;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -106,7 +93,7 @@ public class WalletTransaction implements Parcelable {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.date = in.readString();
-        this.price = (Double) in.readValue(Double.class.getClassLoader());
+        this.price = (Float) in.readValue(Float.class.getClassLoader());
         this.action = in.readInt();
         this.login_id = (Long) in.readValue(Long.class.getClassLoader());
     }

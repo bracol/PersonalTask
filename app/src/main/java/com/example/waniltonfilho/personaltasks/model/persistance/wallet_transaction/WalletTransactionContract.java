@@ -62,7 +62,7 @@ public class WalletTransactionContract {
             walletTransaction.setId(cursor.getLong(cursor.getColumnIndex(WalletTransactionContract.ID)));
             walletTransaction.setName(cursor.getString(cursor.getColumnIndex(WalletTransactionContract.NAME)));
             walletTransaction.setDate((cursor.getString(cursor.getColumnIndex(WalletTransactionContract.DATE))));
-            walletTransaction.setPrice(cursor.getDouble(cursor.getColumnIndex(WalletTransactionContract.PRICE)));
+            walletTransaction.setPrice(cursor.getFloat(cursor.getColumnIndex(WalletTransactionContract.PRICE)));
             walletTransaction.setAction(cursor.getInt(cursor.getColumnIndex(WalletTransactionContract.ACTION)));
             walletTransaction.setLogin_id(cursor.getLong(cursor.getColumnIndex(WalletTransactionContract.LOGIN_ID)));
 

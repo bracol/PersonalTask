@@ -55,7 +55,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_change_wallet, container, false);
         textViewTitle = (TextView) v.findViewById(R.id.textViewTitleChangeWallet);
-        editTextName = (EditText) v.findViewById(R.id.editTextName);
+        editTextName = (EditText) v.findViewById(R.id.editTextNameWallet);
         editTextDate = (EditText) v.findViewById(R.id.editTextDateWallet);
         editTextDate.addTextChangedListener(new EditTextMaskDate(editTextDate));
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
@@ -132,7 +132,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             mWalletTransaction.setAction(mOperation);
             mWalletTransaction.setDate(editTextDate.getText().toString());
             mWalletTransaction.setName(editTextName.getText().toString());
-            mWalletTransaction.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
+            mWalletTransaction.setPrice(Float.parseFloat(editTextPrice.getText().toString()));
         }
     }
 }

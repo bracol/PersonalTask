@@ -19,12 +19,7 @@ import java.util.List;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
-    // cores do grafico
-    private final int[] CORES_GRAFICO = { Color.rgb(180, 0, 157), Color.rgb(0, 103, 208), Color.rgb(255, 54, 6),
-            Color.rgb(255, 154, 0), Color.rgb(1, 151, 0) };
 
-    private PieChart mPieChart;
-    private List<WalletTransaction> mListaDadosGrafico;
 
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
@@ -49,37 +44,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-//    private void preencherConteudo() {
-//
-//        if (mListaDadosGrafico != null) {
-//
-//            // referencia
-//            List<String> xAxis = new ArrayList<>();
-//
-//            // volume
-//            List<Entry> yAxis = new ArrayList<>();
-//
-//            // popular eixos do grafico
-//            for (WalletTransaction dado : mListaDadosGrafico) {
-//                // volume
-//                yAxis.add(new Entry(Float.parseFloat(dado.getPrice()), mListaDadosGrafico.indexOf(dado)));
-//                // referencia
-//                xAxis.add(dado.getChave());
-//            }
-//
-//            PieDataSet pieDataSet = new PieDataSet(yAxis, "Volume Transportado");
-//            pieDataSet.setSelectionShift(8f);
-//            int[] colors = CORES_SFB;
-//            pieDataSet.setColors(colors);
-//
-//            PieData pieData = new PieData(xAxis, pieDataSet);
-//            // pieData.setValueFormatter(new PercentFormatter());
-//            pieData.setValueTextSize(10f);
-//            pieData.setValueTextColor(Color.WHITE);
-//            mPieChart.setData(pieData);
-//            mPieChart.invalidate();
-//        }
-//    }
+
 
     @Override
     public int getCount() {
