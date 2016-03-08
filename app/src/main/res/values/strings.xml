@@ -18,6 +18,10 @@
     <string name="action_offline_version">Offline Version</string>
     <string name="action_button_transaction_confirm">Transaction added successfully!</string>
     <string name="error_valid_value">Enter with a valid value.</string>
+    <string name="imate_back">Back</string>
+    <string name="edit_text_search">SEARCH</string>
+    <string name="voice_cancel">Voice Cancel</string>
+    <string name="action_search">Search</string>
     <string-array name="cat_names">
         <item>George</item>
         <item>Zubin</item>
@@ -33,5 +37,12 @@
         <item>Wallet</item>
         <item>Debts</item>
         <item>Personal</item>
+    </string-array>
+    <string-array name="query_suggestions">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>SCALA</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
     </string-array>
 </resources>

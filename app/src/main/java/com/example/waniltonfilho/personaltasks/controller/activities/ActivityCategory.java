@@ -7,7 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.Tabss.PagerAdapter;
@@ -15,6 +20,7 @@ import com.example.waniltonfilho.personaltasks.controller.fragment.ListTransacti
 import com.example.waniltonfilho.personaltasks.controller.fragment.WalletFragment;
 import com.example.waniltonfilho.personaltasks.controller.tabs.SlidingTabLayout;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 /**
  * Created by wanilton.filho on 22/01/2016.
@@ -25,9 +31,8 @@ public class ActivityCategory extends AppCompatActivity {
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
     private Toolbar mToolbar;
-
     public static Login selectedLogin;
-
+    private MaterialSearchView mSearchView;
 
 
     @Override
@@ -42,7 +47,39 @@ public class ActivityCategory extends AppCompatActivity {
         //bindTabs();
         bindMaterialTabs();
         bindToolbar();
+        mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
+        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Do some magic
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+
+        mSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                Animation animation = AnimationUtils.loadAnimation(ActivityCategory.this, android.R.anim.fade_out);
+                animation.setDuration(3000);
+                animation.start();
+            }
+        });
         initLogin();
+        mSearchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        mSearchView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        mSearchView.setTextColor(android.graphics.Color.parseColor("#FFFFFF"));
+
     }
 
     private void bindMaterialTabs() {
@@ -81,6 +118,16 @@ public class ActivityCategory extends AppCompatActivity {
             this.selectedLogin = getIntent().getExtras().getParcelable(LoginMainActivity.PARAM_LOGIN);
         }
         this.selectedLogin = this.selectedLogin == null ? new Login() : this.selectedLogin;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        mSearchView.setMenuItem(item);
+
+        return true;
     }
 
     private void bindToolbar() {

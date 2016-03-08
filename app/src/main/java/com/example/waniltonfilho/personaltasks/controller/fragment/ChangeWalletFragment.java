@@ -113,17 +113,10 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                     .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                     .remove(this)
                     .commit();
-            updateList();
             Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
         }
     }
 
-    private void updateList() {
-        List<WalletTransaction> listTransactions = WalletTransactionService.findAll();
-        Wallet wallet = WalletRepository.getWallet();
-        mTextViewMoney.setText(wallet.getValue().toString());
-
-    }
 
 
     private void bindWalletTransaction() {
