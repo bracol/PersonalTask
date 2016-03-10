@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 
@@ -88,25 +92,27 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.buttonSignLogin:
-                attempLogin();
+                if(WalletRepository.getWallet() != null) {
+                    attempLogin();
+                } else {
+                    openDialog();
+                }
                 break;
             case R.id.buttonSignOffline:
                 startOffline();
-                verifyWallet();
                 break;
         }
     }
 
-    private void verifyWallet() {
-        if(WalletService.findAll().size() == 0)
-            initWallet();
+    private void openDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        FragmentDialogWallet dialogFragment = new FragmentDialogWallet();
+        ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
+        ft.commit();
     }
 
-    private void initWallet() {
-        Wallet wallet = new Wallet();
-        wallet.setValue((double) 0);
-        WalletService.save(wallet);
-    }
 
     private void startOffline() {
         Intent goToActivityCategory = new Intent(LoginMainActivity.this, ActivityCategory.class);
