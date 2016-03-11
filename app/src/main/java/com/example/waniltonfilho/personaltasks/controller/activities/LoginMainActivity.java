@@ -3,7 +3,6 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +14,9 @@ import android.widget.EditText;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
-import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessService;
-import com.example.waniltonfilho.personaltasks.model.service.WalletService;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 
@@ -77,7 +75,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
         for (Login l : loginList) {
             if (l.getLogin().equals(login.getLogin()) && l.getPassword().equals(login.getPassword())) {
-                Intent intent = new Intent(LoginMainActivity.this, ActivityCategory.class);
+                Intent intent = new Intent(LoginMainActivity.this, ActivityMain.class);
                 intent.putExtra(PARAM_LOGIN, l);
                 startActivity(intent);
             }
@@ -107,19 +105,13 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         FragmentDialogWallet dialogFragment = new FragmentDialogWallet();
-        ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
+        //ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
         ft.commit();
     }
 
 
-    private void initWallet() {
-        Wallet wallet = new Wallet();
-        wallet.setValue(0f);
-        WalletService.save(wallet);
-    }
-
     private void startOffline() {
-        Intent goToActivityCategory = new Intent(LoginMainActivity.this, ActivityCategory.class);
+        Intent goToActivityCategory = new Intent(LoginMainActivity.this, ActivityMain.class);
         startActivity(goToActivityCategory);
     }
 }

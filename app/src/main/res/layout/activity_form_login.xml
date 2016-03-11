@@ -57,8 +57,8 @@
                             android:id="@+id/imageViewName"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:src="@drawable/ic_name"
-                            android:padding="10dp"
+                            android:src="@drawable/ic_social_person"
+                            android:padding="12dp"
 
                             />
 
@@ -69,7 +69,8 @@
                             android:layout_height="@dimen/textinput_size"
                             android:layout_toRightOf="@+id/imageViewName"
                             android:paddingTop="@dimen/padding_input_top"
-                            android:paddingLeft="16dp"
+                            android:paddingLeft="@dimen/padding_edittext_bottom"
+                            android:paddingRight="@dimen/padding_edittext_bottom"
                             >
 
                             <EditText
@@ -111,7 +112,8 @@
                             android:layout_height="@dimen/textinput_size"
                             android:layout_below="@+id/textInputName"
                             android:paddingTop="@dimen/padding_input_top"
-                            android:paddingLeft="16dp"
+                            android:paddingLeft="@dimen/padding_edittext_bottom"
+                            android:paddingRight="@dimen/padding_edittext_bottom"
                             >
 
                             <EditText
@@ -147,7 +149,8 @@
                             android:layout_height="@dimen/textinput_size"
                             android:layout_below="@id/textInputUsername"
                             android:paddingTop="@dimen/padding_input_top"
-                            android:paddingLeft="16dp"
+                            android:paddingLeft="@dimen/padding_edittext_bottom"
+                            android:paddingRight="@dimen/padding_edittext_bottom"
                             >
 
                             <EditText

@@ -2,7 +2,6 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +15,12 @@ import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessServic
 /**
  * Created by wanilton.filho on 20/01/2016.
  */
-public class LoginFormActivity extends AppCompatActivity{
+public class LoginFormActivity extends BaseActivity{
 
     private EditText mEditTextName;
     private EditText mEditTextUsername;
     private EditText mEditTextPassword;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
 
 
@@ -40,8 +39,9 @@ public class LoginFormActivity extends AppCompatActivity{
        // mEditTextName.addTextChangedListener(maskEditTextChangedListener);
         mEditTextUsername = (EditText) findViewById(R.id.editTextUsername);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.app_bar);
+        setupToolbar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

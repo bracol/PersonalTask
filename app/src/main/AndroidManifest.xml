@@ -23,7 +23,12 @@
 
         <activity
             android:name=".controller.activities.LoginFormActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controller.activities.LoginMainActivity" />
+
+        </activity>
 
         <activity
             android:name=".model.TesteCustomView"
@@ -31,12 +36,9 @@
 
         </activity>
         <activity
-            android:name=".controller.activities.ActivityCategory"
+            android:name=".controller.activities.ActivityMain"
             android:label="@string/app_name"></activity>
 
-        <activity android:name=".testes.ActivityTeste">
-
-        </activity>
     </application>
 
 </manifest>
