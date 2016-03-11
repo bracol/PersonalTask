@@ -9,7 +9,8 @@ import android.os.Parcelable;
 public class Wallet implements Parcelable {
 
     private Long _id;
-    private Double value;
+    private Float value;
+
 
     public Long get_id() {
         return _id;
@@ -19,31 +20,12 @@ public class Wallet implements Parcelable {
         this._id = _id;
     }
 
-    public Double getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(Float value) {
         this.value = value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Wallet wallet = (Wallet) o;
-
-        if (_id != null ? !_id.equals(wallet._id) : wallet._id != null) return false;
-        return !(value != null ? !value.equals(wallet.value) : wallet.value != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = _id != null ? _id.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
     }
 
 
@@ -63,10 +45,10 @@ public class Wallet implements Parcelable {
 
     protected Wallet(Parcel in) {
         this._id = (Long) in.readValue(Long.class.getClassLoader());
-        this.value = (Double) in.readValue(Double.class.getClassLoader());
+        this.value = (Float) in.readValue(Float.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Wallet> CREATOR = new Parcelable.Creator<Wallet>() {
+    public static final Creator<Wallet> CREATOR = new Creator<Wallet>() {
         public Wallet createFromParcel(Parcel source) {
             return new Wallet(source);
         }

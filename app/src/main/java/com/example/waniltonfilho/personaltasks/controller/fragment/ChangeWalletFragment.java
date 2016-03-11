@@ -113,18 +113,23 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                     .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                     .remove(this)
                     .commit();
+            changeWalletTextValue();
             Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
         }
     }
 
+    private void changeWalletTextValue() {
+        Wallet wallet = WalletRepository.getWallet();
+        mTextViewMoney.setText(wallet.getValue().toString());
+    }
 
 
     private void bindWalletTransaction() {
         if(!StringUtil.isNullOrBlank(editTextPrice.getText().toString(), editTextPrice, getActivity()) && (StringUtil.isDouble(editTextPrice.getText().toString(), editTextPrice, getActivity()))){
             mWalletTransaction = new WalletTransaction();
             mWalletTransaction.setAction(mOperation);
-            mWalletTransaction.setDate(editTextDate.getText().toString());
-            mWalletTransaction.setName(editTextName.getText().toString());
+            mWalletTransaction.setDate(editTextDate.getText() != null ? editTextDate.getText().toString() : "Transação");
+            mWalletTransaction.setName(editTextName.getText() != null ? editTextName.getText().toString() : "");
             mWalletTransaction.setPrice(Float.parseFloat(editTextPrice.getText().toString()));
         }
     }

@@ -21,7 +21,7 @@ public class WalletService {
         WalletRepository.save(wallet);
     }
 
-    public static void update(Double value){
+    public static void update(Float value){
         WalletRepository.update(value);
     }
 

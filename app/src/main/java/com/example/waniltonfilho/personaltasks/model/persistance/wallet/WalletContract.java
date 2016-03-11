@@ -44,7 +44,7 @@ public class WalletContract {
             Wallet wallet = new Wallet();
             /* get column index pega o indice de acordo com o nome da coluna passado */
             wallet.set_id(cursor.getLong(cursor.getColumnIndex(WalletContract.ID)));
-            wallet.setValue(cursor.getDouble(cursor.getColumnIndex(WalletContract.VALUE)));
+            wallet.setValue(cursor.getFloat(cursor.getColumnIndex(WalletContract.VALUE)));
             return wallet;
         }
         return null;

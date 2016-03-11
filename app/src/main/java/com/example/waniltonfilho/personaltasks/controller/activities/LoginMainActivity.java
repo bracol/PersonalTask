@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 
@@ -21,7 +25,7 @@ import java.util.List;
 /**
  * Created by wanilton.filho on 19/01/2016.
  */
-public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText mEditTextUser;
     private EditText mEditTextPassword;
@@ -43,7 +47,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         bindElements();
 
 
-
     }
 
     private void bindElements() {
@@ -52,7 +55,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mButtonLogin = (Button) findViewById(R.id.buttonSignLogin);
         mButtonLogin.setOnClickListener(this);
         mButtonOfflineLogin = (Button) findViewById(R.id.buttonSignOffline);
-        mButtonOfflineLogin .setOnClickListener(this);
+        mButtonOfflineLogin.setOnClickListener(this);
         mFabAdd = (FloatingActionButton) findViewById(R.id.fabAddLogin);
         mFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +63,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(LoginMainActivity.this, LoginFormActivity.class));
             }
         });
-
 
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -73,7 +75,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         login.setPassword((mEditTextPassword.getText().toString()));
         List<Login> loginList = LoginBusinessService.findAll();
 
-        for(Login l : loginList) {
+        for (Login l : loginList) {
             if (l.getLogin().equals(login.getLogin()) && l.getPassword().equals(login.getPassword())) {
                 Intent intent = new Intent(LoginMainActivity.this, ActivityCategory.class);
                 intent.putExtra(PARAM_LOGIN, l);
@@ -86,25 +88,33 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.buttonSignLogin:
-                attempLogin();
+                if (WalletRepository.getWallet() != null) {
+                    attempLogin();
+                } else {
+                    openDialog();
+                }
                 break;
             case R.id.buttonSignOffline:
                 startOffline();
-                verifyWallet();
                 break;
         }
     }
 
-    private void verifyWallet() {
-        if(WalletService.findAll().size() == 0)
-            initWallet();
+    private void openDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        FragmentDialogWallet dialogFragment = new FragmentDialogWallet();
+        ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
+        ft.commit();
     }
+
 
     private void initWallet() {
         Wallet wallet = new Wallet();
-        wallet.setValue((double) 0);
+        wallet.setValue(0f);
         WalletService.save(wallet);
     }
 

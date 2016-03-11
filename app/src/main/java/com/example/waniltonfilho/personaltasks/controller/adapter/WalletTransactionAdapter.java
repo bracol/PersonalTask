@@ -14,6 +14,8 @@ import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
+import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -47,8 +49,8 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     public void onBindViewHolder(MyViewHolder holder, int position) {
         WalletTransaction walletTransaction = mTransactions.get(position);
         Wallet wallet = WalletRepository.getWallet();
-        Double actualValue = wallet.getValue();
-        Double newValue = actualValue - walletTransaction.getPrice();
+        Float actualValue = wallet.getValue();
+        Float newValue = actualValue - walletTransaction.getPrice();
         String outputDateStr = "";
         Date inputDate;
         String s = "";
@@ -75,6 +77,8 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
 
         holder.mTextViewDate.setText(s);
         holder.mTextViewValue.setText("R$ " + walletTransaction.getPrice().toString());
+        MyValueFormatter formatter = new MyValueFormatter();
+        holder.mTextViewValue.setText(formatter.getFloatFormatted(walletTransaction.getPrice()));
         holder.mTextViewName.setText(walletTransaction.getName().toString());
     }
 

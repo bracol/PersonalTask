@@ -24,7 +24,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +36,7 @@ import java.util.List;
  */
 public class FragmentGraph extends Fragment {
     private PieChart mChart;
+    private SpannableString mCenterText;
     // cores do grafico
     private final int[] CORES_GRAFICO = {Color.rgb(180, 0, 157), Color.rgb(0, 103, 208), Color.rgb(255, 54, 6),
             Color.rgb(255, 154, 0), Color.rgb(1, 151, 0)};
@@ -45,13 +50,24 @@ public class FragmentGraph extends Fragment {
         mListaDadosGrafico = WalletTransactionService.findAll();
         mChart = (PieChart) v.findViewById(R.id.chart);
         mChart.setDescription("");
+        mCenterText = generateCenterText();
+
 
         // radius of the center hole in percent of maximum radius
-        mChart.setHoleRadius(50f);
-        mChart.setTransparentCircleRadius(55f);
+        mChart.setHoleRadius(52f);
+        mChart.setTransparentCircleRadius(57f);
+        mChart.setCenterText(mCenterText);
+        mChart.setCenterTextSize(9f);
+        mChart.setUsePercentValues(true);
+        //mChart.setExtraOffsets(5, 10, 50, 10);
+
+        // do not forget to refresh the chart
+        // mChart.invalidate();
 
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
 
         // referencia
         List<String> xAxis = new ArrayList<>();
@@ -64,9 +80,19 @@ public class FragmentGraph extends Fragment {
         // popular eixos do grafico
         for (WalletTransaction dado : mListaDadosGrafico) {
             // volume
-            yAxis.add(new Entry(dado.getPrice(),  mListaDadosGrafico.indexOf(dado)));
-            // referencia
-            xAxis.add(dado.getDate().substring(0, 4));
+            try {
+
+                yAxis.add(new Entry(dado.getPrice(), mListaDadosGrafico.indexOf(dado)));
+
+                String data = dado.getDate();
+                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date inputDate = inputFormat.parse(data);
+                String outputDateStr = outputFormat.format(inputDate);
+                xAxis.add(outputDateStr.substring(0, 5));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         PieDataSet pieDataSet = new PieDataSet(yAxis, "Meses");

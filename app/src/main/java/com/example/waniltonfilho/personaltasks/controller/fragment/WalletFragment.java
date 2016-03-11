@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
+import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 
 import java.util.List;
 
@@ -52,20 +54,18 @@ public class WalletFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        List<Wallet> wallets = WalletService.findAll();
         mWallet = WalletRepository.getWallet();
         View v = inflater.inflate(R.layout.fragment_wallet, container, false);
         mTextViewNameInfo = (TextView) v.findViewById(R.id.textViewNameInfo);
         mTextViewNameInfo.setText(ActivityCategory.selectedLogin.getName());
         mTextViewMoneyInfo = (TextView) v.findViewById(R.id.textViewMoneyInfo);
-        mTextViewMoneyInfo.setText(mWallet.getValue().toString());
+        mTextViewMoneyInfo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf"));
+        MyValueFormatter formatter = new MyValueFormatter();
+        mTextViewMoneyInfo.setText(formatter.getFloatFormatted(mWallet.getValue()));
         mButtonAdd = (Button) v.findViewById(R.id.buttonPut);
         mButtonAdd.setOnClickListener(this);
-        mButtonShowTransactions = (Button) v.findViewById(R.id.buttonShowTransactions);
-        mButtonShowTransactions.setOnClickListener(this);
         mButtonRemove = (Button) v.findViewById(R.id.buttonRemove);
         mButtonRemove.setOnClickListener(this);
-        mFrameListTransaction = (FrameLayout) v.findViewById(R.id.frameListTransaction);
         v.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -102,9 +102,6 @@ public class WalletFragment extends Fragment implements View.OnClickListener {
                 mOperation = 0;
                 showAddDialog(v);
                 break;
-            case R.id.buttonShowTransactions:
-                animationCalculate(v);
-                break;
         }
     }
 
@@ -115,7 +112,6 @@ public class WalletFragment extends Fragment implements View.OnClickListener {
         clickCooords[1] += v.getHeight() / 2;
         android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
         ListTransactionFragment fragment = new ListTransactionFragment();
-        fm.beginTransaction().replace(R.id.frameListTransaction, fragment).commit();
         if (clicked == false) {
             performRevealAnimationIn(mFrameListTransaction, clickCooords[0], clickCooords[1]);
             clicked = true;

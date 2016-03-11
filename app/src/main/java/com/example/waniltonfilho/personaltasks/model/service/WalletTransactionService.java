@@ -2,6 +2,7 @@ package com.example.waniltonfilho.personaltasks.model.service;
 
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 
 import java.util.List;
@@ -18,10 +19,10 @@ public class WalletTransactionService {
     }
 
     public static void save(WalletTransaction walletTransaction, int operation){
-        Double newValue;
+        Float newValue;
         WalletTransactionRepository.save(walletTransaction);
-        List<Wallet> wallets = WalletService.findAll();
-        Double actualValue = wallets.get(0).getValue();
+        Wallet wallet = WalletRepository.getWallet();
+        Float actualValue = wallet.getValue();
 
         if(operation == 0){
             newValue = actualValue - walletTransaction.getPrice();

@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/textView_height"
         android:layout_below="@+id/app_bar"
-        android:background="@color/blue"
         android:drawableLeft="@drawable/ic_action_username"
         android:fontFamily="sans-serif-medium"
+        android:background="@drawable/gradient_title"
         android:gravity="bottom"
         android:padding="@dimen/textView_padding_vertical"
         android:text="Fulano de Tal"
@@ -31,75 +31,62 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/money_layout_height"
         android:layout_below="@+id/divider"
-        android:background="@color/blue"
+        android:background="@drawable/gradient_title"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/relative_layout_money_padding">
 
+        <FrameLayout
+            android:id="@+id/frameMoney"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
         <TextView
             android:id="@+id/textViewMoneyInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center"
+            android:text="R$ 99.999,99"
             android:textColor="@android:color/white"
             android:textSize="@dimen/textViewMoney_size" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_below="@+id/frameMoney"
+            android:gravity="center|right"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/padding_layout_button">
+
+            <Button
+                android:id="@+id/buttonPut"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginLeft="@dimen/margim_button_put"
+                android:layout_marginRight="@dimen/margim_button_put"
+                android:background="?android:colorBackground"
+                android:elevation="@dimen/elevation_button"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/button_string_put"
+                android:textColor="#DE000000" />
+
+            <Button
+                android:id="@+id/buttonRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@color/colorAccent"
+                android:elevation="@dimen/elevation_button"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/button_string_remove"
+                android:textColor="#DE000000" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:id="@+id/layoutButtons"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_below="@+id/relativeLayout_money"
-        android:background="@color/blue"
-        android:gravity="center|right"
-        android:orientation="horizontal"
-        android:paddingRight="@dimen/padding_layout_button">
 
-        <Button
-            android:id="@+id/buttonPut"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginLeft="@dimen/margim_button_put"
-            android:layout_marginRight="@dimen/margim_button_put"
-            android:background="?android:colorBackground"
-            android:elevation="@dimen/elevation_button"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/button_string_put"
-            android:textColor="#DE000000" />
-
-        <Button
-            android:id="@+id/buttonRemove"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:background="@color/colorAccent"
-            android:elevation="@dimen/elevation_button"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/button_string_remove"
-            android:textColor="#DE000000" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonShowTransactions"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_height="100dp" />
-
-
-
-    <FrameLayout
-        android:id="@+id/frameListTransaction"
-        android:layout_width="match_parent"
-        android:layout_height="380dp"
-        android:layout_above="@+id/buttonShowTransactions"
-        android:visibility="gone"
-        />
 
     <FrameLayout
         android:id="@+id/frameLayoutTransaction"

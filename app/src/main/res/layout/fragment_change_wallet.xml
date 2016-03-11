@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/hint_date"
+                android:inputType="number"
                 android:paddingBottom="16dp"
                 android:paddingTop="8dp" />
 

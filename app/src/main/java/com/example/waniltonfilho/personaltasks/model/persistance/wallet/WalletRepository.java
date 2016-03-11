@@ -47,7 +47,7 @@ public class WalletRepository {
         dataBaseHelper.close();
     }
 
-    public static void update(Double value){
+    public static void update(Float value){
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
 

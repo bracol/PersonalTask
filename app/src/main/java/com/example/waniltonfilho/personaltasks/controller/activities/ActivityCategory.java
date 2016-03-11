@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +14,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.controller.Tabss.PagerAdapter;
 import com.example.waniltonfilho.personaltasks.controller.fragment.ListTransactionFragment;
 import com.example.waniltonfilho.personaltasks.controller.fragment.WalletFragment;
-import com.example.waniltonfilho.personaltasks.controller.tabs.SlidingTabLayout;
+import com.example.waniltonfilho.personaltasks.controller.tabs.PagerAdapter;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -29,7 +27,6 @@ public class ActivityCategory extends AppCompatActivity {
 
 
     private ViewPager mViewPager;
-    private SlidingTabLayout mSlidingTabLayout;
     private Toolbar mToolbar;
     public static Login selectedLogin;
     private MaterialSearchView mSearchView;

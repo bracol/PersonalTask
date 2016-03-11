@@ -19,7 +19,6 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/button_pressed</item>
         <item name="android:textSize">@dimen/textButton_size</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="ButtonWithoutBackground" parent="Widget.AppCompat.Button.Borderless">
@@ -28,7 +27,6 @@
          <item name="android:layout_gravity">right</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="shadowPositive">
