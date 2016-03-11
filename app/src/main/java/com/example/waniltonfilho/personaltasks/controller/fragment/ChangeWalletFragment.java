@@ -2,7 +2,6 @@ package com.example.waniltonfilho.personaltasks.controller.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,16 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.EditTextMaskDate;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
-
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by wanilton.filho on 04/02/2016.
@@ -50,7 +43,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         mTextViewMoney = textViewMoney;
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_change_wallet, container, false);
