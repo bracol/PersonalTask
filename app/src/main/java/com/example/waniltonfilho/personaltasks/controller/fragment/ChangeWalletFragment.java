@@ -15,7 +15,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.EditTextMaskDate;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
