@@ -22,6 +22,9 @@ import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionSe
 import com.example.waniltonfilho.personaltasks.util.EditTextMaskDate;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by wanilton.filho on 04/02/2016.
  */
@@ -50,8 +53,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         View v = inflater.inflate(R.layout.fragment_change_wallet, container, false);
         textViewTitle = (TextView) v.findViewById(R.id.textViewTitleChangeWallet);
         editTextName = (EditText) v.findViewById(R.id.editTextNameWallet);
-        editTextDate = (EditText) v.findViewById(R.id.editTextDateWallet);
-        editTextDate.addTextChangedListener(new EditTextMaskDate(editTextDate));
+        //editTextDate.addTextChangedListener(new EditTextMaskDate(editTextDate));
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
         mButtonCancel = (Button) v.findViewById(R.id.buttonCancelChange);
         mButtonCancel.setOnClickListener(this);
@@ -122,8 +124,10 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         if(!StringUtil.isNullOrBlank(editTextPrice.getText().toString(), editTextPrice, getActivity()) && (StringUtil.isDouble(editTextPrice.getText().toString(), editTextPrice, getActivity()))){
             mWalletTransaction = new WalletTransaction();
             mWalletTransaction.setAction(mOperation);
-            mWalletTransaction.setDate(editTextDate.getText() != null ? editTextDate.getText().toString() : "Transação");
-            mWalletTransaction.setName(editTextName.getText() != null ? editTextName.getText().toString() : "");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String currentDateandTime = sdf.format(new Date());
+            mWalletTransaction.setDate(currentDateandTime);
+            mWalletTransaction.setName(editTextName.getText() != null ? editTextName.getText().toString() : "Transação");
             mWalletTransaction.setPrice(Float.parseFloat(editTextPrice.getText().toString()));
         }
     }

@@ -82,6 +82,8 @@ public class ActivityMain extends BaseActivity {
         });
     }
 
+
+
     private void bindSearchView() {
         //mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {

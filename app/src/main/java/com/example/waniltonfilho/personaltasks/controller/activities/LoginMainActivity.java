@@ -105,7 +105,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         FragmentDialogWallet dialogFragment = new FragmentDialogWallet();
-        //ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
+        ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
         ft.commit();
     }
 

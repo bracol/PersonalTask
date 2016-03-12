@@ -55,10 +55,10 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         Date inputDate;
         String s = "";
         if(walletTransaction.getAction() == 1){
-            holder.mImageViewOperation.setBackgroundColor(mContext.getResources().getColor(R.color.positive));
+            holder.mImageViewOperation.setBackground(mContext.getDrawable(R.drawable.shopping));
             holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowPositive);
         } else if (walletTransaction.getAction() == 0){
-            holder.mImageViewOperation.setBackgroundColor(mContext.getResources().getColor(R.color.negative));
+            holder.mImageViewOperation.setBackground(mContext.getDrawable(R.drawable.shopping));
             holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
         }
 

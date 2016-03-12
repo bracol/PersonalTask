@@ -161,6 +161,12 @@
         </FrameLayout>
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frameDialogLoginTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <View
         android:id="@+id/toolbar_shadow"
         android:layout_width="match_parent"

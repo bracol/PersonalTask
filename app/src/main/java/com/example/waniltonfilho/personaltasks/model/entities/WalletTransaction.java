@@ -43,19 +43,7 @@ public class WalletTransaction implements Parcelable {
     }
 
     public void setDate(String date) {
-        try {
-            if (date.contains("/")) {
-                DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-                DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date inputDate = inputFormat.parse(date);
-                String outputDateStr = outputFormat.format(inputDate);
-                this.date = outputDateStr;
-            } else {
-                this.date = date;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        this.date = date;
     }
 
     public Float getPrice() {

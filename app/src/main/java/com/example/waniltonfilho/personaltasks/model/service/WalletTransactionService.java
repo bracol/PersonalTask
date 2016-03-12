@@ -55,7 +55,7 @@ public class WalletTransactionService {
         int listaSize = allList.size();
 
         if(listaSize >= cont && listaSize > 0){
-            for(int i = listaSize; i >= (listaSize - cont); i--){
+            for(int i = listaSize; i > (listaSize - cont); i--){
                 lastList.add(allList.get(i - 1));
             }
         }
