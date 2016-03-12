@@ -1,7 +1,6 @@
 package com.example.waniltonfilho.personaltasks.controller.adapter;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +12,15 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
-import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.example.waniltonfilho.personaltasks.util.Cir;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * Created by Wanilton on 28/02/2016.
@@ -33,7 +32,7 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     private List<WalletTransaction> itens;
 
 
-    public WalletTransactionAdapter(List<WalletTransaction> transactions, Activity context){
+    public WalletTransactionAdapter(List<WalletTransaction> transactions, Activity context) {
         mTransactions = transactions;
         mContext = context;
     }
@@ -54,13 +53,8 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         String outputDateStr = "";
         Date inputDate;
         String s = "";
-        if(walletTransaction.getAction() == 1){
-            holder.mImageViewOperation.setBackground(mContext.getDrawable(R.drawable.shopping));
-            holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowPositive);
-        } else if (walletTransaction.getAction() == 0){
-            holder.mImageViewOperation.setBackground(mContext.getDrawable(R.drawable.shopping));
-            holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
-        }
+        holder.mImageViewOperation.setBackgroundResource(R.drawable.shopping);
+        holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
 
 
         try {
@@ -91,8 +85,8 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         mTransactions = itens;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        ImageView mImageViewOperation;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView mImageViewOperation;
         TextView mTextViewDate;
         TextView mTextViewName;
         TextView mTextViewValue;
