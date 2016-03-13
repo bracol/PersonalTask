@@ -22,9 +22,10 @@ public class WalletTransactionContract {
     public static final String NAME = "name";
     public static final String DATE = "date";
     public static final String PRICE = "price";
-    public static final String ACTION = "action";
+    //public static final String ACTION = "action";
+    public static final String ICON_CATEGORY = "item_category";
     public static final String LOGIN_ID = "login_ID";
-    public static final String[] COLUMNS = {ID, NAME, DATE, PRICE, ACTION, LOGIN_ID};
+    public static final String[] COLUMNS = {ID, NAME, DATE, PRICE, ICON_CATEGORY, LOGIN_ID};
 
     private WalletTransactionContract() {
     }
@@ -37,7 +38,7 @@ public class WalletTransactionContract {
         sb.append(NAME + " TEXT, ");
         sb.append(DATE + " TEXT, ");
         sb.append(PRICE + " NUMERIC, ");
-        sb.append(ACTION + " TEXT, ");
+        sb.append(ICON_CATEGORY + " TEXT, ");
         sb.append(LOGIN_ID + " INTEGER ");
         sb.append(" ) ");
 
@@ -50,7 +51,7 @@ public class WalletTransactionContract {
         cv.put(WalletTransactionContract.NAME, walletTransaction.getName());
         cv.put(WalletTransactionContract.DATE, walletTransaction.getDate().toString());
         cv.put(WalletTransactionContract.PRICE, walletTransaction.getPrice());
-        cv.put(WalletTransactionContract.ACTION, walletTransaction.getAction());
+        cv.put(WalletTransactionContract.ICON_CATEGORY, walletTransaction.getItemCategory());
         cv.put(WalletTransactionContract.LOGIN_ID, walletTransaction.getLogin_id());
         return cv;
     }
@@ -63,7 +64,7 @@ public class WalletTransactionContract {
             walletTransaction.setName(cursor.getString(cursor.getColumnIndex(WalletTransactionContract.NAME)));
             walletTransaction.setDate((cursor.getString(cursor.getColumnIndex(WalletTransactionContract.DATE))));
             walletTransaction.setPrice(cursor.getFloat(cursor.getColumnIndex(WalletTransactionContract.PRICE)));
-            walletTransaction.setAction(cursor.getInt(cursor.getColumnIndex(WalletTransactionContract.ACTION)));
+            walletTransaction.setItemCategory(cursor.getInt(cursor.getColumnIndex(WalletTransactionContract.ICON_CATEGORY)));
             walletTransaction.setLogin_id(cursor.getLong(cursor.getColumnIndex(WalletTransactionContract.LOGIN_ID)));
 
             return walletTransaction;

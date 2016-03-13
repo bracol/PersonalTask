@@ -18,7 +18,7 @@
 //import android.widget.TextView;
 //
 //import com.example.waniltonfilho.personaltasks.R;
-//import com.example.waniltonfilho.personaltasks.controller.activities.ActivityMain;
+//import com.example.waniltonfilho.personaltasks.controller.activities.MainActivity;
 //import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 //import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 //import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
@@ -46,7 +46,7 @@
 //        mWallet = WalletRepository.getWallet();
 ////        View v = inflater.inflate(R.layout.fragment_wallet, container, false);
 ////        mTextViewNameInfo = (TextView) v.findViewById(R.id.textViewNameInfo);
-////        mTextViewNameInfo.setText(ActivityMain.selectedLogin.getName());
+////        mTextViewNameInfo.setText(MainActivity.selectedLogin.getName());
 ////        mTextViewMoneyInfo = (TextView) v.findViewById(R.id.textViewMoneyInfo);
 ////        mTextViewMoneyInfo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf"));
 ////        MyValueFormatter formatter = new MyValueFormatter();

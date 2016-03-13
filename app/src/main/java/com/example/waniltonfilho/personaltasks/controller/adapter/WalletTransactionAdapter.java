@@ -12,7 +12,6 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
-import com.example.waniltonfilho.personaltasks.util.CircleImageView;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 
 import java.text.DateFormat;
@@ -53,7 +52,7 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         String outputDateStr = "";
         Date inputDate;
         String s = "";
-        holder.mImageViewOperation.setBackgroundResource(R.drawable.shopping);
+        holder.mImageViewTransactionCategory.setBackgroundResource(walletTransaction.getItemCategory());
         holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
 
 
@@ -86,14 +85,14 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mImageViewOperation;
-        TextView mTextViewDate;
+        ImageView mImageViewTransactionCategory;
         TextView mTextViewName;
+        TextView mTextViewDate;
         TextView mTextViewValue;
 
         public MyViewHolder(View v) {
             super(v);
-            mImageViewOperation = (CircleImageView) v.findViewById(R.id.imageViewOperation);
+            mImageViewTransactionCategory = (ImageView) v.findViewById(R.id.imageViewOperation);
             mTextViewDate = (TextView) v.findViewById(R.id.textViewDate);
             mTextViewName = (TextView) v.findViewById(R.id.textViewName);
             mTextViewValue = (TextView) v.findViewById(R.id.textViewValue);

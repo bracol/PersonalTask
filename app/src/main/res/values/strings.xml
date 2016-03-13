@@ -24,6 +24,7 @@
     <string name="action_search">Search</string>
     <string name="hint_inicial_value">Inicial Value</string>
     <string name="info_money">Money</string>
+    <string name="prompt_spinner">Category</string>
     <string-array name="cat_names">
         <item>George</item>
         <item>Zubin</item>

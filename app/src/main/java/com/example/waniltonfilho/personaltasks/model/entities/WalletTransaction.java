@@ -19,8 +19,10 @@ public class WalletTransaction implements Parcelable {
     private String name;
     private String date;
     private Float price;
-    private int action;
+    //private int action;
+    private int itemCategory;
     private Long login_id;
+
 
     public Long getId() {
         return id;
@@ -54,12 +56,12 @@ public class WalletTransaction implements Parcelable {
         this.price = price;
     }
 
-    public int getAction() {
-        return action;
+    public int getItemCategory() {
+        return itemCategory;
     }
 
-    public void setAction(int action) {
-        this.action = action;
+    public void setItemCategory(int itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
     public Long getLogin_id() {
@@ -82,7 +84,7 @@ public class WalletTransaction implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.date);
         dest.writeValue(this.price);
-        dest.writeInt(this.action);
+        dest.writeInt(this.itemCategory);
         dest.writeValue(this.login_id);
     }
 
@@ -94,7 +96,7 @@ public class WalletTransaction implements Parcelable {
         this.name = in.readString();
         this.date = in.readString();
         this.price = (Float) in.readValue(Float.class.getClassLoader());
-        this.action = in.readInt();
+        this.itemCategory = in.readInt();
         this.login_id = (Long) in.readValue(Long.class.getClassLoader());
     }
 

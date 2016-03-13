@@ -36,12 +36,7 @@ public class WalletTransactionService {
         WalletTransactionRepository.save(walletTransaction);
         Wallet wallet = WalletRepository.getWallet();
         Float actualValue = wallet.getValue();
-
-        if(operation == 0){
-            newValue = actualValue - walletTransaction.getPrice();
-        } else{
-            newValue = actualValue + walletTransaction.getPrice();
-        }
+        newValue = actualValue + walletTransaction.getPrice();
         WalletService.update(newValue);
     }
 
@@ -54,9 +49,10 @@ public class WalletTransactionService {
         List<WalletTransaction> lastList = new ArrayList<>();
         int listaSize = allList.size();
 
-        if(listaSize >= cont && listaSize > 0){
-            for(int i = listaSize; i > (listaSize - cont); i--){
-                lastList.add(allList.get(i - 1));
+        if(listaSize > 0){
+            for(int i = 1; i <= cont; i++){
+                if (i <= listaSize)
+                    lastList.add(allList.get(listaSize - i));
             }
         }
 

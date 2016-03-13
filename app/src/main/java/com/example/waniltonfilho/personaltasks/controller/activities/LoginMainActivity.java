@@ -14,8 +14,10 @@ import android.widget.EditText;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
+import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessService;
+import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
@@ -75,7 +77,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
         for (Login l : loginList) {
             if (l.getLogin().equals(login.getLogin()) && l.getPassword().equals(login.getPassword())) {
-                Intent intent = new Intent(LoginMainActivity.this, ActivityMain.class);
+                Intent intent = new Intent(LoginMainActivity.this, MainActivity.class);
                 intent.putExtra(PARAM_LOGIN, l);
                 startActivity(intent);
             }
@@ -111,7 +113,13 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
 
     private void startOffline() {
-        Intent goToActivityCategory = new Intent(LoginMainActivity.this, ActivityMain.class);
-        startActivity(goToActivityCategory);
+        if (WalletRepository.getWallet() != null) {
+            Intent goToActivityCategory = new Intent(LoginMainActivity.this, MainActivity.class);
+            startActivity(goToActivityCategory);
+        } else {
+            Wallet wallet = new Wallet();
+            wallet.setValue(0f);
+            WalletService.save(wallet);
+        }
     }
 }

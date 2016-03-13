@@ -20,6 +20,7 @@
     <string name="action_button_transaction_confirm">Transação adicionada com sucesso!</string>
     <string name="error_valid_value">Digite um valor válido.</string>
     <string name="hint_inicial_value">Valor inicial</string>
+    <string name="prompt_spinner">Categoria</string>
     <string name="info_money">Dinheiro</string>
     <string-array name="tabs">
         <item>Carteira</item>
