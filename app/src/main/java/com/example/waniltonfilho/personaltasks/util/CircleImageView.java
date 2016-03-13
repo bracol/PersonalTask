@@ -1,5 +1,6 @@
 package com.example.waniltonfilho.personaltasks.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -16,7 +17,7 @@ import android.widget.ImageView;
 /**
  * Created by Wanilton on 12/03/2016.
  */
-class CircleImageView extends ImageView {
+public class CircleImageView extends ImageView {
     private static final int KEY_SHADOW_COLOR = 0x1E000000;
     private static final int FILL_SHADOW_COLOR = 0x3D000000;
     // PX
@@ -26,7 +27,7 @@ class CircleImageView extends ImageView {
     private static final int SHADOW_ELEVATION = 4;
     private Animation.AnimationListener mListener;
     private int mShadowRadius;
-    public CircleImageView(Context context, int color, final float radius) {
+    public CircleImageView(Activity context, int color, final float radius) {
         super(context);
         final float density = getContext().getResources().getDisplayMetrics().density;
         final int diameter = (int) (radius * density * 2);

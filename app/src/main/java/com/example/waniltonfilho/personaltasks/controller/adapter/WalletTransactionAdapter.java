@@ -12,8 +12,8 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
+import com.example.waniltonfilho.personaltasks.util.CircleImageView;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
-import com.example.waniltonfilho.personaltasks.util.Cir;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -93,7 +93,7 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
 
         public MyViewHolder(View v) {
             super(v);
-            mImageViewOperation = (ImageView) v.findViewById(R.id.imageViewOperation);
+            mImageViewOperation = (CircleImageView) v.findViewById(R.id.imageViewOperation);
             mTextViewDate = (TextView) v.findViewById(R.id.textViewDate);
             mTextViewName = (TextView) v.findViewById(R.id.textViewName);
             mTextViewValue = (TextView) v.findViewById(R.id.textViewValue);
