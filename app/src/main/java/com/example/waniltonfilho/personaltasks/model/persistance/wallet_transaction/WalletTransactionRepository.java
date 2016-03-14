@@ -62,22 +62,22 @@ public class WalletTransactionRepository {
         return values;
     }
 
-    public static WalletTransaction selectByMonth(int month) {
+    public static List<WalletTransaction> selectByMonth(int month) {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
 
-        String where = "strftime('%m', " + WalletTransactionContract.DATE + ")"  + " = '05' ";
-        String[] params = {("'" + String.valueOf(month) + "'")};
+        String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
+        String[] params = {String.valueOf(month)};
 
         /* ResultSet do Android */
-        Cursor cursor = db.query(WalletTransactionContract.TABLE, WalletTransactionContract.COLUMNS, where, null, null, null, null);
+        Cursor cursor = db.query(WalletTransactionContract.TABLE, WalletTransactionContract.COLUMNS, where, params, null, null, null);
         //Cursor cursor2 = db.rawQuery("select strftime('%m' date) from " + WalletTransactionContract.TABLE, null);
-        WalletTransaction walletTransaction = WalletTransactionContract.getTransaction(cursor);
+        List<WalletTransaction> transactions = WalletTransactionContract.getTransactions(cursor);
 
         db.close();
         dataBaseHelper.close();
 
-        return walletTransaction;
+        return transactions;
     }
 
     public static WalletTransaction selectByMonths(int month) {

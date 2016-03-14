@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapterr;
+import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapter;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
@@ -71,7 +71,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void bindSpinner(Spinner spinner) {
-        spinner.setAdapter(new CategoryAdapterr(getActivity()));
+        spinner.setAdapter(new CategoryAdapter(getActivity()));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

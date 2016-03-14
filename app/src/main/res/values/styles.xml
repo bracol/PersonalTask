@@ -23,8 +23,8 @@
 
     <style name="ButtonWithoutBackground" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
-         <item name="android:layout_height">36dp</item>
-         <item name="android:layout_gravity">right</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_gravity">right</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
@@ -45,6 +45,14 @@
         <item name="android:shadowRadius">1</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

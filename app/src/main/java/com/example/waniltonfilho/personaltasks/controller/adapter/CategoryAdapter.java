@@ -1,10 +1,9 @@
 package com.example.waniltonfilho.personaltasks.controller.adapter;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by Wanilton on 13/03/2016.
  */
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
+public class CategoryAdapter extends BaseAdapter {
 
     private List<Integer> mIconsCategory;
     private List<String> mNameCategory;
@@ -32,59 +31,56 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         mIconsCategory = new ArrayList<>();
         mNameCategory = new ArrayList<>();
         mIconsCategory.add(R.drawable.shopping);
-        mNameCategory.add("shopping");
+        mNameCategory.add("Shopping");
         mIconsCategory.add(R.drawable.sport);
-        mNameCategory.add("sport");
+        mNameCategory.add("Sport");
         mIconsCategory.add(R.drawable.coffee);
-        mNameCategory.add("coffe");
+        mNameCategory.add("Coffe");
         mIconsCategory.add(R.drawable.food);
-        mNameCategory.add("food");
+        mNameCategory.add("Food");
         mIconsCategory.add(R.drawable.bus);
-        mNameCategory.add("bus");
+        mNameCategory.add("Bus");
         mIconsCategory.add(R.drawable.business);
-        mNameCategory.add("business");
+        mNameCategory.add("Business");
         mIconsCategory.add(R.drawable.car);
-        mNameCategory.add("car");
+        mNameCategory.add("Car");
         mIconsCategory.add(R.drawable.cd);
-        mNameCategory.add("cd");
+        mNameCategory.add("Computer");
         mIconsCategory.add(R.drawable.cell);
-        mNameCategory.add("cell");
+        mNameCategory.add("Cell phone");
         mIconsCategory.add(R.drawable.game);
-        mNameCategory.add("game");
+        mNameCategory.add("Game");
         mIconsCategory.add(R.drawable.medic);
-        mNameCategory.add("medic");
+        mNameCategory.add("Hospital");
         mIconsCategory.add(R.drawable.mala);
-        mNameCategory.add("mala");
+        mNameCategory.add("Suitcase");
         mIconsCategory.add(R.drawable.travel);
-        mNameCategory.add("travel");
+        mNameCategory.add("Travel");
     }
 
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_category, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
-    }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.mIvCategoryIcon.setBackgroundResource(mIconsCategory.get(position));
-        holder.mTvCategoryName.setText(mNameCategory.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return mIconsCategory.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView mIvCategoryIcon;
-        TextView mTvCategoryName;
+    @Override
+    public Integer getItem(int position) {
+        return mIconsCategory.get(position);
+    }
 
-        public MyViewHolder(View v) {
-            super(v);
-            mIvCategoryIcon = (ImageView) v.findViewById(R.id.ivCategoryIcon);
-            mTvCategoryName = (TextView) v.findViewById(R.id.tvCategoryName);
-        }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = mContext.getLayoutInflater().inflate(R.layout.list_item_category, parent, false);
+        ImageView mIvCategoryIcon = (ImageView) v.findViewById(R.id.ivCategoryIcon);
+        TextView mTvCategoryName = (TextView) v.findViewById(R.id.tvCategoryName);
+        mIvCategoryIcon.setBackgroundResource(mIconsCategory.get(position));
+        mTvCategoryName.setText(mNameCategory.get(position));
+        return v;
     }
 }

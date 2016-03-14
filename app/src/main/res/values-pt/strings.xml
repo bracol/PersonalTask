@@ -22,6 +22,7 @@
     <string name="hint_inicial_value">Valor inicial</string>
     <string name="prompt_spinner">Categoria</string>
     <string name="info_money">Dinheiro</string>
+    <string name="menu_transaction_consult">Consultar transações</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

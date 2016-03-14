@@ -1,91 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:openDrawer="start">
 
     <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
-
-    <View
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_below="@+id/app_bar"
-        android:layout_height="5dp"
-        android:background="@drawable/toolbar_drop_shadow"/>
+        android:layout_height="match_parent" />
 
-
-
-    <RelativeLayout
-        android:id="@+id/relativeLayoutPrincipal"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@+id/app_bar"
-        android:padding="@dimen/padding_layout_button"
-        android:background="@color/colorPrimary"
-        >
-
-        <TextView
-            android:id="@+id/textViewMoneyInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#DEFFFFFF"
-            android:padding="@dimen/padding_edittext_bottom"
-            android:gravity="center"
-            android:text="@string/info_money"
-            />
-        <View
-            android:layout_below="@id/textViewMoneyInfo"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divisor"/>
-
-        <TextView
-            android:id="@+id/textViewMoney"
-            android:layout_below="@+id/textViewMoneyInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="@dimen/padding_edittext_bottom"
-            android:paddingBottom="@dimen/padding_edittext_bottom"
-            android:text="R$ 99.999,99"
-            android:textColor="#DEFFFFFF"
-            android:textSize="@dimen/textViewMoney_size" />
-
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/relativeLayoutPrincipal"
-        android:id="@+id/recyclerLastTransaction"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fabAddTransaction"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_white_24dp"
-        fab:fab_colorNormal="@color/colorAccent"
-        fab:fab_colorPressed="@color/accent_pressed"
-        fab:fab_colorRipple="@color/ripple" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
-    <View
-        android:id="@+id/toolbar_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@+id/app_bar"
-        android:background="@drawable/toolbar_shadow" />
+</android.support.v4.widget.DrawerLayout>
 
-
-    <FrameLayout
-        android:id="@+id/frameChange"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
-
-</RelativeLayout>
