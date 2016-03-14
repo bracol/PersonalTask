@@ -118,8 +118,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WalletTransactionRepository.selectByMonth(3);
-//                showDialog(v);
+                //WalletTransactionRepository.selectByMonth(3);
+                showDialog(v);
             }
         });
     }

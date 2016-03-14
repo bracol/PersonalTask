@@ -60,7 +60,7 @@ public class ListActivity extends BaseActivity {
                 if (eventX < 200) {
                     mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                 }
-                if (eventX > 850) {
+                if (eventX > 650) {
                     mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
                 }
 
