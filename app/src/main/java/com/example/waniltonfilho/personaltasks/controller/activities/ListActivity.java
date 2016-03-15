@@ -1,5 +1,6 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -56,11 +57,13 @@ public class ListActivity extends BaseActivity {
                 Drawable leftDrawable = compoundDrawables[0];
                 Drawable rightDrawable = compoundDrawables[2];
                 float viewWidth = mMonthTitle.getWidth();
+                Point size = new Point();
+                getWindowManager().getDefaultDisplay().getSize(size);
                 float eventX = event.getX();
                 if (eventX < 200) {
                     mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                 }
-                if (eventX > 650) {
+                if (eventX > size.x-200) {
                     mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
                 }
 
