@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Created by wanilton.filho on 29/01/2016.
  */
-public class WalletTransaction implements Parcelable {
+public class WalletTransaction implements Parcelable, Comparable<WalletTransaction> {
 
     private Long id;
     private String name;
@@ -109,4 +109,19 @@ public class WalletTransaction implements Parcelable {
             return new WalletTransaction[size];
         }
     };
+
+    @Override
+    public int compareTo(WalletTransaction another) {
+        int thisDia = Integer.parseInt(this.getDate().substring(8, 10));
+        int anotherDia = Integer.parseInt(another.getDate().substring(8, 10));
+        if (!(another instanceof WalletTransaction))
+            throw new ClassCastException("Classe não esperada.");
+        if (thisDia < anotherDia) {
+            return -1;
+        }
+        if (thisDia > anotherDia) {
+            return 1;
+        }
+        return 0;
+    }
 }

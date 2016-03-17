@@ -62,7 +62,7 @@ public class WalletTransactionRepository {
         return values;
     }
 
-    public static List<WalletTransaction> selectByMonth(String month) {
+    public static List<WalletTransaction> getByMonth(String month) {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
 
@@ -78,21 +78,4 @@ public class WalletTransactionRepository {
         return transactions;
     }
 
-    public static WalletTransaction selectByMonths(int month) {
-        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
-        SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
-
-        String where = "strftime('%m', " + WalletTransactionContract.DATE + ")"  + " = 11 ";
-        String[] params = {("'" + String.valueOf(month) + "'")};
-
-        /* ResultSet do Android */
-        Cursor cursor = db.query(WalletTransactionContract.TABLE, WalletTransactionContract.COLUMNS, where, null, null, null, null);
-
-        WalletTransaction walletTransaction = WalletTransactionContract.getTransaction(cursor);
-
-        db.close();
-        dataBaseHelper.close();
-        // "strftime('%m', date) AS month"
-        return walletTransaction;
-    }
 }

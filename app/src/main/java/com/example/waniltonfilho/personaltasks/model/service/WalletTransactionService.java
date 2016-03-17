@@ -55,8 +55,15 @@ public class WalletTransactionService {
                     lastList.add(allList.get(listaSize - i));
             }
         }
-
         return lastList;
+    }
+
+    public static List<WalletTransaction> getMonthTransaction(String month){
+//        int intMonth = Integer.parseInt(month);
+//        if (intMonth < 10){
+//            return WalletTransactionRepository.getByMonth("0" + month);
+//        }
+        return WalletTransactionRepository.getByMonth(month);
     }
 
 

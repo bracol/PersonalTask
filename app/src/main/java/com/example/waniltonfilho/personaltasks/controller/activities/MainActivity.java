@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void bindComponents() {
-        WalletTransactionRepository.selectByMonth("03");
         checkWallet();
         bindToolbar();
         bindFloatingButton();

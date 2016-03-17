@@ -23,6 +23,7 @@
     <string name="prompt_spinner">Categoria</string>
     <string name="info_money">Dinheiro</string>
     <string name="menu_transaction_consult">Consultar transações</string>
+    <string name="info_empty_transactions">Não há transações nessa data</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>
