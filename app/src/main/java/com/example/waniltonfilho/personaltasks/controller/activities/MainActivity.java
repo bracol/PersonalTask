@@ -289,10 +289,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //            float viewX = mMonthTitle.getWidth();
 //            float eventX = event.getX();
 //            if (eventX < leftDrawable.getMinimumWidth()) {
-//                mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
+//                mMonthTitle.setText(mManipulateList.swipe_left(mMonthTitle.getText().toString()));
 //            }
 //            if (eventX > (viewX - rightDrawable.getMinimumWidth())) {
-//                mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
+//                mMonthTitle.setText(mManipulateList.swipe_right(mMonthTitle.getText().toString()));
 //            }
 //
 //            return false;

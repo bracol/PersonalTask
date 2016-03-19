@@ -4,55 +4,60 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include android:id="@+id/app_bar"
-        layout="@layout/app_bar"/>
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
 
     <TextView
         android:id="@+id/tvListMonth"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@id/app_bar"
-        android:textSize="14pt"
-        android:textColor="#FFFFFF"
         android:background="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_left_arrow"
         android:drawableRight="@drawable/ic_arrow_right"
+        android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:gravity="center"
-        />
+        android:textColor="#FFFFFF"
+        android:textSize="14pt" />
 
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewMonth"
-        android:layout_below="@id/tvListMonth"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/tvNothingToShow"
-        android:layout_below="@id/tvListMonth"
+    <RelativeLayout
+        android:id="@+id/listContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/info_empty_transactions"
-        android:textSize="16pt"
-        android:visibility="invisible"
-        />
+        android:layout_below="@id/tvListMonth">
 
-    <View
-        android:id="@+id/toolbar_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@+id/app_bar"
-        android:background="@drawable/toolbar_shadow" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewMonth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
+
+        <TextView
+            android:id="@+id/tvNothingToShow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/info_empty_transactions"
+            android:textSize="16pt"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
 
     <View
         android:id="@+id/tv_shadow"
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_below="@+id/tvListMonth"
+        android:background="@drawable/toolbar_shadow" />
+
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/app_bar"
         android:background="@drawable/toolbar_shadow" />
 
 

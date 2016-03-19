@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include android:id="@+id/app_bar"
+        layout="@layout/app_bar"/>
+
+    <TextView
+        android:id="@+id/tvTeste"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/app_bar"
+        android:textSize="14pt"
+        android:textColor="#FFFFFF"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:gravity="center"
+        android:text="maroto"
+        />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerTeste"
+        android:layout_below="@id/tvTeste"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tvNothingTeste"
+        android:layout_below="@id/recyclerTeste"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/info_empty_transactions"
+        android:textSize="16pt"
+        android:visibility="invisible"
+        />
+
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/app_bar"
+        android:background="@drawable/toolbar_shadow" />
+
+    <View
+        android:id="@+id/tv_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/tvTeste"
+        android:background="@drawable/toolbar_shadow" />
+
+
+
+</RelativeLayout>

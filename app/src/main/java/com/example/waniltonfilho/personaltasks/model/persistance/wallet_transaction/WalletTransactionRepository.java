@@ -78,4 +78,34 @@ public class WalletTransactionRepository {
         return transactions;
     }
 
+    public static WalletTransaction getFirstTransaction() {
+        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
+        SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+
+        String[] colum = {"min(date)"};
+
+        Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, null, null, null, null, null);
+        WalletTransaction transaction = WalletTransactionContract.getTransactionDate(cursor);
+
+        db.close();
+        dataBaseHelper.close();
+
+        return transaction;
+    }
+
+    public static WalletTransaction getLastTransaction() {
+        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
+        SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+
+        String[] colum = {"min(date)"};
+
+        Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, null, null, null, null, null);
+        WalletTransaction transaction = WalletTransactionContract.getTransactionDate(cursor);
+
+        db.close();
+        dataBaseHelper.close();
+
+        return transaction;
+    }
+
 }

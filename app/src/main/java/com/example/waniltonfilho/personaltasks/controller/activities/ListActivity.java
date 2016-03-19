@@ -3,17 +3,16 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
@@ -23,7 +22,6 @@ import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +38,13 @@ public class ListActivity extends BaseActivity {
     private MonthList mManipulateList;
     private RecyclerView mRecyclerView;
     private List<WalletTransaction> mTransactionsMonth;
+    private RelativeLayout relativeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_month);
+        relativeContainer = (RelativeLayout) findViewById(R.id.listContainer);
         bindComponents();
     }
 
@@ -66,7 +66,7 @@ public class ListActivity extends BaseActivity {
         String actualDate = simpleDateFormat.format(date);
         String mes = actualDate.substring(5, 7);
         int ano = Integer.parseInt(actualDate.substring(0, 4));
-        mManipulateList = new MonthList(mes, ano);
+        mManipulateList = new MonthList();
         mMonthTitle.setText(mes + "/" + ano);
 
         mMonthTitle.setOnTouchListener(new View.OnTouchListener() {
@@ -76,9 +76,13 @@ public class ListActivity extends BaseActivity {
                 getWindowManager().getDefaultDisplay().getSize(size);
                 float eventX = event.getX();
                 if (eventX < 200) {
+                    Animation animation = AnimationUtils.loadAnimation(ListActivity.this, R.anim.swipe_left);
+                    relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                 }
                 if (eventX > size.x - 200) {
+                    Animation animation = AnimationUtils.loadAnimation(ListActivity.this, R.anim.swipe_right);
+                    relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
                 }
                 updateList();
@@ -88,16 +92,12 @@ public class ListActivity extends BaseActivity {
     }
 
     private void bindRecyclerViewList() {
-        mTransactionsMonth = new ArrayList<>();
+        String tv = mMonthTitle.getText().toString();
+        String month = tv.substring(0, 2);
+        mTransactionsMonth = WalletTransactionService.getMonthTransaction(month);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewMonth);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(new WalletTransactionAdapter(mTransactionsMonth, this));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateList();
     }
 
     private void updateList() {
@@ -105,16 +105,12 @@ public class ListActivity extends BaseActivity {
         String month = tv.substring(0, 2);
         mTransactionsMonth = WalletTransactionService.getMonthTransaction(month);
         if (mTransactionsMonth.size() > 0) {
-            if (mInfoTransaction.getVisibility() == View.VISIBLE) {
-                viewOut(mInfoTransaction);
-                viewIn(mRecyclerView);
-            }
+            mInfoTransaction.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             Collections.sort(mTransactionsMonth, Collections.reverseOrder());
         } else {
-            if (mInfoTransaction.getVisibility() == View.INVISIBLE) {
-                viewOut(mRecyclerView);
-                viewIn(mInfoTransaction);
-            }
+            mRecyclerView.setVisibility(View.INVISIBLE);
+            mInfoTransaction.setVisibility(View.VISIBLE);
         }
 
         WalletTransactionAdapter adapter = (WalletTransactionAdapter) mRecyclerView.getAdapter();

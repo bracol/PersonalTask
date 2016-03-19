@@ -59,11 +59,15 @@ public class WalletTransactionService {
     }
 
     public static List<WalletTransaction> getMonthTransaction(String month){
-//        int intMonth = Integer.parseInt(month);
-//        if (intMonth < 10){
-//            return WalletTransactionRepository.getByMonth("0" + month);
-//        }
         return WalletTransactionRepository.getByMonth(month);
+    }
+
+    public static WalletTransaction getFirstLastTransaction(int type){
+        if(type == 0){
+            return WalletTransactionRepository.getFirstTransaction();
+        } else {
+            return WalletTransactionRepository.getLastTransaction();
+        }
     }
 
 

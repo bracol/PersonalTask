@@ -72,6 +72,16 @@ public class WalletTransactionContract {
         return null;
     }
 
+    public static WalletTransaction getTransactionDate(Cursor cursor) {
+        if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
+            WalletTransaction walletTransaction = new WalletTransaction();
+            /* get column index pega o indice de acordo com o nome da coluna passado */
+            walletTransaction.setDate((cursor.getString(0)));
+            return walletTransaction;
+        }
+        return null;
+    }
+
 
     public static List<WalletTransaction> getTransactions(Cursor cursor) {
         ArrayList<WalletTransaction> walletTransactions = new ArrayList<>();
