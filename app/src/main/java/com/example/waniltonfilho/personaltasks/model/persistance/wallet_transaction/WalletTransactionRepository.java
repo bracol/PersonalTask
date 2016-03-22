@@ -68,8 +68,9 @@ public class WalletTransactionRepository {
 
         String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
         String[] params = {month};
+        String orderBy = WalletTransactionContract.ID + " DESC";
 
-        Cursor cursor = db.query(WalletTransactionContract.TABLE, WalletTransactionContract.COLUMNS, where, params, null, null, null);
+        Cursor cursor = db.query(WalletTransactionContract.TABLE, WalletTransactionContract.COLUMNS, where, params, null, null, orderBy);
         List<WalletTransaction> transactions = WalletTransactionContract.getTransactions(cursor);
 
         db.close();
@@ -97,7 +98,7 @@ public class WalletTransactionRepository {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
 
-        String[] colum = {"min(date)"};
+        String[] colum = {"max(date)"};
 
         Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, null, null, null, null, null);
         WalletTransaction transaction = WalletTransactionContract.getTransactionDate(cursor);

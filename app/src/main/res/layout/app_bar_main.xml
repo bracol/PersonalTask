@@ -48,7 +48,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/padding_edittext_bottom"
             android:paddingTop="@dimen/padding_edittext_bottom"
-            android:text="R$ 99.999,99"
+            android:text="0"
             android:textColor="#DEFFFFFF"
             android:textSize="@dimen/textViewMoney_size" />
 

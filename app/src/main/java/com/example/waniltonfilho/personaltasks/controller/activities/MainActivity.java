@@ -3,6 +3,7 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
@@ -52,6 +53,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private List<WalletTransaction> mListTransactions;
     private TextView mTextViewMoney;
     private boolean clicked;
+    private boolean dialogVisible = false;
+    private ChangeWalletFragment changeFragment;
 
 
     @Override
@@ -119,7 +122,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 //WalletTransactionRepository.selectByMonth(3);
-                showDialog(v);
+                showAddDialog(v);
             }
         });
     }
@@ -184,69 +187,85 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setupToolbar(mToolbar);
     }
 
-
-    private void showDialog(View v) {
-        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frameChange);
-        int[] clickCooords = new int[2];
-        v.getLocationInWindow(clickCooords);
-        clickCooords[0] += v.getWidth() / 2;
-        clickCooords[1] += v.getHeight() / 2;
-        FragmentManager fm = getFragmentManager();
-        ChangeWalletFragment fragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView);
-        fm.beginTransaction().add(R.id.frameChange, fragment).commit();
-        if (clicked == false) {
-            performRevealAnimationIn(frameLayout, clickCooords[0], clickCooords[1]);
-            clicked = true;
+    private void showAddDialog(View v) {
+        if (!dialogVisible) {
+            changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView);
+            FragmentTransaction fm = getFragmentManager().beginTransaction();
+            fm.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right);
+            fm.replace(R.id.frameChange, changeFragment);
+            fm.commit();
+            dialogVisible = true;
         } else {
-            performRevealAnimationOut(frameLayout, clickCooords[0], clickCooords[1]);
-            clicked = false;
-
+            getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+                    .remove(changeFragment)
+                    .commit();
+            dialogVisible = false;
         }
+
     }
 
-    private void performRevealAnimationIn(final View v, int x, int y) {
-        int[] animationCoords = new int[2];
-        v.getLocationInWindow(animationCoords);
-        animationCoords[0] = x - animationCoords[0];
-        animationCoords[1] = y - animationCoords[1];
 
-        Point size = new Point();
-
-        this.getWindowManager().getDefaultDisplay().getSize(size);
-        int maximunRadius = size.y;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(v, x, y, 0, maximunRadius);
-            animator.start();
-            v.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void performRevealAnimationOut(final View v, int x, int y) {
-        int[] animationCoords = new int[2];
-        v.getLocationInWindow(animationCoords);
-        animationCoords[0] = x - animationCoords[0];
-        animationCoords[1] = y - animationCoords[1];
-
-        Point size = new Point();
-
-        getWindowManager().getDefaultDisplay().getSize(size);
-        int maximunRadius = size.y;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(v, x, y, maximunRadius, 0);
-            animator.start();
-            animator.addListener(new AnimatorListenerAdapter() {
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    v.setVisibility(View.GONE);
-                }
-            });
-
-
-        }
-    }
+//    private void showDialog(View v) {
+//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frameChange);
+//        int[] clickCooords = new int[2];
+//        v.getLocationInWindow(clickCooords);
+//        clickCooords[0] += v.getWidth() / 2;
+//        clickCooords[1] += v.getHeight() / 2;
+//        FragmentManager fm = getFragmentManager();
+//        ChangeWalletFragment fragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView);
+//        fm.beginTransaction().add(R.id.frameChange, fragment).commit();
+//        if (clicked == false) {
+//            performRevealAnimationIn(frameLayout, clickCooords[0], clickCooords[1]);
+//            clicked = true;
+//        } else {
+//            performRevealAnimationOut(frameLayout, clickCooords[0], clickCooords[1]);
+//            clicked = false;
+//
+//        }
+//    }
+//
+//    private void performRevealAnimationIn(final View v, int x, int y) {
+//        int[] animationCoords = new int[2];
+//        v.getLocationInWindow(animationCoords);
+//        animationCoords[0] = x - animationCoords[0];
+//        animationCoords[1] = y - animationCoords[1];
+//
+//        Point size = new Point();
+//
+//        this.getWindowManager().getDefaultDisplay().getSize(size);
+//        int maximunRadius = size.y;
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Animator animator = ViewAnimationUtils.createCircularReveal(v, x, y, 0, maximunRadius);
+//            animator.start();
+//            v.setVisibility(View.VISIBLE);
+//        }
+//    }
+//
+//    private void performRevealAnimationOut(final View v, int x, int y) {
+//        int[] animationCoords = new int[2];
+//        v.getLocationInWindow(animationCoords);
+//        animationCoords[0] = x - animationCoords[0];
+//        animationCoords[1] = y - animationCoords[1];
+//
+//        Point size = new Point();
+//
+//        getWindowManager().getDefaultDisplay().getSize(size);
+//        int maximunRadius = size.y;
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Animator animator = ViewAnimationUtils.createCircularReveal(v, x, y, maximunRadius, 0);
+//            animator.start();
+//            animator.addListener(new AnimatorListenerAdapter() {
+//
+//                @Override
+//                public void onAnimationEnd(Animator animator) {
+//                    v.setVisibility(View.GONE);
+//                }
+//            });
+//        }
+//    }
 
     @Override
     protected void onResumeFragments() {

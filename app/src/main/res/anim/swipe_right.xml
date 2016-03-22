@@ -6,5 +6,7 @@
         android:fromXDelta="-100%"
         android:fromYDelta="0%"
         android:toXDelta="0%"
-        android:toYDelta="0%" />
+        android:toYDelta="0%"
+        android:startOffset="500"
+        />
 </set>

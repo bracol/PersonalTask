@@ -98,8 +98,10 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void endFrameAnimation() {
-        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
-        mFrameAnimation.startAnimation(fadeInAnimation);
+        Animation fadeOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+        mFrameAnimation.startAnimation(fadeOutAnimation);
+        //mFrameAnimation.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -129,7 +131,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             endFrameAnimation();
             updateTransactions();
             getActivity().getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right, R.animator.slide_in_right, R.animator.slide_in_right)
                     .remove(this)
                     .commit();
             changeWalletTextValue();

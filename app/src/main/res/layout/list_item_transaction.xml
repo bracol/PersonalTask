@@ -2,31 +2,30 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="73dp"
+    android:layout_height="56dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="55dp"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        >
 
         <ImageView
             android:id="@+id/imageViewOperation"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
              />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="72dp"
+            android:layout_height="match_parent"
             android:layout_toRightOf="@+id/imageViewOperation"
-            android:paddingLeft="24dp"
+            android:paddingLeft="26dp"
             android:orientation="vertical"
             android:gravity="center_vertical"
             >
@@ -40,7 +39,7 @@
                 android:layout_alignParentTop="true"
                 android:text="Dentista"
                 android:textColor="#DE000000"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textViewDate"
@@ -50,7 +49,7 @@
                 android:fontFamily="sans-serif-regular"
                 android:text="30 de fevereiro de 2016"
                 android:textColor="#8A000000"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
