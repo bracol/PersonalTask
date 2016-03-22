@@ -109,4 +109,24 @@ public class WalletTransactionRepository {
         return transaction;
     }
 
+    public static List<WalletTransaction> getSumCategory(String month) {
+//        SELECT dept, sum(salary) FROM employees where strftime('%m', hired_on) = '02' group by dept;;
+        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
+        SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+
+        String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
+        String[] params = {month};
+        String[] colum = {"sum(" + WalletTransactionContract.PRICE + "), " + WalletTransactionContract.ICON_CATEGORY};
+        String groupBy = WalletTransactionContract.ICON_CATEGORY;
+
+
+        Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, null, null, groupBy, null, null);
+        List<WalletTransaction> transactions = WalletTransactionContract.getTransactionSumCategoryAll(cursor);
+
+        db.close();
+        dataBaseHelper.close();
+
+        return transactions;
+    }
+
 }

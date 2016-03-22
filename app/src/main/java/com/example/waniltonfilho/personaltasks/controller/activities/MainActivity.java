@@ -121,7 +121,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //WalletTransactionRepository.selectByMonth(3);
                 showAddDialog(v);
             }
         });
@@ -188,6 +187,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void showAddDialog(View v) {
+        String ae = "";
         if (!dialogVisible) {
             changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView);
             FragmentTransaction fm = getFragmentManager().beginTransaction();

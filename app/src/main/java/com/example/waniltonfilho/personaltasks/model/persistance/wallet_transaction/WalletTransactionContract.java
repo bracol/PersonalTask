@@ -6,6 +6,7 @@ import android.database.Cursor;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,6 +82,30 @@ public class WalletTransactionContract {
         }
         return null;
     }
+
+    public static WalletTransaction getTransactionSumCategory(Cursor cursor) {
+
+        if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
+            WalletTransaction walletTransaction = new WalletTransaction();
+            /* get column index pega o indice de acordo com o nome da coluna passado */
+            walletTransaction.setPrice((cursor.getFloat(0)));
+            walletTransaction.setItemCategory((cursor.getInt(1)));
+            return walletTransaction;
+        }
+        return null;
+    }
+
+    public static List<WalletTransaction> getTransactionSumCategoryAll(Cursor cursor) {
+        ArrayList<WalletTransaction> walletTransactions = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            /* get colum index pega o indice de acordo com o nome da coluna passado */
+            walletTransactions.add(getTransactionSumCategory(cursor));
+
+        }
+        return walletTransactions;
+    }
+
+
 
 
     public static List<WalletTransaction> getTransactions(Cursor cursor) {
