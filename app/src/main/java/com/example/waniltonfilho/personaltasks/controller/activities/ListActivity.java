@@ -44,16 +44,20 @@ public class ListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_month);
-        relativeContainer = (RelativeLayout) findViewById(R.id.listContainer);
         bindComponents();
     }
 
     private void bindComponents() {
         bindToolbar();
+        bindRelativeContainer();
         bindTextViewInfoMonth();
         bindTextViewMonth();
         bindRecyclerViewList();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void bindRelativeContainer() {
+        relativeContainer = (RelativeLayout) findViewById(R.id.listContainer);
     }
 
     private void bindTextViewInfoMonth() {
@@ -121,55 +125,6 @@ public class ListActivity extends BaseActivity {
 
     private void bindToolbar() {
         setupToolbar(mToolbar);
-    }
-
-    private void viewIn(View myView) {
-        // previously invisible view
-
-// get the center for the clipping circle
-        int cx = (myView.getLeft() + myView.getRight()) / 2;
-        int cy = (myView.getTop() + myView.getBottom()) / 2;
-
-// get the final radius for the clipping circle
-        int finalRadius = Math.max(myView.getWidth(), myView.getHeight());
-
-// create the animator for this view (the start radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
-
-        anim.setDuration(1000);
-
-// make the view visible and start the animation
-        myView.setVisibility(View.VISIBLE);
-        anim.start();
-    }
-
-    private void viewOut(final View myView) {
-
-// get the center for the clipping circle
-        int cx = (myView.getLeft() + myView.getRight()) / 2;
-        int cy = (myView.getTop() + myView.getBottom()) / 2;
-
-// get the initial radius for the clipping circle
-        int initialRadius = myView.getWidth();
-
-// create the animation (the final radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
-
-        anim.setDuration(1000);
-
-// make the view invisible when the animation is done
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                myView.setVisibility(View.INVISIBLE);
-            }
-        });
-
-// start the animation
-        anim.start();
     }
 
 

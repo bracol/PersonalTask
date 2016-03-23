@@ -1,12 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
 
-</LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvListMonth"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/app_bar"
+            android:background="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_left_arrow"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="#FFFFFF"
+            android:textSize="14pt" />
+
+    <RelativeLayout
+        android:id="@+id/listContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvListMonth">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/tvNothingToShow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/info_empty_transactions"
+            android:textSize="16pt"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:id="@+id/tv_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/tvListMonth"
+        android:background="@drawable/toolbar_shadow" />
+
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/app_bar"
+        android:background="@drawable/toolbar_shadow" />
+
+</RelativeLayout>

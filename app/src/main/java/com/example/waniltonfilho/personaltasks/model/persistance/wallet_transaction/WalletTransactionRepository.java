@@ -120,7 +120,7 @@ public class WalletTransactionRepository {
         String groupBy = WalletTransactionContract.ICON_CATEGORY;
 
 
-        Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, null, null, groupBy, null, null);
+        Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, where, params, groupBy, null, null);
         List<WalletTransaction> transactions = WalletTransactionContract.getTransactionSumCategoryAll(cursor);
 
         db.close();

@@ -170,7 +170,7 @@ public class FragmentGraph extends Fragment {
     }
 
     private SpannableString generateCenterText() {
-        SpannableString s = new SpannableString("Revenues\nQuarters 2015");
+        SpannableString s = new SpannableString("");
         s.setSpan(new RelativeSizeSpan(2f), 0, 8, 0);
         s.setSpan(new ForegroundColorSpan(Color.GRAY), 8, s.length(), 0);
         return s;

@@ -52,9 +52,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private RecyclerView mRecyclerView;
     private List<WalletTransaction> mListTransactions;
     private TextView mTextViewMoney;
-    private boolean clicked;
     private boolean dialogVisible = false;
     private ChangeWalletFragment changeFragment;
+    private Wallet wallet;
 
 
     @Override
@@ -77,9 +77,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkWallet() {
         if (WalletRepository.getWallet() == null) {
-            Wallet wallet = new Wallet();
+            wallet = new Wallet();
             wallet.setValue(0f);
             WalletService.save(wallet);
+        } else {
+            wallet = WalletRepository.getWallet();
         }
     }
 
@@ -96,6 +98,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void bindTextViewMoney() {
         mTextViewMoney = (TextView) findViewById(R.id.textViewMoney);
+        mTextViewMoney.setText(wallet.getValue().toString());
     }
 
     private void bindRecyclerView() {
@@ -205,68 +208,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-
-//    private void showDialog(View v) {
-//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frameChange);
-//        int[] clickCooords = new int[2];
-//        v.getLocationInWindow(clickCooords);
-//        clickCooords[0] += v.getWidth() / 2;
-//        clickCooords[1] += v.getHeight() / 2;
-//        FragmentManager fm = getFragmentManager();
-//        ChangeWalletFragment fragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView);
-//        fm.beginTransaction().add(R.id.frameChange, fragment).commit();
-//        if (clicked == false) {
-//            performRevealAnimationIn(frameLayout, clickCooords[0], clickCooords[1]);
-//            clicked = true;
-//        } else {
-//            performRevealAnimationOut(frameLayout, clickCooords[0], clickCooords[1]);
-//            clicked = false;
-//
-//        }
-//    }
-//
-//    private void performRevealAnimationIn(final View v, int x, int y) {
-//        int[] animationCoords = new int[2];
-//        v.getLocationInWindow(animationCoords);
-//        animationCoords[0] = x - animationCoords[0];
-//        animationCoords[1] = y - animationCoords[1];
-//
-//        Point size = new Point();
-//
-//        this.getWindowManager().getDefaultDisplay().getSize(size);
-//        int maximunRadius = size.y;
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Animator animator = ViewAnimationUtils.createCircularReveal(v, x, y, 0, maximunRadius);
-//            animator.start();
-//            v.setVisibility(View.VISIBLE);
-//        }
-//    }
-//
-//    private void performRevealAnimationOut(final View v, int x, int y) {
-//        int[] animationCoords = new int[2];
-//        v.getLocationInWindow(animationCoords);
-//        animationCoords[0] = x - animationCoords[0];
-//        animationCoords[1] = y - animationCoords[1];
-//
-//        Point size = new Point();
-//
-//        getWindowManager().getDefaultDisplay().getSize(size);
-//        int maximunRadius = size.y;
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Animator animator = ViewAnimationUtils.createCircularReveal(v, x, y, maximunRadius, 0);
-//            animator.start();
-//            animator.addListener(new AnimatorListenerAdapter() {
-//
-//                @Override
-//                public void onAnimationEnd(Animator animator) {
-//                    v.setVisibility(View.GONE);
-//                }
-//            });
-//        }
-//    }
-
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
@@ -283,6 +224,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_list:
                 Intent goToListActivity = new Intent(MainActivity.this, ListActivity.class);
                 startActivity(goToListActivity);
+                break;
+            case R.id.nav_graph:
+                Intent goToGraphActivity = new Intent(MainActivity.this, Chart.class);
+                startActivity(goToGraphActivity);
                 break;
         }
 
