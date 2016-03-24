@@ -22,6 +22,7 @@ import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,7 @@ public class ListActivity extends BaseActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Point size = new Point();
+                ArrayList<View> touchables = v.getTouchables();
                 getWindowManager().getDefaultDisplay().getSize(size);
                 float eventX = event.getX();
                 if (eventX < 200) {

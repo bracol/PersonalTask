@@ -17,7 +17,7 @@ public class CategoryContract {
     public static final String TABLE = "category";
     public static final String ID = "id";
     public static final String NAME = "name";
-    public static final String CATEGORY_ICON = "password";
+    public static final String CATEGORY_ICON = "category_icon";
     public static final String[] COLUMNS = {ID, NAME, CATEGORY_ICON};
 
     private CategoryContract(){}

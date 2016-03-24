@@ -55,25 +55,24 @@ public class WalletTransactionService {
         for (WalletTransaction walletTransaction : walletTransactions) {
             walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
         }
-        List<WalletTransaction> allList = WalletTransactionService.findAll();
         List<WalletTransaction> lastList = new ArrayList<>();
-        int listaSize = allList.size();
+        int listaSize = walletTransactions.size();
 
         if(listaSize > 0){
             for(int i = 1; i <= cont; i++){
                 if (i <= listaSize)
-                    lastList.add(allList.get(listaSize - i));
+                    lastList.add(walletTransactions.get(listaSize - i));
             }
         }
         return lastList;
     }
 
     public static List<WalletTransaction> getMonthTransaction(String month){
-        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getAll();
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getByMonth(month);
         for (WalletTransaction walletTransaction : walletTransactions) {
             walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
         }
-        return WalletTransactionRepository.getByMonth(month);
+        return walletTransactions;
     }
 
     public static WalletTransaction getFirstLastTransaction(int type){
@@ -83,6 +82,16 @@ public class WalletTransactionService {
             return WalletTransactionRepository.getLastTransaction();
         }
     }
+
+    public static List<WalletTransaction> getSumCategoryService(String month){
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getSumCategory(month);
+        for (WalletTransaction walletTransaction : walletTransactions) {
+            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+        }
+        return walletTransactions;
+    }
+
+
 
 
 }

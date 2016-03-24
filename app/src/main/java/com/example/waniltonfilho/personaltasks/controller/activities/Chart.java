@@ -72,7 +72,7 @@ public class Chart extends BaseActivity {
     private void attGraph() {
         String tv = mMonthTitle.getText().toString();
         String month = tv.substring(0, 2);
-        mListaDadosGrafico = WalletTransactionRepository.getSumCategory(month);
+        mListaDadosGrafico = WalletTransactionService.getSumCategoryService(month);
         if (mListaDadosGrafico.size() > 0) {
             mInfoTransaction.setVisibility(View.INVISIBLE);
             mChart.setVisibility(View.VISIBLE);
@@ -97,47 +97,6 @@ public class Chart extends BaseActivity {
 
                 yAxis.add(new Entry(dado.getPrice(), mListaDadosGrafico.indexOf(dado)));
                 xAxis.add(dado.getCategory().getName());
-//                Integer item = dado.getItemCategory();
-//                switch (item) {
-//                    case 2130837668:
-//                        xAxis.add("Esporte");
-//                        break;
-//                    case 2130837666:
-//                        xAxis.add("Shopping");
-//                        break;
-//                    case 2130837593:
-//                        xAxis.add("Café");
-//                        break;
-//                    case 2130837606:
-//                        xAxis.add("Alimentação");
-//                        break;
-//                    case 2130837583:
-//                        xAxis.add("Transporte");
-//                        break;
-//                    case 2130837587:
-//                        xAxis.add("Carro");
-//                        break;
-//                    case 2130837588:
-//                        xAxis.add("Computador");
-//                        break;
-//                    case 2130837608:
-//                        xAxis.add("Jogos");
-//                        break;
-//                    case 2130837589:
-//                        xAxis.add("Celular");
-//                        break;
-//                    case 2130837660:
-//                        xAxis.add("Hospital");
-//                        break;
-//                    case 2130837659:
-//                        xAxis.add("Compras");
-//                        break;
-//                    case 2130837672:
-//                        xAxis.add("Viagens");
-//                        break;
-//                    default:
-//                        xAxis.add("Negocios");
-//                        break;
             }
         }
         PieDataSet pieDataSet = new PieDataSet(yAxis, "");
@@ -172,7 +131,7 @@ public class Chart extends BaseActivity {
     }
 
     private void bindGraph() {
-        mListaDadosGrafico = WalletTransactionRepository.getSumCategory(mMonthTitle.getText().toString());
+        mListaDadosGrafico = WalletTransactionService.getSumCategoryService(mMonthTitle.getText().toString());
         mChart = (PieChart) findViewById(R.id.chart);
         mChart.setDescription("");
         mCenterText = generateCenterText();
@@ -186,6 +145,8 @@ public class Chart extends BaseActivity {
         //mChart.setExtraOffsets(5, 10, 50, 10);
 
         // do not forget to refresh the chart
+        Legend legend = mChart.getLegend();
+        legend.setEnabled(false);
 
         attGraph();
     }

@@ -47,7 +47,7 @@ public class WalletTransactionContract {
         cv.put(WalletTransactionContract.NAME, walletTransaction.getName());
         cv.put(WalletTransactionContract.DATE, walletTransaction.getDate().toString());
         cv.put(WalletTransactionContract.PRICE, walletTransaction.getPrice());
-        cv.put(WalletTransactionContract.CATEGORY_ID, walletTransaction.getCategory().getCategory_icon());
+        cv.put(WalletTransactionContract.CATEGORY_ID, walletTransaction.getCategory().getId());
         cv.put(WalletTransactionContract.LOGIN_ID, walletTransaction.getLogin_id());
         return cv;
     }
