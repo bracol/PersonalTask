@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryContract;
 import com.example.waniltonfilho.personaltasks.model.persistance.login.LoginContract;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet.WalletContract;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionContract;
@@ -34,6 +36,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(LoginContract.getCreateTableScript());
         db.execSQL(WalletContract.getCreateTableScript());
         db.execSQL(WalletTransactionContract.getCreateTableScript());
+        db.execSQL(CategoryContract.getCreateTableScript());
     }
 
     @Override

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.model.MonthList;
+import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
@@ -42,7 +43,7 @@ import java.util.List;
 /**
  * Created by wanilton.filho on 22/03/2016.
  */
-public class Chart extends BaseActivity{
+public class Chart extends BaseActivity {
     private PieChart mChart;
     private SpannableString mCenterText;
     private Toolbar mToolbar;
@@ -50,6 +51,7 @@ public class Chart extends BaseActivity{
     private MonthList mManipulateList;
     private RelativeLayout relativeContainer;
     private TextView mInfoTransaction;
+    private List<Category> mCategories;
 
     // cores do grafico
     private final int[] CORES_GRAFICO = {Color.rgb(180, 0, 157), Color.rgb(0, 103, 208), Color.rgb(255, 54, 6),
@@ -65,10 +67,9 @@ public class Chart extends BaseActivity{
         bindCompontents();
 
 
-
     }
 
-    private void attGraph(){
+    private void attGraph() {
         String tv = mMonthTitle.getText().toString();
         String month = tv.substring(0, 2);
         mListaDadosGrafico = WalletTransactionRepository.getSumCategory(month);
@@ -95,66 +96,65 @@ public class Chart extends BaseActivity{
                 // volume
 
                 yAxis.add(new Entry(dado.getPrice(), mListaDadosGrafico.indexOf(dado)));
-                Integer item = dado.getItemCategory();
-                switch (item) {
-                    case 2130837668:
-                        xAxis.add("Esporte");
-                        break;
-                    case 2130837666:
-                        xAxis.add("Shopping");
-                        break;
-                    case 2130837593:
-                        xAxis.add("Café");
-                        break;
-                    case 2130837606:
-                        xAxis.add("Alimentação");
-                        break;
-                    case 2130837583:
-                        xAxis.add("Transporte");
-                        break;
-                    case 2130837587:
-                        xAxis.add("Carro");
-                        break;
-                    case 2130837588:
-                        xAxis.add("Computador");
-                        break;
-                    case 2130837608:
-                        xAxis.add("Jogos");
-                        break;
-                    case 2130837589:
-                        xAxis.add("Celular");
-                        break;
-                    case 2130837660:
-                        xAxis.add("Hospital");
-                        break;
-                    case 2130837659:
-                        xAxis.add("Compras");
-                        break;
-                    case 2130837672:
-                        xAxis.add("Viagens");
-                        break;
-                    default:
-                        xAxis.add("Negocios");
-                        break;
-                }
+                xAxis.add(dado.getCategory().getName());
+//                Integer item = dado.getItemCategory();
+//                switch (item) {
+//                    case 2130837668:
+//                        xAxis.add("Esporte");
+//                        break;
+//                    case 2130837666:
+//                        xAxis.add("Shopping");
+//                        break;
+//                    case 2130837593:
+//                        xAxis.add("Café");
+//                        break;
+//                    case 2130837606:
+//                        xAxis.add("Alimentação");
+//                        break;
+//                    case 2130837583:
+//                        xAxis.add("Transporte");
+//                        break;
+//                    case 2130837587:
+//                        xAxis.add("Carro");
+//                        break;
+//                    case 2130837588:
+//                        xAxis.add("Computador");
+//                        break;
+//                    case 2130837608:
+//                        xAxis.add("Jogos");
+//                        break;
+//                    case 2130837589:
+//                        xAxis.add("Celular");
+//                        break;
+//                    case 2130837660:
+//                        xAxis.add("Hospital");
+//                        break;
+//                    case 2130837659:
+//                        xAxis.add("Compras");
+//                        break;
+//                    case 2130837672:
+//                        xAxis.add("Viagens");
+//                        break;
+//                    default:
+//                        xAxis.add("Negocios");
+//                        break;
             }
-            PieDataSet pieDataSet = new PieDataSet(yAxis, "");
-            pieDataSet.setSelectionShift(12f);
-            int[] colors = CORES_GRAFICO;
-            pieDataSet.setColors(colors);
-
-            PieData pieData = new PieData(xAxis, pieDataSet);
-            pieData.setValueFormatter(new MyValueFormatter());
-            pieData.setValueTextSize(10f);
-            pieData.setValueTextColor(Color.WHITE);
-
-            mChart.setData(pieData);
         }
+        PieDataSet pieDataSet = new PieDataSet(yAxis, "");
+        pieDataSet.setSelectionShift(12f);
+        int[] colors = CORES_GRAFICO;
+        pieDataSet.setColors(colors);
 
+        PieData pieData = new PieData(xAxis, pieDataSet);
+        pieData.setValueFormatter(new MyValueFormatter());
+        pieData.setValueTextSize(10f);
+        pieData.setValueTextColor(Color.WHITE);
 
+        mChart.setData(pieData);
     }
 
     private void bindCompontents() {
+        mCategories = getCategories();
         bindToolbar();
         bindRelativeContainer();
         bindTextViewInfoMonth();

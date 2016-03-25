@@ -12,8 +12,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 
@@ -28,7 +30,11 @@ public class WalletTransactionService {
     private WalletTransactionService(){super();}
 
     public static List<WalletTransaction> findAll(){
-        return WalletTransactionRepository.getAll();
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getAll();
+        for (WalletTransaction walletTransaction : walletTransactions) {
+            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+        }
+        return walletTransactions;
     }
 
     public static void save(WalletTransaction walletTransaction, int operation){
@@ -45,6 +51,10 @@ public class WalletTransactionService {
     }
 
     public static List<WalletTransaction> getLastTransactions(int cont){
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getAll();
+        for (WalletTransaction walletTransaction : walletTransactions) {
+            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+        }
         List<WalletTransaction> allList = WalletTransactionService.findAll();
         List<WalletTransaction> lastList = new ArrayList<>();
         int listaSize = allList.size();
@@ -59,6 +69,10 @@ public class WalletTransactionService {
     }
 
     public static List<WalletTransaction> getMonthTransaction(String month){
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getAll();
+        for (WalletTransaction walletTransaction : walletTransactions) {
+            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+        }
         return WalletTransactionRepository.getByMonth(month);
     }
 

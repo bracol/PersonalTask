@@ -52,7 +52,7 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         String outputDateStr = "";
         Date inputDate;
         String s = "";
-        holder.mImageViewTransactionCategory.setBackgroundResource(walletTransaction.getItemCategory());
+        holder.mImageViewTransactionCategory.setBackgroundResource((int) walletTransaction.getCategory().getCategory_icon());
         holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
 
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapter;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
+import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
@@ -43,14 +44,16 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private int mOperation;
     private FrameLayout mFrameAnimation;
     private Spinner mSpinnerIcons;
-    private Integer mIconSelected;
+    private Category mCategorySelected;
     private TextView mTextViewMoney;
     private RecyclerView recyclerViewWallet;
+    private List<Category> mCategories;
 
-    public ChangeWalletFragment(int operation, TextView textViewMoney, RecyclerView recyclerView){
+    public ChangeWalletFragment(int operation, TextView textViewMoney, RecyclerView recyclerView, List<Category> categories){
         mOperation = operation;
         mTextViewMoney = textViewMoney;
         recyclerViewWallet = recyclerView;
+        mCategories = categories;
     }
 
     @Override
@@ -71,11 +74,11 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void bindSpinner(Spinner spinner) {
-        spinner.setAdapter(new CategoryAdapter(getActivity()));
+        spinner.setAdapter(new CategoryAdapter(getActivity(), mCategories));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mIconSelected = (Integer) parent.getSelectedItem();
+                mCategorySelected = (Category) parent.getSelectedItem();
             }
 
             @Override
@@ -153,7 +156,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             mWalletTransaction.setDate(currentDateandTime);
             mWalletTransaction.setName(editTextName.getText() != null ? editTextName.getText().toString() : "Transação");
             mWalletTransaction.setPrice(Float.parseFloat(editTextPrice.getText().toString()));
-            mWalletTransaction.setItemCategory(mIconSelected);
+            mWalletTransaction.setCategory(mCategorySelected);
         }
     }
 

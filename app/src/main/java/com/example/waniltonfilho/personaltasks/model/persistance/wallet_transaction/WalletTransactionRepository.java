@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.DataBaseHelper;
 
@@ -116,8 +115,8 @@ public class WalletTransactionRepository {
 
         String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
         String[] params = {month};
-        String[] colum = {"sum(" + WalletTransactionContract.PRICE + "), " + WalletTransactionContract.ICON_CATEGORY};
-        String groupBy = WalletTransactionContract.ICON_CATEGORY;
+        String[] colum = {"sum(" + WalletTransactionContract.PRICE + "), " + WalletTransactionContract.CATEGORY_ID};
+        String groupBy = WalletTransactionContract.CATEGORY_ID;
 
 
         Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, where, params, groupBy, null, null);

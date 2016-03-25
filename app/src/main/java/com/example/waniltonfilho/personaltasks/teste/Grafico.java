@@ -30,7 +30,6 @@ public class Grafico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         bindChartList();
         bindChart();
         bindChartData();
@@ -54,53 +53,51 @@ public class Grafico extends AppCompatActivity {
         List<WalletTransaction> transactions = WalletTransactionRepository.getSumCategory("03");
         entries = new ArrayList<>();
         int i = 0;
-        for(WalletTransaction wt : transactions){
+        for (WalletTransaction wt : transactions) {
             entries.add(new BarEntry(wt.getPrice(), i));
             i++;
         }
         dataSet = new BarDataSet(entries, "# of Calls");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         labels = new ArrayList<String>();
-        for(WalletTransaction wt : transactions){
-            switch (wt.getItemCategory()){
-                case 2130837668:
-                    labels.add("Esporte");
-                    break;
-                case 2130837666:
-                    labels.add("Shopping");
-                    break;
-                case 2130837593:
-                    labels.add("Café");
-                    break;
-                case 2130837606:
-                    labels.add("Alimentação");
-                    break;
-                case 2130837583:
-                    labels.add("Transporte");
-                    break;
-                case 2130837587:
-                    labels.add("Carro");
-                    break;
-                case 2130837588:
-                    labels.add("Computador");
-                    break;
-                case 2130837608:
-                    labels.add("Jogos");
-                    break;
-                case 2130837589:
-                    labels.add("Celular");
-                    break;
-                case 2130837660:
-                    labels.add("Hospital");
-                    break;
-                case 2130837659:
-                    labels.add("Compras");
-                    break;
-                case 2130837672:
-                    labels.add("Viagens");
-                    break;
-            }
+        for (WalletTransaction wt : transactions) {
+//            switch (wt.getItemCategory()){
+//                case 2130837668:
+//                    labels.add("Esporte");
+//                    break;
+//                case 2130837666:
+//                    labels.add("Shopping");
+//                    break;
+//                case 2130837593:
+//                    labels.add("Café");
+//                    break;
+//                case 2130837606:
+//                    labels.add("Alimentação");
+//                    break;
+//                case 2130837583:
+//                    labels.add("Transporte");
+//                    break;
+//                case 2130837587:
+//                    labels.add("Carro");
+//                    break;
+//                case 2130837588:
+//                    labels.add("Computador");
+//                    break;
+//                case 2130837608:
+//                    labels.add("Jogos");
+//                    break;
+//                case 2130837589:
+//                    labels.add("Celular");
+//                    break;
+//                case 2130837660:
+//                    labels.add("Hospital");
+//                    break;
+//                case 2130837659:
+//                    labels.add("Compras");
+//                    break;
+//                case 2130837672:
+//                    labels.add("Viagens");
+//                    break;
         }
-
     }
 }

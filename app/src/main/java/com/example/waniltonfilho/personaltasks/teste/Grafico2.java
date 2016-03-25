@@ -78,65 +78,65 @@ public class Grafico2 extends AppCompatActivity{
         MyValueFormatter myValueFormatter = new MyValueFormatter();
 
         // popular eixos do grafico
-        for (WalletTransaction dado : mListaDadosGrafico) {
+//        for (WalletTransaction dado : mListaDadosGrafico) {
             // volume
 
-            yAxis.add(new Entry(dado.getPrice(), mListaDadosGrafico.indexOf(dado)));
-            Integer item = dado.getItemCategory();
-            switch (item){
-                case 2130837668:
-                    xAxis.add("Esporte");
-                    break;
-                case 2130837666:
-                    xAxis.add("Shopping");
-                    break;
-                case 2130837593:
-                    xAxis.add("Café");
-                    break;
-                case 2130837606:
-                    xAxis.add("Alimentação");
-                    break;
-                case 2130837583:
-                    xAxis.add("Transporte");
-                    break;
-                case 2130837587:
-                    xAxis.add("Carro");
-                    break;
-                case 2130837588:
-                    xAxis.add("Computador");
-                    break;
-                case 2130837608:
-                    xAxis.add("Jogos");
-                    break;
-                case 2130837589:
-                    xAxis.add("Celular");
-                    break;
-                case 2130837660:
-                    xAxis.add("Hospital");
-                    break;
-                case 2130837659:
-                    xAxis.add("Compras");
-                    break;
-                case 2130837672:
-                    xAxis.add("Viagens");
-                    break;
-                default:
-                    xAxis.add("Negocios");
-                    break;
-            }
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(yAxis, "Meses");
-        pieDataSet.setSelectionShift(12f);
-        int[] colors = CORES_GRAFICO;
-        pieDataSet.setColors(colors);
-
-        PieData pieData = new PieData(xAxis, pieDataSet);
-        pieData.setValueFormatter(new MyValueFormatter());
-        pieData.setValueTextSize(10f);
-        pieData.setValueTextColor(Color.WHITE);
-
-        mChart.setData(pieData);
+//            yAxis.add(new Entry(dado.getPrice(), mListaDadosGrafico.indexOf(dado)));
+//            Integer item = dado.get();
+//            switch (item){
+//                case 2130837668:
+//                    xAxis.add("Esporte");
+//                    break;
+//                case 2130837666:
+//                    xAxis.add("Shopping");
+//                    break;
+//                case 2130837593:
+//                    xAxis.add("Café");
+//                    break;
+//                case 2130837606:
+//                    xAxis.add("Alimentação");
+//                    break;
+//                case 2130837583:
+//                    xAxis.add("Transporte");
+//                    break;
+//                case 2130837587:
+//                    xAxis.add("Carro");
+//                    break;
+//                case 2130837588:
+//                    xAxis.add("Computador");
+//                    break;
+//                case 2130837608:
+//                    xAxis.add("Jogos");
+//                    break;
+//                case 2130837589:
+//                    xAxis.add("Celular");
+//                    break;
+//                case 2130837660:
+//                    xAxis.add("Hospital");
+//                    break;
+//                case 2130837659:
+//                    xAxis.add("Compras");
+//                    break;
+//                case 2130837672:
+//                    xAxis.add("Viagens");
+//                    break;
+//                default:
+//                    xAxis.add("Negocios");
+//                    break;
+//            }
+//        }
+//
+//        PieDataSet pieDataSet = new PieDataSet(yAxis, "Meses");
+//        pieDataSet.setSelectionShift(12f);
+//        int[] colors = CORES_GRAFICO;
+//        pieDataSet.setColors(colors);
+//
+//        PieData pieData = new PieData(xAxis, pieDataSet);
+//        pieData.setValueFormatter(new MyValueFormatter());
+//        pieData.setValueTextSize(10f);
+//        pieData.setValueTextColor(Color.WHITE);
+//
+//        mChart.setData(pieData);
     }
 
     private void preencherConteudo() {

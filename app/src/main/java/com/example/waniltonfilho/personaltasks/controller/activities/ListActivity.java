@@ -53,7 +53,7 @@ public class ListActivity extends BaseActivity {
         bindTextViewInfoMonth();
         bindTextViewMonth();
         bindRecyclerViewList();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void bindRelativeContainer() {

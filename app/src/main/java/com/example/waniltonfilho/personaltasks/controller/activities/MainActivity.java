@@ -192,7 +192,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void showAddDialog(View v) {
         String ae = "";
         if (!dialogVisible) {
-            changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView);
+            changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView, getCategories());
             FragmentTransaction fm = getFragmentManager().beginTransaction();
             fm.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right);
             fm.replace(R.id.frameChange, changeFragment);
