@@ -119,7 +119,7 @@ public class Chart extends BaseActivity {
         bindTextViewInfoMonth();
         bindTextViewMonth();
         bindGraph();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void bindTextViewInfoMonth() {
@@ -154,6 +154,8 @@ public class Chart extends BaseActivity {
     private void bindToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setupToolbar(mToolbar);
+        mToolbar.setTitle("Gráfico de Transações");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private SpannableString generateCenterText() {

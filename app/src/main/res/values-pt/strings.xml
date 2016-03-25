@@ -21,7 +21,7 @@
     <string name="error_valid_value">Digite um valor válido.</string>
     <string name="hint_inicial_value">Valor inicial</string>
     <string name="prompt_spinner">Categoria</string>
-    <string name="info_money">Dinheiro</string>
+    <string name="info_money">Gastos</string>
     <string name="menu_transaction_consult">Consultar transações</string>
     <string name="info_empty_transactions">Não há transações nessa data</string>
     <string-array name="tabs">

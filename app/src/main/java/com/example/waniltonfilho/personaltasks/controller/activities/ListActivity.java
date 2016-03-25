@@ -126,7 +126,10 @@ public class ListActivity extends BaseActivity {
     }
 
     private void bindToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setupToolbar(mToolbar);
+        mToolbar.setTitle("Lista de Transações");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 

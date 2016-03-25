@@ -36,7 +36,7 @@ public class BaseActivity extends AppCompatActivity{
             CategoryService.save(getCategory("Jogos", R.drawable.game));
             CategoryService.save(getCategory("Negócios", R.drawable.business));
             CategoryService.save(getCategory("Shopping", R.drawable.shopping));
-            CategoryService.save(getCategory("Sport", R.drawable.sport));
+            CategoryService.save(getCategory("Esporte", R.drawable.sport));
             CategoryService.save(getCategory("Trabalho", R.drawable.mala));
             CategoryService.save(getCategory("Transporte", R.drawable.bus));
             CategoryService.save(getCategory("Viagem", R.drawable.travel));
