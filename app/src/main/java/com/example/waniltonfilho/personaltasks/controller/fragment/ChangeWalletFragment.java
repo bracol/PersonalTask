@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +26,14 @@ import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
+import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by wanilton.filho on 04/02/2016.
@@ -63,6 +68,35 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         editTextName = (EditText) v.findViewById(R.id.editTextNameWallet);
         //editTextDate.addTextChangedListener(new EditTextMaskDate(editTextDate));
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
+        editTextPrice.addTextChangedListener(new TextWatcher() {
+            String current = "";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().equals(current)){
+
+                    String cleanString = s.toString().replaceAll("[R$,.]", "");
+
+
+                    float parsed = Float.parseFloat(cleanString);
+                    MyValueFormatter myValueFormatter = new MyValueFormatter();
+                    String formatted = myValueFormatter.getMaskNumbers(parsed / 100);
+                    current = formatted;
+                    editTextPrice.setText(formatted);
+                    editTextPrice.setSelection(formatted.length());
+
+                }
+            }
+        });
         mButtonCancel = (Button) v.findViewById(R.id.buttonCancelChange);
         mButtonCancel.setOnClickListener(this);
         mButtonConfirm = (Button) v.findViewById(R.id.buttonConfirmChange);
@@ -155,7 +189,8 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             String currentDateandTime = sdf.format(new Date());
             mWalletTransaction.setDate(currentDateandTime);
             mWalletTransaction.setName(editTextName.getText() != null ? editTextName.getText().toString() : "Transação");
-            mWalletTransaction.setPrice(Float.parseFloat(editTextPrice.getText().toString()));
+            String price = editTextPrice.getText().toString().replace("R$ ", "");
+            mWalletTransaction.setPrice(Float.parseFloat(price));
             mWalletTransaction.setCategory(mCategorySelected);
         }
     }

@@ -54,6 +54,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/hint_price"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:paddingBottom="16dp"
                 android:paddingTop="8dp" />
 

@@ -1,12 +1,7 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,26 +12,24 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletFragment;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Login;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
+import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.melnykov.fab.FloatingActionButton;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +58,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void bindComponents() {
+        new TaskWallet().execute();
+        String ae;
         checkWallet();
         bindToolbar();
         bindFloatingButton();
@@ -97,8 +92,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void bindTextViewMoney() {
+        MyValueFormatter myValueFormatter = new MyValueFormatter();
         mTextViewMoney = (TextView) findViewById(R.id.textViewMoney);
-        mTextViewMoney.setText(wallet.getValue().toString());
+        mTextViewMoney.setText(myValueFormatter.getMaskFormatted(wallet.getValue()));
     }
 
     private void bindRecyclerView() {

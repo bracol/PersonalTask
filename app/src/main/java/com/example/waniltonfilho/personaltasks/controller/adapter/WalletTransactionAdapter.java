@@ -71,7 +71,7 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         holder.mTextViewDate.setText(s);
         holder.mTextViewValue.setText("R$ " + walletTransaction.getPrice().toString());
         MyValueFormatter formatter = new MyValueFormatter();
-        holder.mTextViewValue.setText(formatter.getFloatFormatted(walletTransaction.getPrice()));
+        holder.mTextViewValue.setText(formatter.getMaskFormatted(walletTransaction.getPrice()));
         holder.mTextViewName.setText(walletTransaction.getName() == null ? "Transação" : walletTransaction.getName().toString());
     }
 

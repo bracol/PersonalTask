@@ -19,6 +19,8 @@ public class MyValueFormatter implements ValueFormatter {
     public MyValueFormatter() {
         // use one decimal
         mFormat = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+        mFormat.setMaximumFractionDigits(2);
+        mFormat.setMinimumFractionDigits(2);
     }
 
     @Override
@@ -27,7 +29,11 @@ public class MyValueFormatter implements ValueFormatter {
         return "R$ " + mFormat.format(value); // e.g. append a dollar-sign
     }
 
-    public String getFloatFormatted(float value){
+    public String getMaskFormatted(float value){
         return "R$ " + mFormat.format(value);
+    }
+
+    public String getMaskNumbers(float value){
+        return mFormat.format(value);
     }
 }

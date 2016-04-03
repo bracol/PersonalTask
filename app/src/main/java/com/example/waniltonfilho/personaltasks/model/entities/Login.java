@@ -3,13 +3,23 @@ package com.example.waniltonfilho.personaltasks.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by wanilton.filho on 19/01/2016.
  */
 public class Login implements Parcelable {
+
+    @JsonProperty("_id")
     private Long id;
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("login")
     private String login;
+
+    @JsonProperty("password")
     private String password;
 
     public Long getId() {

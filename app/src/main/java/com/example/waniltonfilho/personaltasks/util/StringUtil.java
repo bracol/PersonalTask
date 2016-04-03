@@ -24,7 +24,8 @@ public class StringUtil {
     public static Boolean isDouble(String s, EditText editText, Activity context){
         Double d;
         try {
-            d = Double.parseDouble(s);
+            String cleanString = s.toString().replaceAll("[R$,.]", "");
+            d = Double.parseDouble(cleanString);
             return true;
         } catch (NumberFormatException e) {
             //Se chegou aqui, não é um double!

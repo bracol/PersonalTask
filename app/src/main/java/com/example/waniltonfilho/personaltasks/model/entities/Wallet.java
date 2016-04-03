@@ -3,20 +3,28 @@ package com.example.waniltonfilho.personaltasks.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by Wanilton on 28/02/2016.
  */
 public class Wallet implements Parcelable {
 
-    private Long _id;
+    @JsonProperty("_id")
+    private String _id;
+
+    @JsonProperty("value")
     private Float value;
 
+    @JsonIgnore
+    private Login user;
 
-    public Long get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(Long _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
@@ -28,6 +36,14 @@ public class Wallet implements Parcelable {
         this.value = value;
     }
 
+    public Login getUser() {
+        return user;
+    }
+
+    public void setUser(Login user) {
+        this.user = user;
+    }
+
 
     @Override
     public int describeContents() {
@@ -36,23 +52,27 @@ public class Wallet implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this._id);
+        dest.writeString(this._id);
         dest.writeValue(this.value);
+        dest.writeParcelable(this.user, flags);
     }
 
     public Wallet() {
     }
 
     protected Wallet(Parcel in) {
-        this._id = (Long) in.readValue(Long.class.getClassLoader());
+        this._id = in.readString();
         this.value = (Float) in.readValue(Float.class.getClassLoader());
+        this.user = in.readParcelable(Login.class.getClassLoader());
     }
 
     public static final Creator<Wallet> CREATOR = new Creator<Wallet>() {
+        @Override
         public Wallet createFromParcel(Parcel source) {
             return new Wallet(source);
         }
 
+        @Override
         public Wallet[] newArray(int size) {
             return new Wallet[size];
         }

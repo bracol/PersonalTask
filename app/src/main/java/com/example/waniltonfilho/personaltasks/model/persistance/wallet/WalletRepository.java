@@ -35,12 +35,12 @@ public class WalletRepository {
         dataBaseHelper.close();
     }
 
-    public static void delete(long id) {
+    public static void delete(String id) {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
 
         String where = WalletContract.ID + " = ? ";
-        String[] params = {String.valueOf(id)};
+        String[] params = {id};
         db.delete(WalletContract.TABLE, where, params);
 
         db.close();
