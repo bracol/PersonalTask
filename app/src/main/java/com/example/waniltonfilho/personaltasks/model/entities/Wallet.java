@@ -11,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Wallet implements Parcelable {
 
-    @JsonProperty("_id")
+    @JsonProperty(value = "_id")
     private String _id;
 
-    @JsonProperty("value")
+    @JsonProperty(value = "value")
     private Float value;
 
-    @JsonIgnore
-    private Login user;
+    @JsonProperty(value = "login_id")
+    private String login_id;
 
     public String get_id() {
         return _id;
@@ -36,12 +36,12 @@ public class Wallet implements Parcelable {
         this.value = value;
     }
 
-    public Login getUser() {
-        return user;
+    public String getLogin_id() {
+        return login_id;
     }
 
-    public void setUser(Login user) {
-        this.user = user;
+    public void setLogin_id(String login_id) {
+        this.login_id = login_id;
     }
 
 
@@ -54,7 +54,7 @@ public class Wallet implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this._id);
         dest.writeValue(this.value);
-        dest.writeParcelable(this.user, flags);
+        dest.writeString(this.login_id);
     }
 
     public Wallet() {
@@ -63,7 +63,7 @@ public class Wallet implements Parcelable {
     protected Wallet(Parcel in) {
         this._id = in.readString();
         this.value = (Float) in.readValue(Float.class.getClassLoader());
-        this.user = in.readParcelable(Login.class.getClassLoader());
+        this.login_id = in.readString();
     }
 
     public static final Creator<Wallet> CREATOR = new Creator<Wallet>() {

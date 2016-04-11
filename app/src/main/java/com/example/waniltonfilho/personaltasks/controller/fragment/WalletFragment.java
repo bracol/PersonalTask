@@ -46,7 +46,7 @@
 //        mWallet = WalletRepository.getWallet();
 ////        View v = inflater.inflate(R.layout.fragment_wallet, container, false);
 ////        mTextViewNameInfo = (TextView) v.findViewById(R.id.textViewNameInfo);
-////        mTextViewNameInfo.setText(MainActivity.selectedLogin.getName());
+////        mTextViewNameInfo.setText(MainActivity.selectedUser.getName());
 ////        mTextViewMoneyInfo = (TextView) v.findViewById(R.id.textViewMoneyInfo);
 ////        mTextViewMoneyInfo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf"));
 ////        MyValueFormatter formatter = new MyValueFormatter();

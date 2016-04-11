@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.model.entities.Login;
-import com.example.waniltonfilho.personaltasks.model.service.LoginBusinessService;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostLogin;
+import com.example.waniltonfilho.personaltasks.model.entities.User;
 
 /**
  * Created by wanilton.filho on 20/01/2016.
@@ -34,9 +34,7 @@ public class LoginFormActivity extends BaseActivity{
     }
 
     private void bindElements() {
-        //MaskEditTextChangedListener maskEditTextChangedListener = new MaskEditTextChangedListener("##/##/####", mEditTextName);
         mEditTextName = (EditText) findViewById(R.id.editTextName);
-       // mEditTextName.addTextChangedListener(maskEditTextChangedListener);
         mEditTextUsername = (EditText) findViewById(R.id.editTextUsername);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -54,23 +52,27 @@ public class LoginFormActivity extends BaseActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_login_OK:
-                loginSave();
+                onOKClick();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void loginSave() {
+    private void onOKClick() {
         try {
-            Login login = new Login();
-            login.setLogin(mEditTextUsername.getText().toString());
-            login.setPassword(mEditTextPassword.getText().toString());
-            login.setName(mEditTextName.getText().toString());
-            LoginBusinessService.save(login);
+            User user = new User();
+            user.setUserName(mEditTextUsername.getText().toString());
+            user.setPassword(mEditTextPassword.getText().toString());
+            user.setName(mEditTextName.getText().toString());
+            saveLogin(user);
             startActivity(new Intent(this, LoginMainActivity.class));
         } catch (Exception e){
             Toast.makeText(getBaseContext(), "Ocorreu um erro e o login não foi salvo!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveLogin(User user) {
+        new TaskPostLogin(user).execute();
     }
 }

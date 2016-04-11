@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include
@@ -12,11 +12,11 @@
         layout="@layout/app_bar" />
 
     <!--<ImageView-->
-        <!--android:id="@+id/imageViewLogo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:layout_below="@id/app_bar"-->
-        <!--android:src="@drawable/logo" />-->
+    <!--android:id="@+id/imageViewLogo"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_below="@id/app_bar"-->
+    <!--android:src="@drawable/logo" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         tools:context=".controller. .activities.MainLoginActivity">
 
 
-        <!-- Login progress -->
+        <!-- User progress -->
         <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
@@ -61,10 +61,9 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/textinput_size"
-                        android:paddingTop="@dimen/padding_input_top"
                         android:paddingLeft="@dimen/padding_edittext_bottom"
                         android:paddingRight="@dimen/padding_edittext_bottom"
-                        >
+                        android:paddingTop="@dimen/padding_input_top">
 
                         <EditText
                             android:id="@+id/editTextUsername"
@@ -97,17 +96,16 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/textinput_size"
-                        android:paddingTop="@dimen/padding_input_top"
                         android:paddingLeft="@dimen/padding_edittext_bottom"
                         android:paddingRight="@dimen/padding_edittext_bottom"
-                        >
+                        android:paddingTop="@dimen/padding_input_top">
 
                         <EditText
                             android:id="@+id/editTextPassword"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/edittext_size"
                             android:hint="@string/prompt_password"
-                            android:imeActionId="@+id/login"
+                            android:imeActionId="@+id/userName"
                             android:imeActionLabel="@string/action_sign_in"
                             android:imeOptions="actionUnspecified"
                             android:inputType="textPassword"
@@ -143,10 +141,10 @@
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fabAddLogin"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:src="@drawable/ic_add_white_24dp"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/accent_pressed"
@@ -164,7 +162,7 @@
     <FrameLayout
         android:id="@+id/frameDialogLoginTransaction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <View
         android:id="@+id/toolbar_shadow"

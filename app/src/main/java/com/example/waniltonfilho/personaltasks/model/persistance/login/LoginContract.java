@@ -3,7 +3,7 @@ package com.example.waniltonfilho.personaltasks.model.persistance.login;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.example.waniltonfilho.personaltasks.model.entities.Login;
+import com.example.waniltonfilho.personaltasks.model.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,38 +35,38 @@ public class LoginContract {
         return sb.toString();
     }
 
-    public static ContentValues getContentValues(Login login){
+    public static ContentValues getContentValues(User user){
         ContentValues cv = new ContentValues();
-        cv.put(LoginContract.ID, login.getId());
-        cv.put(LoginContract.NAME, login.getName());
-        cv.put(LoginContract.LOGIN, login.getLogin());
-        cv.put(LoginContract.PASSWORD, login.getPassword());
+        cv.put(LoginContract.ID, user.getId());
+        cv.put(LoginContract.NAME, user.getName());
+        cv.put(LoginContract.LOGIN, user.getUserName());
+        cv.put(LoginContract.PASSWORD, user.getPassword());
         return cv;
     }
 
-    public static Login getLogin(Cursor cursor) {
+    public static User getLogin(Cursor cursor) {
         if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
-            Login login = new Login();
+            User user = new User();
             /* get column index pega o indice de acordo com o nome da coluna passado */
-            login.setId(cursor.getLong(cursor.getColumnIndex(LoginContract.ID)));
-            login.setLogin(cursor.getString(cursor.getColumnIndex(LoginContract.LOGIN)));
-            login.setPassword(cursor.getString(cursor.getColumnIndex(LoginContract.PASSWORD)));
-            login.setName(cursor.getString(cursor.getColumnIndex(LoginContract.NAME)));
+            user.setId(cursor.getString(cursor.getColumnIndex(LoginContract.ID)));
+            user.setUserName(cursor.getString(cursor.getColumnIndex(LoginContract.LOGIN)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(LoginContract.PASSWORD)));
+            user.setName(cursor.getString(cursor.getColumnIndex(LoginContract.NAME)));
 
-            return login;
+            return user;
         }
         return null;
     }
 
 
-    public static List<Login> getLogins(Cursor cursor) {
-        ArrayList<Login> logins = new ArrayList<>();
+    public static List<User> getLogins(Cursor cursor) {
+        ArrayList<User> users = new ArrayList<>();
         while (cursor.moveToNext()) {
             /* get colum index pega o indice de acordo com o nome da coluna passado */
-            logins.add(getLogin(cursor));
+            users.add(getLogin(cursor));
 
         }
-        return logins;
+        return users;
     }
 
 

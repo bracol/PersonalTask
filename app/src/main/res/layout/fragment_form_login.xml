@@ -27,7 +27,7 @@
             tools:context=".controller. .activities.MainLoginActivity">
 
 
-            <!-- Login progress -->
+            <!-- User progress -->
             <ProgressBar
                 android:id="@+id/login_progress"
                 style="?android:attr/progressBarStyleLarge"
@@ -77,7 +77,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/edittext_size"
                                 android:hint="@string/prompt_name"
-                                android:imeActionId="@+id/login"
+                                android:imeActionId="@+id/userName"
                                 android:imeActionLabel="@string/action_sign_in"
                                 android:imeOptions="actionUnspecified"
                                 android:maxLines="1"
@@ -155,7 +155,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/edittext_size"
                                 android:hint="@string/prompt_password"
-                                android:imeActionId="@+id/login"
+                                android:imeActionId="@+id/userName"
                                 android:imeActionLabel="@string/action_sign_in"
                                 android:imeOptions="actionUnspecified"
                                 android:inputType="textPassword"

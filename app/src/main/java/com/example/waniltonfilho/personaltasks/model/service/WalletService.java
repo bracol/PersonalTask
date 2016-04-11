@@ -29,4 +29,10 @@ public class WalletService {
         WalletRepository.delete(selectedWallet.get_id());
     }
 
+    public static Wallet getWallet(){
+
+
+        return WalletRepository.getWallet();
+    }
+
 }
