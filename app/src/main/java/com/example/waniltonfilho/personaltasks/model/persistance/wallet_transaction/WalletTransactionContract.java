@@ -20,8 +20,8 @@ public class WalletTransactionContract {
     public static final String PRICE = "price";
     //public static final String ACTION = "action";
     public static final String CATEGORY_ID = "item_category";
-    public static final String LOGIN_ID = "login_ID";
-    public static final String[] COLUMNS = {ID, NAME, DATE, PRICE, CATEGORY_ID, LOGIN_ID};
+    public static final String WALLET_ID = "wallet_id";
+    public static final String[] COLUMNS = {ID, NAME, DATE, PRICE, CATEGORY_ID, WALLET_ID};
 
     private WalletTransactionContract() {
     }
@@ -35,7 +35,7 @@ public class WalletTransactionContract {
         sb.append(DATE + " TEXT, ");
         sb.append(PRICE + " NUMERIC, ");
         sb.append(CATEGORY_ID + " TEXT, ");
-        sb.append(LOGIN_ID + " INTEGER ");
+        sb.append(WALLET_ID + " TEXT ");
         sb.append(" ) ");
 
         return sb.toString();
@@ -47,8 +47,8 @@ public class WalletTransactionContract {
         cv.put(WalletTransactionContract.NAME, walletTransaction.getName());
         cv.put(WalletTransactionContract.DATE, walletTransaction.getDate().toString());
         cv.put(WalletTransactionContract.PRICE, walletTransaction.getPrice());
-        cv.put(WalletTransactionContract.CATEGORY_ID, walletTransaction.getCategory().getId());
-        cv.put(WalletTransactionContract.LOGIN_ID, walletTransaction.getLogin_id());
+        cv.put(WalletTransactionContract.CATEGORY_ID, walletTransaction.getCategory());
+        cv.put(WalletTransactionContract.WALLET_ID, walletTransaction.getWallet_id());
         return cv;
     }
 
@@ -56,15 +56,12 @@ public class WalletTransactionContract {
         if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
             WalletTransaction walletTransaction = new WalletTransaction();
             /* get column index pega o indice de acordo com o nome da coluna passado */
-            walletTransaction.setId(cursor.getLong(cursor.getColumnIndex(WalletTransactionContract.ID)));
+            walletTransaction.setId(cursor.getString(cursor.getColumnIndex(WalletTransactionContract.ID)));
             walletTransaction.setName(cursor.getString(cursor.getColumnIndex(WalletTransactionContract.NAME)));
             walletTransaction.setDate((cursor.getString(cursor.getColumnIndex(WalletTransactionContract.DATE))));
             walletTransaction.setPrice(cursor.getFloat(cursor.getColumnIndex(WalletTransactionContract.PRICE)));
-            walletTransaction.setLogin_id(cursor.getLong(cursor.getColumnIndex(WalletTransactionContract.LOGIN_ID)));
-
-            Category category = new Category();
-            category.setId(cursor.getLong(cursor.getColumnIndex(WalletTransactionContract.CATEGORY_ID)));
-            walletTransaction.setCategory(category);
+            walletTransaction.setWallet_id(cursor.getString(cursor.getColumnIndex(WalletTransactionContract.WALLET_ID)));
+            walletTransaction.setCategory(cursor.getString(cursor.getColumnIndex(WalletTransactionContract.CATEGORY_ID)));
 
             return walletTransaction;
         }
@@ -87,10 +84,7 @@ public class WalletTransactionContract {
             WalletTransaction walletTransaction = new WalletTransaction();
             /* get column index pega o indice de acordo com o nome da coluna passado */
             walletTransaction.setPrice((cursor.getFloat(0)));
-
-            Category category = new Category();
-            category.setId(cursor.getLong(1));
-            walletTransaction.setCategory(category);
+            walletTransaction.setCategory(cursor.getString(1));
             return walletTransaction;
         }
         return null;

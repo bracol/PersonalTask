@@ -68,7 +68,7 @@ public class WalletHttpService {
             os.write(new ObjectMapper().writeValueAsBytes(wallet));
             os.flush();
 
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
 

@@ -31,13 +31,29 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
     private Float price;
 
     @JsonProperty("category")
-    private Category category;
+    private String category;
 
-    @JsonProperty("wallet")
+    @JsonProperty("wallet_id")
     private String wallet_id;
 
     public String getId() {
         return id;
+    }
+
+
+    @Override
+    public int compareTo(WalletTransaction another) {
+        int thisDia = Integer.parseInt(this.getDate().substring(8, 10));
+        int anotherDia = Integer.parseInt(another.getDate().substring(8, 10));
+        if (!(another instanceof WalletTransaction))
+            throw new ClassCastException("Classe não esperada.");
+        if (thisDia < anotherDia) {
+            return -1;
+        }
+        if (thisDia > anotherDia) {
+            return 1;
+        }
+        return 0;
     }
 
     public void setId(String id) {
@@ -68,11 +84,11 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
         this.price = price;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -82,23 +98,6 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
 
     public void setWallet_id(String wallet_id) {
         this.wallet_id = wallet_id;
-    }
-
-
-
-    @Override
-    public int compareTo(WalletTransaction another) {
-        int thisDia = Integer.parseInt(this.getDate().substring(8, 10));
-        int anotherDia = Integer.parseInt(another.getDate().substring(8, 10));
-        if (!(another instanceof WalletTransaction))
-            throw new ClassCastException("Classe não esperada.");
-        if (thisDia < anotherDia) {
-            return -1;
-        }
-        if (thisDia > anotherDia) {
-            return 1;
-        }
-        return 0;
     }
 
 
@@ -113,7 +112,7 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
         dest.writeString(this.name);
         dest.writeString(this.date);
         dest.writeValue(this.price);
-        dest.writeParcelable(this.category, 0);
+        dest.writeString(this.category);
         dest.writeString(this.wallet_id);
     }
 
@@ -125,7 +124,7 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
         this.name = in.readString();
         this.date = in.readString();
         this.price = (Float) in.readValue(Float.class.getClassLoader());
-        this.category = in.readParcelable(Category.class.getClassLoader());
+        this.category = in.readString();
         this.wallet_id = in.readString();
     }
 
@@ -139,3 +138,6 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
         }
     };
 }
+
+
+

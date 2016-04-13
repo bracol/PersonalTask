@@ -31,9 +31,9 @@ public class WalletTransactionService {
 
     public static List<WalletTransaction> findAll(){
         List<WalletTransaction> walletTransactions = WalletTransactionRepository.getAll();
-        for (WalletTransaction walletTransaction : walletTransactions) {
-            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
-        }
+//        for (WalletTransaction walletTransaction : walletTransactions) {
+//            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+//        }
         return walletTransactions;
     }
 
@@ -52,9 +52,9 @@ public class WalletTransactionService {
 
     public static List<WalletTransaction> getLastTransactions(int cont){
         List<WalletTransaction> walletTransactions = WalletTransactionRepository.getAll();
-        for (WalletTransaction walletTransaction : walletTransactions) {
-            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
-        }
+//        for (WalletTransaction walletTransaction : walletTransactions) {
+//            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+//        }
         List<WalletTransaction> lastList = new ArrayList<>();
         int listaSize = walletTransactions.size();
 
@@ -69,9 +69,9 @@ public class WalletTransactionService {
 
     public static List<WalletTransaction> getMonthTransaction(String month){
         List<WalletTransaction> walletTransactions = WalletTransactionRepository.getByMonth(month);
-        for (WalletTransaction walletTransaction : walletTransactions) {
-            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
-        }
+//        for (WalletTransaction walletTransaction : walletTransactions) {
+//            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+//        }
         return walletTransactions;
     }
 
@@ -85,9 +85,9 @@ public class WalletTransactionService {
 
     public static List<WalletTransaction> getSumCategoryService(String month){
         List<WalletTransaction> walletTransactions = WalletTransactionRepository.getSumCategory(month);
-        for (WalletTransaction walletTransaction : walletTransactions) {
-            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
-        }
+//        for (WalletTransaction walletTransaction : walletTransactions) {
+//            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
+//        }
         return walletTransactions;
     }
 

@@ -24,6 +24,7 @@ import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransact
 import com.example.waniltonfilho.personaltasks.model.MonthList;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
@@ -94,9 +95,9 @@ public class Chart extends BaseActivity {
             mChart.invalidate();
             for (WalletTransaction dado : mListaDadosGrafico) {
                 // volume
-
+                Category category = CategoryRepository.getById(Long.parseLong(dado.getCategory()));
                 yAxis.add(new Entry(dado.getPrice(), mListaDadosGrafico.indexOf(dado)));
-                xAxis.add(dado.getCategory().getName());
+                xAxis.add(category.getName());
             }
         }
         PieDataSet pieDataSet = new PieDataSet(yAxis, "");

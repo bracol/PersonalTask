@@ -21,6 +21,7 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletFragment;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
@@ -130,8 +131,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, this));
         } else {
-
+            new TaskGetWalletTransaction(mWallet.get_id()){
+                @Override
+                protected void onPostExecute(List<WalletTransaction> transactions) {
+                    super.onPostExecute(transactions);
+                    mListTransactions = transactions;
+                    mRecyclerView = (RecyclerView) findViewById(R.id.recyclerLastTransaction);
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, MainActivity.this));
+                }
+            }.execute();
         }
+
     }
 
     public User getPreferenceLogin() {
@@ -190,6 +201,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         String ae = "";
         if (!dialogVisible) {
             changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView, getCategories());
+            if (mUser != null) {
+                Bundle args = new Bundle();
+                args.putParcelable("wallet", mWallet);
+                changeFragment.setArguments(args);
+            }
             FragmentTransaction fm = getFragmentManager().beginTransaction();
             fm.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right);
             fm.replace(R.id.frameChange, changeFragment);

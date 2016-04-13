@@ -36,4 +36,12 @@ public class MyValueFormatter implements ValueFormatter {
     public String getMaskNumbers(float value){
         return mFormat.format(value);
     }
+
+    public static String formatPrice(String value){
+        String formated;
+        formated = value.replace("R$ ", "");
+        formated = formated.replace(".", "");
+        formated = formated.replace(",", ".");
+        return formated;
+    }
 }

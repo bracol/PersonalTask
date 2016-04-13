@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 
@@ -52,7 +54,8 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         String outputDateStr = "";
         Date inputDate;
         String s = "";
-        holder.mImageViewTransactionCategory.setBackgroundResource((int) walletTransaction.getCategory().getCategory_icon());
+        Category category = CategoryRepository.getById(Long.parseLong(walletTransaction.getCategory()));
+        holder.mImageViewTransactionCategory.setBackgroundResource((int) category.getCategory_icon());
         holder.mTextViewValue.setTextAppearance(mContext, R.style.shadowNegative);
 
 
