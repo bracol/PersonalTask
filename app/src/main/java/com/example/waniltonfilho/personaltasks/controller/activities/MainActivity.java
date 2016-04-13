@@ -124,10 +124,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void bindRecyclerView() {
-        mListTransactions = WalletTransactionService.getLastTransactions(2);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerLastTransaction);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, this));
+        if(getPreferenceLogin() == null) {
+            mListTransactions = WalletTransactionService.getLastTransactions(2);
+            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerLastTransaction);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, this));
+        } else {
+
+        }
     }
 
     public User getPreferenceLogin() {

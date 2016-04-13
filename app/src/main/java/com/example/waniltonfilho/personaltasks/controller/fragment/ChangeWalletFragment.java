@@ -54,6 +54,9 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private RecyclerView recyclerViewWallet;
     private List<Category> mCategories;
 
+    public ChangeWalletFragment() {
+    }
+
     public ChangeWalletFragment(int operation, TextView textViewMoney, RecyclerView recyclerView, List<Category> categories){
         mOperation = operation;
         mTextViewMoney = textViewMoney;
@@ -190,6 +193,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             mWalletTransaction.setDate(currentDateandTime);
             mWalletTransaction.setName(editTextName.getText() != null ? editTextName.getText().toString() : "Transação");
             String price = editTextPrice.getText().toString().replace("R$ ", "");
+            price = price.replace(",", ".");
             mWalletTransaction.setPrice(Float.parseFloat(price));
             mWalletTransaction.setCategory(mCategorySelected);
         }

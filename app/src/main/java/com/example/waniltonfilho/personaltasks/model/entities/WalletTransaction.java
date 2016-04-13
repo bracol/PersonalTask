@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,18 +18,29 @@ import java.util.Date;
  */
 public class WalletTransaction implements Parcelable, Comparable<WalletTransaction> {
 
-    private Long id;
-    private String name;
-    private String date;
-    private Float price;
-    private Category category;
-    private Long login_id;
+    @JsonProperty("_id")
+    private String id;
 
-    public Long getId() {
+    @JsonProperty("desc")
+    private String name;
+
+    @JsonProperty("date")
+    private String date;
+
+    @JsonProperty("price")
+    private Float price;
+
+    @JsonProperty("category")
+    private Category category;
+
+    @JsonProperty("wallet")
+    private String wallet_id;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -62,13 +76,15 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
         this.category = category;
     }
 
-    public Long getLogin_id() {
-        return login_id;
+    public String getWallet_id() {
+        return wallet_id;
     }
 
-    public void setLogin_id(Long login_id) {
-        this.login_id = login_id;
+    public void setWallet_id(String wallet_id) {
+        this.wallet_id = wallet_id;
     }
+
+
 
     @Override
     public int compareTo(WalletTransaction another) {
@@ -85,6 +101,7 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
         return 0;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,33 +109,31 @@ public class WalletTransaction implements Parcelable, Comparable<WalletTransacti
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.date);
         dest.writeValue(this.price);
-        dest.writeParcelable(this.category, flags);
-        dest.writeValue(this.login_id);
+        dest.writeParcelable(this.category, 0);
+        dest.writeString(this.wallet_id);
     }
 
     public WalletTransaction() {
     }
 
     protected WalletTransaction(Parcel in) {
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.id = in.readString();
         this.name = in.readString();
         this.date = in.readString();
         this.price = (Float) in.readValue(Float.class.getClassLoader());
         this.category = in.readParcelable(Category.class.getClassLoader());
-        this.login_id = (Long) in.readValue(Long.class.getClassLoader());
+        this.wallet_id = in.readString();
     }
 
     public static final Creator<WalletTransaction> CREATOR = new Creator<WalletTransaction>() {
-        @Override
         public WalletTransaction createFromParcel(Parcel source) {
             return new WalletTransaction(source);
         }
 
-        @Override
         public WalletTransaction[] newArray(int size) {
             return new WalletTransaction[size];
         }
