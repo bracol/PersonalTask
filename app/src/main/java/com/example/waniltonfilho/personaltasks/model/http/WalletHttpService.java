@@ -82,4 +82,30 @@ public class WalletHttpService {
         return getWallet(wallet.getLogin_id());
 
     }
+
+    public static Wallet updateWallet(Wallet wallet) {
+        try {
+            URL url = new URL(URL + wallet.get_id());
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            //método de request, podendo ser get, post, put ou delete
+            conn.setDoOutput(true);
+            conn.setRequestMethod("PUT");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            OutputStream os = conn.getOutputStream();
+            os.write(new ObjectMapper().writeValueAsBytes(wallet));
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            conn.disconnect();
+
+        } catch (Exception e) {
+            Log.e(WalletHttpService.class.getName(), e.getMessage());
+        }
+
+        return getWallet(wallet.getLogin_id());
+    }
 }

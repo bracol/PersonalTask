@@ -2,24 +2,22 @@ package com.example.waniltonfilho.personaltasks.controller.tasks;
 
 import android.os.AsyncTask;
 
-import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.http.WalletHttpService;
 
 /**
- * Created by wanilton.filho on 14/03/2016.
+ * Created by Wanilton on 14/04/2016.
  */
-public class TaskWallet extends AsyncTask<Void, Void, Wallet> {
+public class TaskUpdateWallet extends AsyncTask<Void, Void, Wallet> {
 
-    private User mUser;
+    private Wallet mWallet;
 
-    public TaskWallet(User user){
-        mUser = user;
+    public TaskUpdateWallet(Wallet wallet){
+        mWallet = wallet;
     }
-
 
     @Override
     protected Wallet doInBackground(Void... params) {
-        return WalletHttpService.getWallet(mUser.getId());
+        return WalletHttpService.updateWallet(mWallet);
     }
 }

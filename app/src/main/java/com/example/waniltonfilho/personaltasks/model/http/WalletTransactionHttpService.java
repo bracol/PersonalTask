@@ -48,8 +48,16 @@ public class WalletTransactionHttpService {
             Log.e(WalletHttpService.class.getName() + "-------------------", e.getMessage());
         }
 
+        List<WalletTransaction> lastList = new ArrayList<>();
+        int listaSize = listWts.size();
 
-        return listWts;
+        if(listaSize > 0){
+            for(int i = 1; i <= 2; i++){
+                if (i <= listaSize)
+                    lastList.add(listWts.get(listaSize - i));
+            }
+        }
+        return lastList;
     }
 
 

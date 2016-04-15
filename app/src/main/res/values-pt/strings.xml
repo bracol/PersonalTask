@@ -25,6 +25,7 @@
     <string name="menu_transaction_consult">Consultar transações</string>
     <string name="info_empty_transactions">Não há transações nessa data</string>
     <string name="error_password">Usuário ou senha incorreto..</string>
+    <string name="log_info_att_wallet">Atualizando valor da carteira...</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

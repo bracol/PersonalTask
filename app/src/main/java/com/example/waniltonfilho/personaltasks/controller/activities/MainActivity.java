@@ -23,7 +23,7 @@ import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletF
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
-import com.example.waniltonfilho.personaltasks.controller.tasks.TaskWallet;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void bindComponents() {
         bindToolbar();
         bindFloatingButton();
+        getCategories();
         bindRecyclerView();
         bindTextViewMoney();
         bindNavigationView();
@@ -85,7 +86,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void getHttpWallet() {
-        new TaskWallet(mUser) {
+        new TaskGetWallet(mUser.getId()) {
             @Override
             protected void onPostExecute(Wallet wallet) {
                 mWallet = wallet;
@@ -132,6 +133,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, this));
         } else {
             new TaskGetWalletTransaction(mWallet.get_id()){
+
+                ProgressDialog dialog;
+
+                @Override
+                protected void onPreExecute() {
+                    dialog = new ProgressDialog(MainActivity.this);
+                    dialog.setMessage("Loading...");
+                    dialog.show();
+                    super.onPreExecute();
+                }
                 @Override
                 protected void onPostExecute(List<WalletTransaction> transactions) {
                     super.onPostExecute(transactions);
@@ -139,6 +150,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mRecyclerView = (RecyclerView) findViewById(R.id.recyclerLastTransaction);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                     mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, MainActivity.this));
+                    dialog.dismiss();
                 }
             }.execute();
         }
@@ -198,7 +210,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void showAddDialog(View v) {
-        String ae = "";
         if (!dialogVisible) {
             changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView, getCategories());
             if (mUser != null) {

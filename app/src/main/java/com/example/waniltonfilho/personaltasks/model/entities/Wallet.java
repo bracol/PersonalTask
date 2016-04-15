@@ -11,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Wallet implements Parcelable {
 
-    @JsonProperty(value = "_id")
+    @JsonProperty("_id")
     private String _id;
 
-    @JsonProperty(value = "value")
+    @JsonProperty("value")
     private Float value;
 
-    @JsonProperty(value = "login_id")
+    @JsonProperty("login_id")
     private String login_id;
 
     public String get_id() {

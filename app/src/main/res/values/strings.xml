@@ -57,4 +57,5 @@
     <string name="menu_transaction_consult">Consult transactions</string>
     <string name="info_empty_transactions">There no transactions on this date</string>
     <string name="error_password">Incorrect username or password.</string>
+    <string name="log_info_att_wallet">Updating wallet value...</string>
 </resources>

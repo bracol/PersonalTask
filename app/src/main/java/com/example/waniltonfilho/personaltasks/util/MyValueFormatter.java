@@ -18,7 +18,7 @@ public class MyValueFormatter implements ValueFormatter {
 
     public MyValueFormatter() {
         // use one decimal
-        mFormat = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+        mFormat = (DecimalFormat) NumberFormat.getInstance(new Locale("pt", "BR"));
         mFormat.setMaximumFractionDigits(2);
         mFormat.setMinimumFractionDigits(2);
     }
@@ -44,4 +44,6 @@ public class MyValueFormatter implements ValueFormatter {
         formated = formated.replace(",", ".");
         return formated;
     }
+
+
 }

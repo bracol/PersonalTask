@@ -48,9 +48,6 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         WalletTransaction walletTransaction = mTransactions.get(position);
-        Wallet wallet = WalletRepository.getWallet();
-        Float actualValue = wallet.getValue();
-        Float newValue = actualValue - walletTransaction.getPrice();
         String outputDateStr = "";
         Date inputDate;
         String s = "";

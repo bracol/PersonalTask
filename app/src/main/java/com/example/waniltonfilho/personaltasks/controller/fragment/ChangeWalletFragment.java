@@ -1,8 +1,10 @@
 package com.example.waniltonfilho.personaltasks.controller.fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +23,10 @@ import android.widget.TextView;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapter;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWalletTransaction;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskUpdateWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
@@ -179,11 +184,11 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         if(mWalletTransaction != null) {
             if(mWallet == null) {
                 WalletTransactionService.save(mWalletTransaction, mOperation);
-                updateTransactions();
             } else {
                 mWalletTransaction.setWallet_id(mWallet.get_id());
                 new TaskPostWalletTransaction(mWalletTransaction).execute();
             }
+            updateTransactions();
             endFrameAnimation();
             getActivity().getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right, R.animator.slide_in_right, R.animator.slide_in_right)
@@ -195,11 +200,31 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void changeWalletTextValue() {
+        final MyValueFormatter myValueFormatter = new MyValueFormatter();
         if (mWallet == null) {
             Wallet wallet = WalletRepository.getWallet();
-            mTextViewMoney.setText(wallet.getValue().toString());
+            mTextViewMoney.setText(myValueFormatter.getMaskFormatted(wallet.getValue()));
         } else {
-            mTextViewMoney.setText(mWallet.getValue().toString());
+            mWallet.setValue(mWallet.getValue() + Float.parseFloat(MyValueFormatter.formatPrice(editTextPrice.getText().toString())));
+            new TaskUpdateWallet(mWallet){
+                ProgressDialog dialog;
+
+                @Override
+                protected void onPreExecute() {
+                    dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage(getActivity().getString(R.string.log_info_att_wallet));
+                    dialog.show();
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(Wallet wallet) {
+                    mWallet = wallet;
+                    mTextViewMoney.setText(myValueFormatter.getMaskFormatted(mWallet.getValue()));
+                    dialog.dismiss();
+                }
+            }.execute();
+
         }
     }
 
@@ -217,10 +242,34 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void updateTransactions(){
-        List<WalletTransaction> mListTransactions = WalletTransactionService.getLastTransactions(2);
-        WalletTransactionAdapter adapter = (WalletTransactionAdapter) recyclerViewWallet.getAdapter();
-        adapter.setItens(mListTransactions);
-        adapter.notifyDataSetChanged();
+        if(mWallet == null) {
+            List<WalletTransaction> mListTransactions = WalletTransactionService.getLastTransactions(2);
+            WalletTransactionAdapter adapter = (WalletTransactionAdapter) recyclerViewWallet.getAdapter();
+            adapter.setItens(mListTransactions);
+            adapter.notifyDataSetChanged();
+        } else {
+            new TaskGetWalletTransaction(mWallet.get_id()){
+
+                ProgressDialog dialog;
+
+                @Override
+                protected void onPreExecute() {
+                    dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Loading...");
+                    dialog.show();
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(List<WalletTransaction> transactions) {
+                    super.onPostExecute(transactions);
+                    WalletTransactionAdapter adapter = (WalletTransactionAdapter) recyclerViewWallet.getAdapter();
+                    adapter.setItens(transactions);
+                    adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                }
+            }.execute();
+        }
     }
 
 }
