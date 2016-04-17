@@ -150,12 +150,13 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private void startFrameAnimation() {
         Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         mFrameAnimation.startAnimation(fadeInAnimation);
+        mFrameAnimation.setVisibility(View.VISIBLE);
     }
 
     private void endFrameAnimation() {
         Animation fadeOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mFrameAnimation.startAnimation(fadeOutAnimation);
-        //mFrameAnimation.setVisibility(View.INVISIBLE);
+        mFrameAnimation.setVisibility(View.INVISIBLE);
 
     }
 
@@ -172,7 +173,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void onButtonCancel() {
-        endFrameAnimation();
         getActivity().getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                 .remove(this)
@@ -189,7 +189,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                 new TaskPostWalletTransaction(mWalletTransaction).execute();
             }
             updateTransactions();
-            endFrameAnimation();
             getActivity().getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right, R.animator.slide_in_right, R.animator.slide_in_right)
                     .remove(this)
@@ -270,6 +269,12 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                 }
             }.execute();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        endFrameAnimation();
+        super.onDestroyView();
     }
 
 }

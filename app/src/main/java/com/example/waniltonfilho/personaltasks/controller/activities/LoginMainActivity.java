@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
@@ -30,6 +32,9 @@ import com.melnykov.fab.FloatingActionButton;
  */
 public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    private final int FIRST_LOGIN = 0;
+    private final int NOT_FIRST_LOGIN = 1;
     private EditText mEditTextUser;
     private EditText mEditTextPassword;
     private Button mButtonLogin;
@@ -38,6 +43,8 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     private FloatingActionButton mFabAdd;
     private User mUser;
     public static final String PREFERENCE_NAME = "PREFERENCE_NAME";
+    private ImageView mImgViewLogout;
+    private TextView mTvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +55,11 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
             StrictMode.setThreadPolicy(policy);
         }
 
-        bindElements();
-
+        checkPreferences();
 
     }
 
     private void bindElements() {
-        clearPreferences();
         mEditTextUser = (EditText) findViewById(R.id.editTextUsername);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonLogin = (Button) findViewById(R.id.buttonSignLogin);
@@ -70,18 +75,28 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         });
 
 
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
     }
 
-    private void clearPreferences() {
-        SharedPreferences sharedPref = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.remove("login");
-        editor.remove("pass");
-        editor.remove("name");
-        editor.commit();
+    private void checkPreferences() {
+        SharedPreferences sharedPref = getSharedPreferences(LoginMainActivity.PREFERENCE_NAME, Context.MODE_PRIVATE);
+        String login = sharedPref.getString("login", null);
+        String pass = sharedPref.getString("pass", null);
+        String name = sharedPref.getString("name", null);
+        if(login != null){
+            mUser = new User();
+            mUser.setName(name);
+            mUser.setUserName(login);
+            mUser.setPassword(pass);
+            goToMainActivity();
+        } else{
+            bindElements();
+        }
     }
+
+
 
     private void attempLogin() {
         User user = new User();
@@ -165,5 +180,11 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         editor.putString("pass", mUser.getPassword());
         editor.putString("name", mUser.getName());
         editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //clearPreferences();
     }
 }

@@ -16,6 +16,8 @@
         android:background="@drawable/toolbar_drop_shadow" />
 
 
+
+
     <RelativeLayout
         android:id="@+id/relativeLayoutPrincipal"
         android:layout_width="match_parent"
@@ -28,7 +30,8 @@
             android:id="@+id/textViewMoneyInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="30dp"
             android:padding="@dimen/padding_edittext_bottom"
             android:text="@string/info_money"
             android:textColor="#DEFFFFFF" />
@@ -58,6 +61,35 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_below="@id/relativeLayoutPrincipal" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLoginActive"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/app_bar"
+        android:gravity="right|center"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorPrimaryDark"
+        >
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        />
+
+    <ImageView
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_power_settings_new_white_36dp"
+        android:layout_marginRight="16dp"
+        android:padding="10dp"
+        />
+    </LinearLayout>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fabAddTransaction"

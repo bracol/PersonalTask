@@ -15,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
@@ -41,6 +43,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    public static final String WALLET_PARAM = "WALLET_PARAM";
     private Toolbar mToolbar;
     public static User selectedUser;
     private FloatingActionButton mFloatingActionButton;
@@ -51,6 +54,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ChangeWalletFragment changeFragment;
     private Wallet mWallet;
     private User mUser;
+    private LinearLayout linearLayoutLogged;
+    private ImageView mImgViewLogout;
+    private TextView mTvName;
 
 
     @Override
@@ -67,6 +73,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         bindRecyclerView();
         bindTextViewMoney();
         bindNavigationView();
+        bindLinearLogged();
+        bindTvName();
+        bindBtnLogout();
+    }
+
+    private void bindLinearLogged() {
+        linearLayoutLogged = (LinearLayout) findViewById(R.id.linearLoginActive);
+        if(mUser != null){
+            linearLayoutLogged.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void bindBtnLogout() {
+        mImgViewLogout = (ImageView) findViewById(R.id.btnLogout);
+        if(mUser != null){
+            mImgViewLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clearPreferences();
+                    goToLoginActivity();
+                }
+            });
+        }
+
+    }
+
+    private void goToLoginActivity() {
+        Intent goToLoginActivity = new Intent(MainActivity.this, LoginMainActivity.class);
+        startActivity(goToLoginActivity);
+    }
+
+    private void bindTvName() {
+        mTvName = (TextView) findViewById(R.id.tvName);
+        if(mUser != null){
+            mTvName.setText(mUser.getName());
+        }
     }
 
     private void checkWallet() {
@@ -237,6 +279,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item.getItemId()) {
             case R.id.nav_list:
                 Intent goToListActivity = new Intent(MainActivity.this, ListActivity.class);
+                if (mUser != null){
+                    goToListActivity.putExtra(WALLET_PARAM, mWallet);
+                }
                 startActivity(goToListActivity);
                 break;
             case R.id.nav_graph:
@@ -256,6 +301,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void clearPreferences() {
+        SharedPreferences sharedPref = getSharedPreferences(LoginMainActivity.PREFERENCE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("login");
+        editor.remove("pass");
+        editor.remove("name");
+        editor.commit();
     }
 
     //    mMonthTitle.setOnTouchListener(new View.OnTouchListener() {
