@@ -109,65 +109,6 @@ public class FragmentGraph extends Fragment {
         return v;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //preencherConteudo();
-        //preencherEstilo();
-    }
-
-    private void preencherConteudo() {
-        mListaDadosGrafico = WalletTransactionService.findAll();
-        if (mListaDadosGrafico != null) {
-
-            // referencia
-            List<String> xAxis = new ArrayList<>();
-
-            // volume
-            List<Entry> yAxis = new ArrayList<>();
-
-            MyValueFormatter myValueFormatter = new MyValueFormatter();
-            // popular eixos do grafico
-            for (WalletTransaction dado : mListaDadosGrafico) {
-                // volume
-                yAxis.add(new Entry(Float.parseFloat(""), mListaDadosGrafico.indexOf(dado)));
-                // referencia
-                xAxis.add("R$ " + String.valueOf(dado.getPrice()));
-            }
-
-            PieDataSet pieDataSet = new PieDataSet(yAxis, "Meses");
-            pieDataSet.setSelectionShift(8f);
-            int[] colors = CORES_GRAFICO;
-            pieDataSet.setColors(colors);
-
-            PieData pieData = new PieData(xAxis, pieDataSet);
-            // pieData.setValueFormatter(new PercentFormatter());
-            pieData.setValueTextSize(10f);
-            pieData.setValueTextColor(Color.WHITE);
-            mChart.setData(pieData);
-            mChart.invalidate();
-        }
-    }
-
-    private void preencherEstilo() {
-        // necessario para remover o valor default da descricao do grafico
-        mChart.setDescription("");
-        // remover a legenda dos segmentos do grafico
-        mChart.getLegend().setEnabled(false);
-        // seta esta classe como listener dos eventos de toque
-        // configura o tipo e a velocidade da animacao de apresentacao do
-        // grafico
-        mChart.animateXY(1000, 1000, Easing.EasingOption.Linear, Easing.EasingOption.Linear);
-        // apresenta um texto no lugar do grafico quando nao houverem dados para
-        // apresentacao
-        // configuracoes gerais de estilo
-        mChart.setCenterTextColor(Color.TRANSPARENT);
-        mChart.setBackgroundColor(Color.TRANSPARENT);
-        mChart.setHoleColorTransparent(true);
-        mChart.setHoleRadius(0F);
-        mChart.setTransparentCircleRadius(0F);
-
-    }
 
     private SpannableString generateCenterText() {
         SpannableString s = new SpannableString("");

@@ -1,12 +1,14 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
-import android.app.FragmentTransaction;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,9 +25,9 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletFragment;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
-import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
@@ -80,19 +82,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void bindLinearLogged() {
         linearLayoutLogged = (LinearLayout) findViewById(R.id.linearLoginActive);
-        if(mUser != null){
+        if (mUser != null) {
             linearLayoutLogged.setVisibility(View.VISIBLE);
         }
     }
 
     private void bindBtnLogout() {
         mImgViewLogout = (ImageView) findViewById(R.id.btnLogout);
-        if(mUser != null){
+        if (mUser != null) {
             mImgViewLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clearPreferences();
-                    goToLoginActivity();
+                    onLogoutClick();
                 }
             });
         }
@@ -106,7 +107,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void bindTvName() {
         mTvName = (TextView) findViewById(R.id.tvName);
-        if(mUser != null){
+        if (mUser != null) {
             mTvName.setText(mUser.getName());
         }
     }
@@ -133,7 +134,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             protected void onPostExecute(Wallet wallet) {
                 mWallet = wallet;
                 if (mWallet == null) {
-                    new TaskPostWallet(mUser){
+                    new TaskPostWallet(mUser) {
                         @Override
                         protected void onPostExecute(Wallet walletResult) {
                             mWallet = walletResult;
@@ -168,13 +169,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void bindRecyclerView() {
-        if(getPreferenceLogin() == null) {
+        if (getPreferenceLogin() == null) {
             mListTransactions = WalletTransactionService.getLastTransactions(2);
             mRecyclerView = (RecyclerView) findViewById(R.id.recyclerLastTransaction);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, this));
         } else {
-            new TaskGetWalletTransaction(mWallet.get_id()){
+            new TaskGetWalletTransaction(mWallet.get_id()) {
 
                 ProgressDialog dialog;
 
@@ -185,6 +186,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     dialog.show();
                     super.onPreExecute();
                 }
+
                 @Override
                 protected void onPostExecute(List<WalletTransaction> transactions) {
                     super.onPostExecute(transactions);
@@ -203,12 +205,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         SharedPreferences sharedPref = getSharedPreferences(LoginMainActivity.PREFERENCE_NAME, Context.MODE_PRIVATE);
         String login = sharedPref.getString("login", null);
         String pass = sharedPref.getString("pass", null);
+        String name = sharedPref.getString("name", null);
         if (login == null && pass == null) {
             return null;
         } else {
             User userC = new User();
             userC.setUserName(login);
             userC.setPassword(pass);
+            userC.setName(name);
             return userC;
         }
     }
@@ -259,14 +263,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 args.putParcelable("wallet", mWallet);
                 changeFragment.setArguments(args);
             }
-            FragmentTransaction fm = getFragmentManager().beginTransaction();
-            fm.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right);
+            FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+            fm.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
             fm.replace(R.id.frameChange, changeFragment);
             fm.commit();
             dialogVisible = true;
         } else {
-            getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                     .remove(changeFragment)
                     .commit();
             dialogVisible = false;
@@ -279,13 +283,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item.getItemId()) {
             case R.id.nav_list:
                 Intent goToListActivity = new Intent(MainActivity.this, ListActivity.class);
-                if (mUser != null){
+                if (mUser != null) {
                     goToListActivity.putExtra(WALLET_PARAM, mWallet);
                 }
                 startActivity(goToListActivity);
                 break;
             case R.id.nav_graph:
-                Intent goToGraphActivity = new Intent(MainActivity.this, Chart.class);
+                Intent goToGraphActivity = new Intent(MainActivity.this, ChartActivity.class);
                 startActivity(goToGraphActivity);
                 break;
         }
@@ -310,6 +314,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         editor.remove("pass");
         editor.remove("name");
         editor.commit();
+    }
+
+    private void onLogoutClick() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.lbl_confirm)
+                .setMessage(R.string.info_confirm_logout)
+                .setPositiveButton(R.string.lbl_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearPreferences();
+                        goToLoginActivity();
+                    }
+                })
+                .setNeutralButton(R.string.lbl_no, null)
+                .create()
+                .show();
+
     }
 
     //    mMonthTitle.setOnTouchListener(new View.OnTouchListener() {

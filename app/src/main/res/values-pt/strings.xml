@@ -26,6 +26,10 @@
     <string name="info_empty_transactions">Não há transações nessa data</string>
     <string name="error_password">Usuário ou senha incorreto..</string>
     <string name="log_info_att_wallet">Atualizando valor da carteira...</string>
+    <string name="info_confirm_logout">Tem certeza que deseja sair?</string>
+    <string name="lbl_confirm">Confirmação</string>
+    <string name="lbl_yes">Sim</string>
+    <string name="lbl_no">Não</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

@@ -1,29 +1,29 @@
 package com.example.waniltonfilho.personaltasks.controller.fragment;
 
-import android.app.Fragment;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapter;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
-import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskUpdateWallet;
@@ -35,11 +35,9 @@ import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionSe
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by wanilton.filho on 04/02/2016.
@@ -53,6 +51,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private Button mButtonCancel;
     private WalletTransaction mWalletTransaction;
     private int mOperation;
+    private LinearLayout mLinearAnimation;
     private FrameLayout mFrameAnimation;
     private Spinner mSpinnerIcons;
     private Category mCategorySelected;
@@ -64,7 +63,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     public ChangeWalletFragment() {
     }
 
-    public ChangeWalletFragment(int operation, TextView textViewMoney, RecyclerView recyclerView, List<Category> categories){
+    public ChangeWalletFragment(int operation, TextView textViewMoney, RecyclerView recyclerView, List<Category> categories) {
         mOperation = operation;
         mTextViewMoney = textViewMoney;
         recyclerViewWallet = recyclerView;
@@ -74,9 +73,10 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             mWallet = getArguments().getParcelable("wallet");
         }
+        getActivity().findViewById(R.id.textViewMoney);
     }
 
     @Override
@@ -88,6 +88,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
         editTextPrice.addTextChangedListener(new TextWatcher() {
             String current = "";
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -100,7 +101,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(current)){
+                if (!s.toString().equals(current)) {
 
                     String cleanString = s.toString().replaceAll("[R$,.]", "");
 
@@ -119,6 +120,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         mButtonCancel.setOnClickListener(this);
         mButtonConfirm = (Button) v.findViewById(R.id.buttonConfirmChange);
         mButtonConfirm.setOnClickListener(this);
+        mLinearAnimation = (LinearLayout) v.findViewById(R.id.linearAnimation);
         mFrameAnimation = (FrameLayout) v.findViewById(R.id.frameAnimation);
         mSpinnerIcons = (Spinner) v.findViewById(R.id.spinnerIcons);
         bindSpinner(mSpinnerIcons);
@@ -144,21 +146,22 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        startFrameAnimation();
     }
 
-    private void startFrameAnimation() {
-        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-        mFrameAnimation.startAnimation(fadeInAnimation);
-        mFrameAnimation.setVisibility(View.VISIBLE);
-    }
-
-    private void endFrameAnimation() {
-        Animation fadeOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
-        mFrameAnimation.startAnimation(fadeOutAnimation);
-        mFrameAnimation.setVisibility(View.INVISIBLE);
-
-    }
+//    private void startFrameAnimation() {
+//        Animation swipeLeftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_left);
+//        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+//        mFrameAnimation.startAnimation(fadeInAnimation);
+//        mLinearAnimation.startAnimation(swipeLeftAnimation);
+//
+//    }
+//
+//    private void endFrameAnimation() {
+//        //Animation swipeRightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_right);
+//        Animation fadeOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+//        mFrameAnimation.startAnimation(fadeOutAnimation);
+//        //mLinearAnimation.startAnimation(swipeRightAnimation);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -173,26 +176,27 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void onButtonCancel() {
-        getActivity().getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+        removeFragment();
+    }
+
+    private void removeFragment() {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .remove(this)
                 .commit();
     }
 
     private void onButtonConfirm() {
         bindWalletTransaction();
-        if(mWalletTransaction != null) {
-            if(mWallet == null) {
+        if (mWalletTransaction != null) {
+            if (mWallet == null) {
                 WalletTransactionService.save(mWalletTransaction, mOperation);
             } else {
                 mWalletTransaction.setWallet_id(mWallet.get_id());
                 new TaskPostWalletTransaction(mWalletTransaction).execute();
             }
             updateTransactions();
-            getActivity().getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right, R.animator.slide_in_right, R.animator.slide_in_right)
-                    .remove(this)
-                    .commit();
+            removeFragment();
             changeWalletTextValue();
             Snackbar.make(getView(), getString(R.string.action_button_transaction_confirm), Snackbar.LENGTH_SHORT).show();
         }
@@ -205,7 +209,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             mTextViewMoney.setText(myValueFormatter.getMaskFormatted(wallet.getValue()));
         } else {
             mWallet.setValue(mWallet.getValue() + Float.parseFloat(MyValueFormatter.formatPrice(editTextPrice.getText().toString())));
-            new TaskUpdateWallet(mWallet){
+            new TaskUpdateWallet(mWallet) {
                 ProgressDialog dialog;
 
                 @Override
@@ -229,7 +233,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
 
 
     private void bindWalletTransaction() {
-        if(!StringUtil.isNullOrBlank(editTextPrice.getText().toString(), editTextPrice, getActivity()) && (StringUtil.isDouble(editTextPrice.getText().toString(), editTextPrice, getActivity()))){
+        if (!StringUtil.isNullOrBlank(editTextPrice.getText().toString(), editTextPrice, getActivity()) && (StringUtil.isDouble(editTextPrice.getText().toString(), editTextPrice, getActivity()))) {
             mWalletTransaction = new WalletTransaction();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String currentDateandTime = sdf.format(new Date());
@@ -240,14 +244,14 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void updateTransactions(){
-        if(mWallet == null) {
+    private void updateTransactions() {
+        if (mWallet == null) {
             List<WalletTransaction> mListTransactions = WalletTransactionService.getLastTransactions(2);
             WalletTransactionAdapter adapter = (WalletTransactionAdapter) recyclerViewWallet.getAdapter();
             adapter.setItens(mListTransactions);
             adapter.notifyDataSetChanged();
         } else {
-            new TaskGetWalletTransaction(mWallet.get_id()){
+            new TaskGetWalletTransaction(mWallet.get_id()) {
 
                 ProgressDialog dialog;
 
@@ -271,10 +275,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        endFrameAnimation();
-        super.onDestroyView();
-    }
+
 
 }

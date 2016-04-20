@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <application
         android:name=".util.TaskManagerApplication"
@@ -15,10 +16,10 @@
         <activity
             android:name=".controller.activities.LoginMainActivity"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controller.activities.MainActivity" />
+
         </activity>
         <activity
             android:name=".controller.activities.LoginFormActivity"
@@ -32,8 +33,7 @@
             android:label="@string/app_name"></activity>
         <activity
             android:name=".controller.activities.MainActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
 
         <activity
             android:name=".controller.activities.ListActivity"
@@ -44,22 +44,20 @@
 
         </activity>
 
-        <activity android:name=".teste.ActivityMonthTeste">
-
+        <activity android:name=".teste.TesteActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
-        <activity android:name=".teste.Grafico2">
+        <activity
+            android:name=".controller.activities.ChartActivity"
+            android:label="@string/app_name"></activity>
 
-        </activity>
-
-        <activity android:name=".controller.activities.Chart"
-            android:label="@string/app_name">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.activities.MainActivity" />
-        </activity>
+        <receiver android:name=".teste.AlarmReceiver"/>
+        <service android:name=".teste.TestBroadcast"></service>
     </application>
-
 
 
 </manifest>
