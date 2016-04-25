@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -331,6 +332,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .create()
                 .show();
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mUser != null) {
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     //    mMonthTitle.setOnTouchListener(new View.OnTouchListener() {

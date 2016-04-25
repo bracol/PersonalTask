@@ -17,10 +17,12 @@ public class MonthList {
     private List<String> mMonthsNumber = Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
     public MonthList() {
-        initMonth = WalletTransactionService.getFirstLastTransaction(0).getDate().substring(5, 7);
-        initYear = Integer.parseInt(WalletTransactionService.getFirstLastTransaction(0).getDate().substring(0, 4));
-        lastMonth = WalletTransactionService.getFirstLastTransaction(1).getDate().substring(5, 7);
-        lastYear = Integer.parseInt(WalletTransactionService.getFirstLastTransaction(1).getDate().substring(0, 4));
+        if(WalletTransactionService.getFirstLastTransaction(0).getDate() != null) {
+            initMonth = WalletTransactionService.getFirstLastTransaction(0).getDate().substring(5, 7);
+            initYear = Integer.parseInt(WalletTransactionService.getFirstLastTransaction(0).getDate().substring(0, 4));
+            lastMonth = WalletTransactionService.getFirstLastTransaction(1).getDate().substring(5, 7);
+            lastYear = Integer.parseInt(WalletTransactionService.getFirstLastTransaction(1).getDate().substring(0, 4));
+        }
     }
 
     public String swipeLeft(String current) {

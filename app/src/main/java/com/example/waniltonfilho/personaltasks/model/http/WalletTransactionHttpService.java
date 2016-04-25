@@ -51,8 +51,8 @@ public class WalletTransactionHttpService {
         List<WalletTransaction> lastList = new ArrayList<>();
         int listaSize = listWts.size();
 
-        if(listaSize > 0){
-            for(int i = 1; i <= 2; i++){
+        if (listaSize > 0) {
+            for (int i = 1; i <= 2; i++) {
                 if (i <= listaSize)
                     lastList.add(listWts.get(listaSize - i));
             }
@@ -84,4 +84,59 @@ public class WalletTransactionHttpService {
             Log.e(WalletHttpService.class.getName(), e.getMessage());
         }
     }
+
+    public static List<WalletTransaction> getSumCategoryWalletTransaction(String wallet_id) {
+        List<WalletTransaction> listWts = new ArrayList<>();
+
+
+        try {
+            java.net.URL url = new URL(URL + wallet_id);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream inputStream = conn.getInputStream();
+                ObjectMapper objectMapper = new ObjectMapper();
+                CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, WalletTransaction.class);
+                listWts = objectMapper.readValue(inputStream, collectionType);
+            }
+            conn.disconnect();
+
+        } catch (Exception e) {
+            Log.e(WalletHttpService.class.getName() + "-------------------", e.getMessage());
+        }
+
+        List<WalletTransaction> lastList = new ArrayList<>();
+        int listaSize = listWts.size();
+
+        if (listaSize > 0) {
+            for (WalletTransaction w1 : listWts) {
+                for(WalletTransaction w2 : lastList){
+
+                }
+            }
+        }
+        return lastList;
+    }
+
+//    public static List<WalletTransaction> getSumCategory(String month) {
+////        SELECT dept, sum(salary) FROM employees where strftime('%m', hired_on) = '02' group by dept;;
+//
+//        String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
+//        String[] params = {month};
+//        String[] colum = {"sum(" + WalletTransactionContract.PRICE + "), " + WalletTransactionContract.CATEGORY_ID};
+//        String groupBy = WalletTransactionContract.CATEGORY_ID;
+//
+//
+//        Cursor cursor = db.query(WalletTransactionContract.TABLE, colum, where, params, groupBy, null, null);
+//        List<WalletTransaction> transactions = WalletTransactionContract.getTransactionSumCategoryAll(cursor);
+//
+//        db.close();
+//        dataBaseHelper.close();
+//
+//        return transactions;
+//    }
 }

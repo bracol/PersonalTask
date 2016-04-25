@@ -138,7 +138,6 @@ public class ChartActivity extends BaseActivity {
         mListaDadosGrafico = WalletTransactionService.getSumCategoryService(mMonthTitle.getText().toString());
         mChart = (PieChart) findViewById(R.id.chart);
         mChart.setDescription("");
-        mCenterText = generateCenterText();
 
 
         // radius of the center hole in percent of maximum radius
