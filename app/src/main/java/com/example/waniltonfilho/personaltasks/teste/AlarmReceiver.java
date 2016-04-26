@@ -14,14 +14,19 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostLogin;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 
+import java.util.Calendar;
+
 public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     private User mUser;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        final Intent service = new Intent(context, TestBroadcast.class);
-        startWakefulService(context, service);
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mUser = extras.getParcelable("EZE_USER");
+            new TaskPostLogin(mUser).execute();
+        }
     }
 
     public void setAlarm(final Context context, User user) {
@@ -33,8 +38,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         intent.putExtras(bundle);
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 0, intent, 0);
+        Calendar calendar = Calendar.getInstance();
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis(), 500, pendingIntent);
+                calendar.getTimeInMillis(), 500, pendingIntent);
     }
 
 }

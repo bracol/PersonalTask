@@ -62,4 +62,5 @@
     <string name="lbl_confirm">Confirm</string>
     <string name="lbl_yes">Yes</string>
     <string name="lbl_no">No</string>
+    <string name="info_connection">No Connection</string>
 </resources>

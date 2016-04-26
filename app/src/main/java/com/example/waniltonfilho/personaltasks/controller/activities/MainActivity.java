@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
@@ -35,6 +37,7 @@ import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
+import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -53,7 +56,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private RecyclerView mRecyclerView;
     private List<WalletTransaction> mListTransactions;
     private TextView mTextViewMoney;
-    private boolean dialogVisible = false;
+    public static boolean dialogVisible = false;
     private ChangeWalletFragment changeFragment;
     private Wallet mWallet;
     private User mUser;
@@ -125,7 +128,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 bindComponents();
             }
         } else {
-            getHttpLogin(user);
+            if(ConnectionUtil.isConnected(this)) {
+                getHttpLogin(user);
+            } else {
+                Toast.makeText(this, R.string.info_connection, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -259,22 +266,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void showAddDialog(View v) {
         if (!dialogVisible) {
             changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView, getCategories());
+            Bundle args = new Bundle();
             if (mUser != null) {
-                Bundle args = new Bundle();
                 args.putParcelable("wallet", mWallet);
-                changeFragment.setArguments(args);
             }
+            changeFragment.setArguments(args);
             FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
             fm.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
             fm.replace(R.id.frameChange, changeFragment);
             fm.commit();
             dialogVisible = true;
-        } else {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                    .remove(changeFragment)
-                    .commit();
-            dialogVisible = false;
         }
 
     }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.controller.activities.MainActivity;
 import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapter;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
@@ -59,6 +60,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private RecyclerView recyclerViewWallet;
     private List<Category> mCategories;
     private Wallet mWallet;
+    private Boolean dialogVisible;
 
     public ChangeWalletFragment() {
     }
@@ -75,6 +77,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mWallet = getArguments().getParcelable("wallet");
+            dialogVisible = getArguments().getBoolean("bool");
         }
         getActivity().findViewById(R.id.textViewMoney);
     }
@@ -177,6 +180,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
 
     private void onButtonCancel() {
         removeFragment();
+        MainActivity.dialogVisible  = false;
     }
 
     private void removeFragment() {
@@ -184,6 +188,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .remove(this)
                 .commit();
+        MainActivity.dialogVisible = false;
     }
 
     private void onButtonConfirm() {

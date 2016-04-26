@@ -3,6 +3,8 @@ package com.example.waniltonfilho.personaltasks.model.http;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -13,10 +15,7 @@ public class LoginAuthenticationService {
     private LoginAuthenticationService() {
     }
 
-    ;
-
-    //private static final String URL = "http://inovacoes.cast.com.br/api";
-    private static final String URL = "http://10.0.3.2:3000/api/v1/users";
+    public static String URL = ConnectionUtil.URL_WALLET + "users";
 
 
     public static HttpURLConnection getAuthentication(String user, String password) {

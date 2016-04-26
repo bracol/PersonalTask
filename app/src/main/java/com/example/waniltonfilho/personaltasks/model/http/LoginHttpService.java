@@ -3,6 +3,7 @@ package com.example.waniltonfilho.personaltasks.model.http;
 import android.util.Log;
 
 import com.example.waniltonfilho.personaltasks.model.entities.User;
+import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.InputStream;
@@ -14,7 +15,7 @@ import java.net.URL;
  * Created by Wanilton on 03/04/2016.
  */
 public class LoginHttpService {
-    private static final String URL = "http://10.0.3.2:3000/api/v1/users";
+    public static String URL = ConnectionUtil.URL_WALLET + "users";
 
     private LoginHttpService() {
         super();

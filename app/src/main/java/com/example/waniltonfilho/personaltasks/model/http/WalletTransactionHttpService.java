@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
+import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by wanilton.filho on 13/04/2016.
  */
 public class WalletTransactionHttpService {
-    private static final String URL = "http://10.0.3.2:3000/api/v1/wts/";
+    public static String URL = ConnectionUtil.URL_WALLET + "wts/";
 
     private WalletTransactionHttpService() {
         super();
