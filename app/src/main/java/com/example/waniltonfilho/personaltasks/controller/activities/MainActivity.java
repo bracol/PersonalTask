@@ -49,9 +49,9 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    public static final String ONLINE_PARAM = "ONLINE_PARAM";
     public static final String WALLET_PARAM = "WALLET_PARAM";
     private Toolbar mToolbar;
-    public static User selectedUser;
     private FloatingActionButton mFloatingActionButton;
     private RecyclerView mRecyclerView;
     private List<WalletTransaction> mListTransactions;
@@ -292,6 +292,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_graph:
                 Intent goToGraphActivity = new Intent(MainActivity.this, ChartActivity.class);
+                if (mUser != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("online", true);
+                    goToGraphActivity.putExtras(bundle);
+                }
                 startActivity(goToGraphActivity);
                 break;
         }

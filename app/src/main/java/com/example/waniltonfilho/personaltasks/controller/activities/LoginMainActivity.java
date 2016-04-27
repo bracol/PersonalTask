@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetGroupWts;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
@@ -54,7 +55,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
         checkPreferences();
 
     }
