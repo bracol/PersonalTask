@@ -19,9 +19,7 @@ import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
-import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetGroupWts;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
-import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
@@ -50,11 +48,12 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_main_login);
+        setContentView(R.layout.activity_main_login);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        bindElements();
         checkPreferences();
 
     }
@@ -181,6 +180,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         editor.putString("name", mUser.getName());
         editor.commit();
     }
+
 
     @Override
     protected void onResume() {

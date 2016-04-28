@@ -53,7 +53,7 @@ public class ChartActivity extends BaseActivity {
     private List<Category> mCategories;
     private List<GroupCategoryTransaction> mGroupCategories;
     private List<WalletTransaction> mListaDadosGrafico;
-    private Boolean isOnline;
+    private Wallet mWallet;
 
     // cores do grafico
     private final int[] CORES_GRAFICO = {Color.rgb(180, 0, 157), Color.rgb(0, 103, 208), Color.rgb(255, 54, 6),
@@ -73,7 +73,7 @@ public class ChartActivity extends BaseActivity {
     private void initWallet() {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            isOnline = extras.getBoolean(MainActivity.ONLINE_PARAM);
+            mWallet = extras.getParcelable(MainActivity.WALLET_PARAM);
         }
     }
 
@@ -124,7 +124,7 @@ public class ChartActivity extends BaseActivity {
         String tv = mMonthTitle.getText().toString();
         String month = tv.substring(0, 2);
         String year = tv.substring(3, 7);
-        new TaskGetGroupWts(year, month){
+        new TaskGetGroupWts(mWallet.get_id(), year, month){
             ProgressDialog dialog;
 
             @Override
@@ -227,7 +227,7 @@ public class ChartActivity extends BaseActivity {
     }
 
     private void verifyGraphState() {
-        if (isOnline == null){
+        if (mWallet == null){
             attGraphOffline();
         }else{
             attGraphOnline();

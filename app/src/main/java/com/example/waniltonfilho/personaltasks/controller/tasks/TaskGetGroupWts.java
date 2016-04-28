@@ -15,10 +15,12 @@ public class TaskGetGroupWts extends AsyncTask<Void, Void, List<GroupCategoryTra
 
     private String mYear;
     private String mMonth;
+//    private String mWallet_id;
 
-    public TaskGetGroupWts(String year, String month){
+    public TaskGetGroupWts(String walle_id, String year, String month){
         mYear = year;
         mMonth = month;
+//        mWallet_id = walle_id;
     }
 
 

@@ -14,8 +14,8 @@ import java.net.URL;
  */
 public class ConnectionUtil {
 
-    public static final String URL_WALLET = "http://10.0.3.2:3000/api/v1/";
-//    public static final String URL_WALLET = "http://192.168.0.12:3000/api/v1/";
+//    public static final String URL_WALLET = "http://10.0.3.2:3000/api/v1/";
+    public static final String URL_WALLET = "http://192.168.0.12:3000/api/v1/";
 
     public static boolean isConnected(Activity context)
     {

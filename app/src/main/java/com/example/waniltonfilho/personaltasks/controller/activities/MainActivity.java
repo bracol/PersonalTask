@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 bindComponents();
             }
         } else {
-            if(ConnectionUtil.isConnected(this)) {
+            if (ConnectionUtil.isConnected(this)) {
                 getHttpLogin(user);
             } else {
                 Toast.makeText(this, R.string.info_connection, Toast.LENGTH_LONG).show();
@@ -240,8 +240,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             protected void onPostExecute(User user) {
                 super.onPostExecute(user);
-                mUser = user;
-                getHttpWallet();
+                if (user != null) {
+                    mUser = user;
+                    getHttpWallet();
+                } else {
+                    clearPreferences();
+                    finish();
+                }
+
                 dialog.dismiss();
             }
         }.execute();
@@ -294,7 +300,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 Intent goToGraphActivity = new Intent(MainActivity.this, ChartActivity.class);
                 if (mUser != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean("online", true);
+                    bundle.putParcelable(WALLET_PARAM, mWallet);
                     goToGraphActivity.putExtras(bundle);
                 }
                 startActivity(goToGraphActivity);
