@@ -11,7 +11,7 @@
     <string name="button_string_put">PUT</string>
     <string name="button_string_remove">REMOVE</string>
     <string name="hint_date">Date</string>
-    <string name="hint_name">Name</string>
+    <string name="hint_description">Description</string>
     <string name="hint_price">Price</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>

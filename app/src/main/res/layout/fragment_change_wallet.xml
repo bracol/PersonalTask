@@ -46,9 +46,12 @@
                 android:id="@+id/editTextNameWallet"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="@string/hint_name"
+                android:hint="@string/hint_description"
                 android:paddingBottom="16dp"
-                android:paddingTop="8dp" />
+                android:paddingTop="8dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                />
 
             <EditText
                 android:id="@+id/editTextPriceWallet"

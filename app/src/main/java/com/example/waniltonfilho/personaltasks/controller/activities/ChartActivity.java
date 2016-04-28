@@ -27,6 +27,7 @@ import com.example.waniltonfilho.personaltasks.model.persistance.category.Catego
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.ListManipulation;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -136,10 +137,10 @@ public class ChartActivity extends BaseActivity {
 
             @Override
             protected void onPostExecute(List<GroupCategoryTransaction> groupTransactions) {
+                super.onPostExecute(groupTransactions);
                 mGroupCategories = groupTransactions;
                 attOnline();
                 dialog.dismiss();
-                super.onPostExecute(groupTransactions);
             }
         }.execute();
 
@@ -207,18 +208,20 @@ public class ChartActivity extends BaseActivity {
         mListaDadosGrafico = WalletTransactionService.getSumCategoryService(mMonthTitle.getText().toString());
         mChart = (PieChart) findViewById(R.id.chart);
         mChart.setDescription("");
-
-
-        // radius of the center hole in percent of maximum radius
-        mChart.setHoleRadius(52f);
-        mChart.setTransparentCircleRadius(57f);
-        mChart.setCenterText(mCenterText);
-        mChart.setCenterTextSize(9f);
-        //mChart.setExtraOffsets(5, 10, 50, 10);
-
-        // do not forget to refresh the chart
-        Legend legend = mChart.getLegend();
-        legend.setEnabled(false);
+        // remover a legenda dos segmentos do grafico
+        mChart.getLegend().setEnabled(false);
+        // seta esta classe como listener dos eventos de toque
+        // configura o tipo e a velocidade da animacao de apresentacao do
+        // grafico
+        mChart.animateXY(1000, 1000, Easing.EasingOption.Linear, Easing.EasingOption.Linear);
+        // apresenta um texto no lugar do grafico quando nao houverem dados para
+        // apresentacao
+        // configuracoes gerais de estilo
+        mChart.setCenterTextColor(Color.TRANSPARENT);
+        mChart.setBackgroundColor(Color.TRANSPARENT);
+        mChart.setHoleColorTransparent(true);
+        mChart.setHoleRadius(0F);
+        mChart.setTransparentCircleRadius(0F);
 
         verifyGraphState();
     }

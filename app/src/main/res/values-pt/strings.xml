@@ -12,7 +12,7 @@
     <string name="button_string_put">ADICIONAR</string>
     <string name="button_string_remove">REMOVER</string>
     <string name="hint_date">Data</string>
-    <string name="hint_name">Nome</string>
+    <string name="hint_description">Descrição</string>
     <string name="hint_price">Preço</string>
     <string name="action_confirm">Confirmar</string>
     <string name="action_cancel">Cancelar</string>
