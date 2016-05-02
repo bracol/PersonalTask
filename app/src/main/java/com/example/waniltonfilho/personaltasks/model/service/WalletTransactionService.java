@@ -1,22 +1,7 @@
 package com.example.waniltonfilho.personaltasks.model.service;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.FragmentManager;
-import android.graphics.Point;
-import android.os.Build;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-
-import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
-import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
 
 import java.util.ArrayList;
@@ -40,7 +25,7 @@ public class WalletTransactionService {
     public static void save(WalletTransaction walletTransaction, int operation){
         Float newValue;
         WalletTransactionRepository.save(walletTransaction);
-        Wallet wallet = WalletRepository.getWallet();
+        Wallet wallet = WalletService.getWallet();
         Float actualValue = wallet.getValue();
         newValue = actualValue + walletTransaction.getPrice();
         WalletService.update(newValue);

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".util.TaskManagerApplication"
@@ -26,11 +26,8 @@
         </activity>
         <activity
             android:name=".controller.activities.LoginFormActivity"
-            android:label="@string/app_name">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.activities.LoginMainActivity" />
-        </activity>
+            android:label="@string/app_name"
+            android:theme="@style/Transparent"></activity>
         <activity
             android:name=".model.TesteCustomView"
             android:label="@string/app_name"></activity>
@@ -66,8 +63,9 @@
         </activity>
 
 
-        <receiver android:name=".teste.AlarmReceiver"/>
-        <receiver android:name=".teste.AlarmReceiverNotification"/>
+        <receiver android:name=".teste.AlarmReceiver" />
+        <receiver android:name=".teste.AlarmReceiverNotification" />
+
         <service android:name=".teste.TestBroadcast"></service>
     </application>
 

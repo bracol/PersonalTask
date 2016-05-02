@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.Snackbar;
@@ -22,7 +23,6 @@ import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialo
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -65,6 +65,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mButtonLogin.setOnClickListener(this);
         mButtonOfflineLogin = (Button) findViewById(R.id.buttonSignOffline);
         mButtonOfflineLogin.setOnClickListener(this);
+        final ColorStateList colors = mEditTextPassword.getHintTextColors();
         mFabAdd = (FloatingActionButton) findViewById(R.id.fabAddLogin);
         mFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +163,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
 
     private void startOffline() {
-        if (WalletRepository.getWallet() != null) {
+        if (WalletService.getWallet() != null) {
             Intent goToActivityCategory = new Intent(LoginMainActivity.this, MainActivity.class);
             startActivity(goToActivityCategory);
         } else {

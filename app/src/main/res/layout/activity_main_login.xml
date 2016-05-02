@@ -18,21 +18,22 @@
     <!--android:layout_below="@id/app_bar"-->
     <!--android:src="@drawable/logo" />-->
 
-    <FrameLayout
+    <ImageView
         android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/teste"
+        android:src="@drawable/testewallpaper"
+        android:scaleType="centerCrop"
         />
 
-    <FrameLayout
+
+    <ImageView
         android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:alpha="0.5"
+        android:background="#000000"
+        android:alpha="0.4"
         />
-
 
 
     <RelativeLayout
@@ -41,28 +42,18 @@
         android:layout_below="@+id/app_bar"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-
         tools:context=".controller. .activities.MainLoginActivity">
 
 
         <!-- User progress -->
-        <ScrollView
-            android:id="@+id/login_form"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            >
 
             <LinearLayout
-                android:id="@+id/email_login_form"
+                android:id="@+id/linear_login_sign_form"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="150dp"
                 android:orientation="vertical"
-                android:layout_gravity="center_vertical"
+                android:layout_marginTop="70dp"
+                android:paddingLeft="@dimen/padding_layout_button"
                 >
 
                 <LinearLayout
@@ -76,11 +67,13 @@
                         android:id="@+id/imageViewUserNameMain"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_action_username"
+                        android:src="@drawable/ic_action_account_box"
+                        android:padding="10dp"
 
                         />
 
                     <android.support.design.widget.TextInputLayout
+                        android:theme="@style/EditTextHintLight"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/textinput_size"
                         android:paddingLeft="@dimen/padding_edittext_bottom"
@@ -97,6 +90,7 @@
                             android:singleLine="true"
                             android:textSize="@dimen/textfield_textsize"
                             android:gravity="center_vertical"
+                            android:textColor="@android:color/white"
                             />
 
                     </android.support.design.widget.TextInputLayout>
@@ -113,11 +107,12 @@
                         android:id="@+id/imageViewPassword"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_action_password"
-
+                        android:src="@drawable/ic_action_lock"
+                        android:padding="5dp"
                         />
 
                     <android.support.design.widget.TextInputLayout
+                        android:theme="@style/EditTextHintLight"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/textinput_size"
                         android:paddingLeft="@dimen/padding_edittext_bottom"
@@ -138,33 +133,35 @@
                             android:singleLine="true"
                             android:textSize="@dimen/textfield_textsize"
                             android:gravity="center_vertical"
+                            android:textColor="@android:color/white"
                             />
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
-
-
-                <Button
-                    android:id="@+id/buttonSignLogin"
-                    style="@style/ButtonStyle"
-                    android:layout_width="280dp"
-                    android:layout_height="@dimen/button_size"
-                    android:layout_marginTop="@dimen/vertical_padding_button"
-                    android:elevation="2dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/action_sign_in" />
-
-                <Button
-                    android:id="@+id/buttonSignOffline"
-                    style="@style/ButtonStyle"
-                    android:layout_width="280dp"
-                    android:layout_height="@dimen/button_size"
-                    android:layout_marginTop="@dimen/vertical_padding_button"
-                    android:elevation="2dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/action_offline_version" />
             </LinearLayout>
-        </ScrollView>
+        <Button
+            android:id="@+id/buttonSignLogin"
+            style="@style/ButtonStyle"
+            android:layout_below="@+id/linear_login_sign_form"
+            android:layout_width="280dp"
+            android:layout_height="@dimen/button_size"
+            android:layout_marginTop="@dimen/vertical_padding_button"
+            android:elevation="2dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/action_sign_in" />
+
+        <Button
+            android:id="@+id/buttonSignOffline"
+            style="@style/ButtonStyle"
+            android:layout_width="280dp"
+            android:layout_height="@dimen/button_size"
+            android:layout_marginTop="@dimen/vertical_padding_button"
+            android:elevation="2dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/action_offline_version"
+            android:layout_below="@+id/buttonSignLogin"
+            android:layout_centerHorizontal="true"
+            />
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fabAddLogin"
@@ -173,6 +170,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_add_white_24dp"
+            android:layout_margin="@dimen/fab_margin"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/accent_pressed"
             fab:fab_colorRipple="@color/ripple" />

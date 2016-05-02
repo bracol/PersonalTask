@@ -31,6 +31,7 @@
     <string name="lbl_yes">Sim</string>
     <string name="lbl_no">Não</string>
     <string name="info_connection">Sem conexão</string>
+    <string name="action_save_user">Usuário salvo com sucesso!</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

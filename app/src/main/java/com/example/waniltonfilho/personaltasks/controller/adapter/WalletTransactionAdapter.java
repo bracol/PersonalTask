@@ -13,7 +13,6 @@ import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 
 import java.text.DateFormat;
