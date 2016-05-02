@@ -51,7 +51,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private Button mButtonConfirm;
     private Button mButtonCancel;
     private WalletTransaction mWalletTransaction;
-    private int mOperation;
     private LinearLayout mLinearAnimation;
     private FrameLayout mFrameAnimation;
     private Spinner mSpinnerIcons;
@@ -60,16 +59,8 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private RecyclerView recyclerViewWallet;
     private List<Category> mCategories;
     private Wallet mWallet;
-    private Boolean dialogVisible;
 
     public ChangeWalletFragment() {
-    }
-
-    public ChangeWalletFragment(int operation, TextView textViewMoney, RecyclerView recyclerView, List<Category> categories) {
-        mOperation = operation;
-        mTextViewMoney = textViewMoney;
-        recyclerViewWallet = recyclerView;
-        mCategories = categories;
     }
 
     @Override
@@ -77,7 +68,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mWallet = getArguments().getParcelable("wallet");
-            dialogVisible = getArguments().getBoolean("bool");
         }
         getActivity().findViewById(R.id.textViewMoney);
     }
@@ -89,6 +79,9 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         editTextName = (EditText) v.findViewById(R.id.editTextNameWallet);
         //editTextDate.addTextChangedListener(new EditTextMaskDate(editTextDate));
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
+        mTextViewMoney = (TextView) getActivity().findViewById(R.id.textViewMoney);
+        recyclerViewWallet = (RecyclerView) getActivity().findViewById(R.id.recyclerLastTransaction);
+
         editTextPrice.addTextChangedListener(new TextWatcher() {
             String current = "";
 
@@ -131,6 +124,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void bindSpinner(Spinner spinner) {
+        mCategories = Category.getCategories();
         spinner.setAdapter(new CategoryAdapter(getActivity(), mCategories));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,7 +189,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         bindWalletTransaction();
         if (mWalletTransaction != null) {
             if (mWallet == null) {
-                WalletTransactionService.save(mWalletTransaction, mOperation);
+                WalletTransactionService.save(mWalletTransaction, 0);
             } else {
                 mWalletTransaction.setWallet_id(mWallet.get_id());
                 new TaskPostWalletTransaction(mWalletTransaction).execute();

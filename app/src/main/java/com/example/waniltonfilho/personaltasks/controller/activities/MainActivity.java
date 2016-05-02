@@ -31,6 +31,7 @@ import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
+import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
@@ -49,7 +50,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    public static final String ONLINE_PARAM = "ONLINE_PARAM";
     public static final String WALLET_PARAM = "WALLET_PARAM";
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void bindComponents() {
         bindToolbar();
         bindFloatingButton();
-        getCategories();
+        Category.getCategories();
         bindRecyclerView();
         bindTextViewMoney();
         bindNavigationView();
@@ -132,6 +132,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 getHttpLogin(user);
             } else {
                 Toast.makeText(this, R.string.info_connection, Toast.LENGTH_LONG).show();
+                clearPreferences();
+                startActivity(new Intent(MainActivity.this, LoginMainActivity.class));
             }
         }
     }
@@ -271,7 +273,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void showAddDialog(View v) {
         if (!dialogVisible) {
-            changeFragment = new ChangeWalletFragment(0, mTextViewMoney, mRecyclerView, getCategories());
+            changeFragment = new ChangeWalletFragment();
             Bundle args = new Bundle();
             if (mUser != null) {
                 args.putParcelable("wallet", mWallet);
@@ -290,24 +292,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_list:
-                Intent goToListActivity = new Intent(MainActivity.this, ListActivity.class);
-                if (mUser != null) {
-                    goToListActivity.putExtra(WALLET_PARAM, mWallet);
-                }
-                startActivity(goToListActivity);
+                onNavListClick();
                 break;
             case R.id.nav_graph:
-                Intent goToGraphActivity = new Intent(MainActivity.this, ChartActivity.class);
-                if (mUser != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(WALLET_PARAM, mWallet);
-                    goToGraphActivity.putExtras(bundle);
-                }
-                startActivity(goToGraphActivity);
+                onNavGraphClick();
                 break;
         }
 
         return true;
+    }
+
+    private void onNavGraphClick() {
+        Intent goToGraphActivity = new Intent(MainActivity.this, ChartActivity.class);
+        if (mUser != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(WALLET_PARAM, mWallet);
+            goToGraphActivity.putExtras(bundle);
+        }
+        startActivity(goToGraphActivity);
+    }
+
+    private void onNavListClick() {
+        Intent goToListActivity = new Intent(MainActivity.this, ListActivity.class);
+        if (mUser != null) {
+            goToListActivity.putExtra(WALLET_PARAM, mWallet);
+        }
+        startActivity(goToListActivity);
     }
 
     @Override
@@ -343,7 +353,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .setNeutralButton(R.string.lbl_no, null)
                 .create()
                 .show();
-
     }
 
     @Override
@@ -355,23 +364,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         return super.onKeyDown(keyCode, event);
     }
-
-    //    mMonthTitle.setOnTouchListener(new View.OnTouchListener() {
-//        @Override
-//        public boolean onTouch(View v, MotionEvent event) {
-//            Drawable[] compoundDrawables = mMonthTitle.getCompoundDrawables();
-//            Drawable leftDrawable = compoundDrawables[0];
-//            Drawable rightDrawable = compoundDrawables[2];
-//            float viewX = mMonthTitle.getWidth();
-//            float eventX = event.getX();
-//            if (eventX < leftDrawable.getMinimumWidth()) {
-//                mMonthTitle.setText(mManipulateList.swipe_left(mMonthTitle.getText().toString()));
-//            }
-//            if (eventX > (viewX - rightDrawable.getMinimumWidth())) {
-//                mMonthTitle.setText(mManipulateList.swipe_right(mMonthTitle.getText().toString()));
-//            }
-//
-//            return false;
-//        }
-//    });
 }

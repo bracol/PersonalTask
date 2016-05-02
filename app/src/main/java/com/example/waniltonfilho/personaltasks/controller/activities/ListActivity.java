@@ -159,6 +159,14 @@ public class ListActivity extends BaseActivity {
     private void updateList(List<WalletTransaction> transactions) {
         String tv = mMonthTitle.getText().toString();
         mMonth = tv.substring(0, 2);
+        visibilityListChange(transactions);
+
+        WalletTransactionAdapter adapter = (WalletTransactionAdapter) mRecyclerView.getAdapter();
+        adapter.setItens(transactions);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void visibilityListChange(List<WalletTransaction> transactions) {
         if (transactions.size() > 0) {
             mInfoTransaction.setVisibility(View.INVISIBLE);
             mRecyclerView.setVisibility(View.VISIBLE);
@@ -167,10 +175,6 @@ public class ListActivity extends BaseActivity {
             mRecyclerView.setVisibility(View.INVISIBLE);
             mInfoTransaction.setVisibility(View.VISIBLE);
         }
-
-        WalletTransactionAdapter adapter = (WalletTransactionAdapter) mRecyclerView.getAdapter();
-        adapter.setItens(transactions);
-        adapter.notifyDataSetChanged();
     }
 
     private void bindToolbar() {

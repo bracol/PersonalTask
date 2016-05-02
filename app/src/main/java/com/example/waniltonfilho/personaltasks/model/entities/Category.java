@@ -3,6 +3,9 @@ package com.example.waniltonfilho.personaltasks.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.model.service.CategoryService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,4 +75,31 @@ public class Category implements Parcelable {
             return new Category[size];
         }
     };
+
+    public static List<Category> getCategories(){
+        List<Category> categories = CategoryService.findAll();
+        if(categories.size() == 0) {
+            CategoryService.save(addCategory("Alimentação", R.drawable.food));
+            CategoryService.save(addCategory("Café", R.drawable.coffee));
+            CategoryService.save(addCategory("Carro", R.drawable.car));
+            CategoryService.save(addCategory("Celular", R.drawable.cell));
+            CategoryService.save(addCategory("Computador", R.drawable.cd));
+            CategoryService.save(addCategory("Jogos", R.drawable.game));
+            CategoryService.save(addCategory("Negócios", R.drawable.business));
+            CategoryService.save(addCategory("Shopping", R.drawable.shopping));
+            CategoryService.save(addCategory("Esporte", R.drawable.sport));
+            CategoryService.save(addCategory("Trabalho", R.drawable.mala));
+            CategoryService.save(addCategory("Transporte", R.drawable.bus));
+            CategoryService.save(addCategory("Viagem", R.drawable.travel));
+            categories = CategoryService.findAll();
+        }
+        return categories;
+    }
+
+    private static Category addCategory(String nome, long category_icon){
+        Category category = new Category();
+        category.setName(nome);
+        category.setCategory_icon(category_icon);
+        return category;
+    }
 }

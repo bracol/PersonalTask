@@ -187,7 +187,7 @@ public class ChartActivity extends BaseActivity {
     }
 
     private void bindCompontents() {
-        mCategories = getCategories();
+        mCategories = Category.getCategories();
         bindToolbar();
         bindRelativeContainer();
         bindTextViewInfoMonth();
