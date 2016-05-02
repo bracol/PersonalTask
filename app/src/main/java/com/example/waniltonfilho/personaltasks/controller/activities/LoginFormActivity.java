@@ -39,6 +39,7 @@ public class LoginFormActivity extends BaseActivity implements View.OnClickListe
         bindEditTextUsername();
         bindEditTextPassword();
         bindBtnConfirm();
+        bindBtnCancel();
     }
 
     private void bindBtnConfirm() {
