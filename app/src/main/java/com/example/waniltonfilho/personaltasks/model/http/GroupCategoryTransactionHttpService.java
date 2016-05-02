@@ -21,12 +21,12 @@ public class GroupCategoryTransactionHttpService {
 
     private static String URL = ConnectionUtil.URL_WALLET;
 
-    public static List<GroupCategoryTransaction> getGroupCategories(String year, String month) {
+    public static List<GroupCategoryTransaction> getGroupCategories(String wallet_id, String year, String month) {
         List<GroupCategoryTransaction> listGroupWts = new ArrayList<>();
 
 
         try {
-            java.net.URL url = new URL(URL + "wts/group/" + year + "/" + month);
+            java.net.URL url = new URL(URL + "wts/group/" + wallet_id + "/" + year + "/" + month);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");

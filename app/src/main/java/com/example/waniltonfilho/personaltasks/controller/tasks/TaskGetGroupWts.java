@@ -15,17 +15,17 @@ public class TaskGetGroupWts extends AsyncTask<Void, Void, List<GroupCategoryTra
 
     private String mYear;
     private String mMonth;
-//    private String mWallet_id;
+    private String mWallet_id;
 
     public TaskGetGroupWts(String walle_id, String year, String month){
         mYear = year;
         mMonth = month;
-//        mWallet_id = walle_id;
+        mWallet_id = walle_id;
     }
 
 
     @Override
     protected List<GroupCategoryTransaction> doInBackground(Void... params) {
-        return GroupCategoryTransactionHttpService.getGroupCategories(mYear, mMonth);
+        return GroupCategoryTransactionHttpService.getGroupCategories(mWallet_id, mYear, mMonth);
     }
 }
