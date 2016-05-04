@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
 
     <!--<ImageView-->
     <!--android:id="@+id/imageViewLogo"-->
@@ -22,7 +19,7 @@
         android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/testewallpaper"
+        android:src="@drawable/wallpaper3"
         android:scaleType="centerCrop"
         />
 
@@ -32,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
-        android:alpha="0.4"
+        android:alpha="0.2"
         />
 
 
@@ -40,37 +37,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/app_bar"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:context=".controller. .activities.MainLoginActivity">
+
+        <!--<View-->
+            <!--android:id="@+id/centerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:background="#FFFFFF"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginTop="38dp"-->
+            <!--/>-->
 
 
         <!-- User progress -->
 
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            fab:cardBackgroundColor="#99000000"
+            fab:cardElevation="4dp"
+            fab:cardCornerRadius="4dp"
+            >
+
             <LinearLayout
                 android:id="@+id/linear_login_sign_form"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="70dp"
                 android:paddingLeft="@dimen/padding_layout_button"
+                android:paddingRight="@dimen/padding_layout_button"
+                android:gravity="center"
+                android:paddingBottom="30dp"
+
                 >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textinput_size"
-                    android:gravity="bottom"
-                    android:orientation="horizontal"
-                    >
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageViewUserNameMain"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:src="@drawable/ic_action_account_box"
-                        android:padding="10dp"
-
-                        />
+                        android:layout_marginBottom="12dp"
+                        android:alpha="0.70" />
 
                     <android.support.design.widget.TextInputLayout
                         android:theme="@style/EditTextHintLight"
@@ -78,8 +93,7 @@
                         android:layout_height="@dimen/textinput_size"
                         android:paddingLeft="@dimen/padding_edittext_bottom"
                         android:paddingRight="@dimen/padding_edittext_bottom"
-                        android:paddingTop="@dimen/padding_input_top"
-                        >
+                        android:paddingTop="@dimen/padding_input_top">
 
                         <EditText
                             android:id="@+id/editTextUsername"
@@ -90,8 +104,7 @@
                             android:singleLine="true"
                             android:textSize="@dimen/textfield_textsize"
                             android:gravity="center_vertical"
-                            android:textColor="@android:color/white"
-                            />
+                            android:textColor="@android:color/white" />
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -100,16 +113,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textinput_size"
                     android:gravity="bottom"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageViewPassword"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:src="@drawable/ic_action_lock"
-                        android:padding="5dp"
-                        />
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="12dp"
+                        android:alpha="0.70" />
 
                     <android.support.design.widget.TextInputLayout
                         android:theme="@style/EditTextHintLight"
@@ -134,34 +147,37 @@
                             android:textSize="@dimen/textfield_textsize"
                             android:gravity="center_vertical"
                             android:textColor="@android:color/white"
+
                             />
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
-            </LinearLayout>
-        <Button
-            android:id="@+id/buttonSignLogin"
-            style="@style/ButtonStyle"
-            android:layout_below="@+id/linear_login_sign_form"
-            android:layout_width="280dp"
-            android:layout_height="@dimen/button_size"
-            android:layout_marginTop="@dimen/vertical_padding_button"
-            android:elevation="2dp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/action_sign_in" />
 
-        <Button
-            android:id="@+id/buttonSignOffline"
-            style="@style/ButtonStyle"
-            android:layout_width="280dp"
-            android:layout_height="@dimen/button_size"
-            android:layout_marginTop="@dimen/vertical_padding_button"
-            android:elevation="2dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/action_offline_version"
-            android:layout_below="@+id/buttonSignLogin"
-            android:layout_centerHorizontal="true"
-            />
+                <Button
+                    android:id="@+id/buttonSignLogin"
+                    style="@style/ButtonStyle"
+                    android:layout_width="250dp"
+                    android:layout_height="@dimen/button_size"
+                    android:layout_marginTop="@dimen/vertical_padding_button"
+                    android:elevation="2dp"
+                    android:text="@string/action_sign_in"
+                    android:fontFamily="sans-serif-medium"
+
+                    />
+
+                <Button
+                    android:id="@+id/buttonSignOffline"
+                    style="@style/ButtonStyle"
+                    android:layout_width="250dp"
+                    android:layout_height="@dimen/button_size"
+                    android:layout_marginTop="@dimen/vertical_padding_button"
+                    android:elevation="2dp"
+                    android:text="@string/action_offline_version"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fabAddLogin"
@@ -175,19 +191,8 @@
             fab:fab_colorPressed="@color/accent_pressed"
             fab:fab_colorRipple="@color/ripple" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:elevation="4dp">
-
-        </FrameLayout>
 
     </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/frameDialogLoginTransaction"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <View
         android:id="@+id/toolbar_shadow"

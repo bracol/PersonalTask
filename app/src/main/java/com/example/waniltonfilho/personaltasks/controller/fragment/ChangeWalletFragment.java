@@ -12,6 +12,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -143,22 +145,21 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        startFrameAnimation();
+
+
     }
 
-//    private void startFrameAnimation() {
-//        Animation swipeLeftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_left);
-//        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-//        mFrameAnimation.startAnimation(fadeInAnimation);
-//        mLinearAnimation.startAnimation(swipeLeftAnimation);
-//
-//    }
-//
-//    private void endFrameAnimation() {
-//        //Animation swipeRightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_right);
-//        Animation fadeOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
-//        mFrameAnimation.startAnimation(fadeOutAnimation);
-//        //mLinearAnimation.startAnimation(swipeRightAnimation);
-//    }
+    private void startFrameAnimation() {
+        Animation swipeLeftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_left);
+        mLinearAnimation.startAnimation(swipeLeftAnimation);
+
+    }
+
+    private void endFrameAnimation() {
+        Animation swipeRightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_right);
+        mLinearAnimation.startAnimation(swipeRightAnimation);
+    }
 
     @Override
     public void onClick(View v) {
@@ -274,6 +275,9 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         }
     }
 
-
-
+    @Override
+    public void onDestroyView() {
+        endFrameAnimation();
+        super.onDestroyView();
+    }
 }

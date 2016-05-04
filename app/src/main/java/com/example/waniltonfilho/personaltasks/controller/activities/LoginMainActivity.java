@@ -132,8 +132,8 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     private void goToMainActivity() {
         if (mUser != null) {
             savePreferences();
-            Intent goToEstoqueForm = new Intent(LoginMainActivity.this, MainActivity.class);
-            startActivity(goToEstoqueForm);
+            Intent goToMainActivity = new Intent(LoginMainActivity.this, MainActivity.class);
+            startActivity(goToMainActivity);
         } else {
             Snackbar.make(mButtonLogin, R.string.error_password, Snackbar.LENGTH_LONG).show();
         }
@@ -152,25 +152,16 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void openDialog() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        FragmentDialogWallet dialogFragment = new FragmentDialogWallet();
-        ft.replace(R.id.frameDialogLoginTransaction, dialogFragment);
-        ft.commit();
-    }
 
 
     private void startOffline() {
-        if (WalletService.getWallet() != null) {
-            Intent goToActivityCategory = new Intent(LoginMainActivity.this, MainActivity.class);
-            startActivity(goToActivityCategory);
-        } else {
+        if (WalletService.getWallet() == null) {
             Wallet wallet = new Wallet();
             wallet.setValue(0f);
             WalletService.save(wallet);
         }
+        Intent goToActivityCategory = new Intent(LoginMainActivity.this, MainActivity.class);
+        startActivity(goToActivityCategory);
     }
 
     public void savePreferences() {
@@ -186,6 +177,5 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        //clearPreferences();
     }
 }

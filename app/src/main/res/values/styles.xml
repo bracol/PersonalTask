@@ -19,6 +19,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/button_pressed</item>
         <item name="android:textSize">@dimen/textButton_size</item>
+
     </style>
 
     <style name="ButtonWithoutBackground" parent="Widget.AppCompat.Button.Borderless">
@@ -27,6 +28,8 @@
         <item name="android:layout_gravity">right</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="shadowPositive">
@@ -56,7 +59,7 @@
 
     <style name="EditTextHintLight" parent="TextAppearance.AppCompat">
         <item name="colorAccent">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:textColorHint">#B3FFFFFF</item>
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
