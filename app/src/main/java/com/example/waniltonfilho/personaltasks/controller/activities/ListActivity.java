@@ -1,7 +1,5 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -121,12 +118,12 @@ public class ListActivity extends BaseActivity {
                 getWindowManager().getDefaultDisplay().getSize(size);
                 float eventX = event.getX();
                 if (eventX < 200) {
-                    Animation animation = AnimationUtils.loadAnimation(ListActivity.this, R.anim.swipe_left);
+                    Animation animation = AnimationUtils.loadAnimation(ListActivity.this, R.anim.swipe_from_left);
                     relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                 }
                 if (eventX > size.x - 200) {
-                    Animation animation = AnimationUtils.loadAnimation(ListActivity.this, R.anim.swipe_right);
+                    Animation animation = AnimationUtils.loadAnimation(ListActivity.this, R.anim.swipe_to_right);
                     relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
                 }

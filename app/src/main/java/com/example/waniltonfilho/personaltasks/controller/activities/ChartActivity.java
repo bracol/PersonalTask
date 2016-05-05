@@ -25,11 +25,9 @@ import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
-import com.example.waniltonfilho.personaltasks.util.ListManipulation;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -265,12 +263,12 @@ public class ChartActivity extends BaseActivity {
                 getWindowManager().getDefaultDisplay().getSize(size);
                 float eventX = event.getX();
                 if (eventX < 200) {
-                    Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_left);
+                    Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_from_left);
                     relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                 }
                 if (eventX > size.x - 200) {
-                    Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_right);
+                    Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_to_right);
                     relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
                 }

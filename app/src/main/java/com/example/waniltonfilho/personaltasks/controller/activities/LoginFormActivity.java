@@ -1,12 +1,11 @@
 package com.example.waniltonfilho.personaltasks.controller.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +24,7 @@ public class LoginFormActivity extends BaseActivity implements View.OnClickListe
     private EditText mEditTextPassword;
     private Button mButtonConfirm;
     private Button mButtonCancel;
+    private CardView mCardViewLoginForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +40,15 @@ public class LoginFormActivity extends BaseActivity implements View.OnClickListe
         bindEditTextPassword();
         bindBtnConfirm();
         bindBtnCancel();
+        bindCardViewFormLogin();
+    }
+
+    private void bindCardViewFormLogin() {
+        mCardViewLoginForm = (CardView) findViewById(R.id.cardViewFormLogin);
     }
 
     private void bindBtnConfirm() {
-        mButtonConfirm = (Button) findViewById(R.id.buttonConfirmFormLogin);
+        mButtonConfirm = (Button) findViewById(R.id.buttonSaveFormLogin);
         mButtonConfirm.setOnClickListener(this);
     }
 
@@ -92,7 +97,7 @@ public class LoginFormActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.buttonConfirmFormLogin:
+            case R.id.buttonSaveFormLogin:
                 onButtonConfirm();
                 break;
             case R.id.buttonCancelFormLogin:
@@ -113,9 +118,34 @@ public class LoginFormActivity extends BaseActivity implements View.OnClickListe
             user.setName(mEditTextName.getText().toString());
             saveLogin(user);
             Snackbar.make(mButtonConfirm, R.string.action_save_user, Snackbar.LENGTH_SHORT).show();
-            finish();
+            onPauseAnimation();
         } catch (Exception e){
             Toast.makeText(getBaseContext(), "Ocorreu um erro e o login não foi salvo!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+
+    private void onPauseAnimation() {
+        Animation swipeToRightAnimation = AnimationUtils.loadAnimation(this, R.anim.swipe_to_right);
+        mCardViewLoginForm.startAnimation(swipeToRightAnimation);
+    }
+
+    private void onResumeAnimation() {
+        Animation swipeRightAnimation = AnimationUtils.loadAnimation(this, R.anim.swipe_from_right);
+        mCardViewLoginForm.startAnimation(swipeRightAnimation);
+    }
+
+    @Override
+    protected void onResume() {
+        onResumeAnimation();
+        mCardViewLoginForm.setVisibility(View.VISIBLE);
+        super.onResume();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.swipe_to_right);
     }
 }

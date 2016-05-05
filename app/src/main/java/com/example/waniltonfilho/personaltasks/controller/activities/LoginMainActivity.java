@@ -8,18 +8,18 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
-import com.example.waniltonfilho.personaltasks.controller.fragment.FragmentDialogWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
@@ -44,6 +44,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     public static final String PREFERENCE_NAME = "PREFERENCE_NAME";
     private ImageView mImgViewLogout;
     private TextView mTvName;
+    private CardView mCardViewLoginSign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(LoginMainActivity.this, LoginFormActivity.class));
             }
         });
+        mCardViewLoginSign = (CardView) findViewById(R.id.cardViewSignLogin);
 
 
 
@@ -173,9 +175,28 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         editor.commit();
     }
 
+    private void onPauseAnimation() {
+        Animation swipeLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.swipe_to_left);
+        mCardViewLoginSign.startAnimation(swipeLeftAnimation);
+
+    }
+
+    private void onResumeAnimation() {
+        Animation swipeRightAnimation = AnimationUtils.loadAnimation(this, R.anim.swipe_from_left);
+        mCardViewLoginSign.startAnimation(swipeRightAnimation);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        onPauseAnimation();
+        mCardViewLoginSign.setVisibility(View.GONE);
+    }
 
     @Override
     protected void onResume() {
+        onResumeAnimation();
+        mCardViewLoginSign.setVisibility(View.VISIBLE);
         super.onResume();
     }
 }

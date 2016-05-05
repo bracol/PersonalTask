@@ -14,8 +14,6 @@
     </style>
 
     <style name="ButtonStyle" parent="android:Widget.Holo.Button">
-        <item name="android:paddingRight">@dimen/button_horizontal_padding</item>
-        <item name="android:paddingLeft">@dimen/button_horizontal_padding</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/button_pressed</item>
         <item name="android:textSize">@dimen/textButton_size</item>

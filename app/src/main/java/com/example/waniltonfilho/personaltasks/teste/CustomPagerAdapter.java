@@ -34,10 +34,10 @@ public class CustomPagerAdapter extends PagerAdapter {
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_teste, collection, false);
         mTextView = (TextView) layout.findViewById(R.id.tvTeste);
         if(last > position) {
-            //customPageAdapter.setTextViewTitle(mManipulateList.swipe_left(lastTitle));
+            //customPageAdapter.setTextViewTitle(mManipulateList.swipe_from_left(lastTitle));
             last = position;
         } else {
-            //customPageAdapter.setTextViewTitle(mManipulateList.swipe_right(lastTitle));
+            //customPageAdapter.setTextViewTitle(mManipulateList.swipe_to_right(lastTitle));
             last = position;
         }
         collection.addView(layout);

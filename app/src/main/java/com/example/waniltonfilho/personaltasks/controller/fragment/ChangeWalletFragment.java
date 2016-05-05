@@ -1,8 +1,6 @@
 package com.example.waniltonfilho.personaltasks.controller.fragment;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,7 +19,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.activities.MainActivity;
@@ -151,13 +148,13 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void startFrameAnimation() {
-        Animation swipeLeftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_left);
+        Animation swipeLeftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_from_left);
         mLinearAnimation.startAnimation(swipeLeftAnimation);
 
     }
 
     private void endFrameAnimation() {
-        Animation swipeRightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_right);
+        Animation swipeRightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.swipe_to_right);
         mLinearAnimation.startAnimation(swipeRightAnimation);
     }
 
@@ -175,7 +172,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
 
     private void onButtonCancel() {
         removeFragment();
-        MainActivity.dialogVisible  = false;
+
     }
 
     private void removeFragment() {
@@ -183,7 +180,6 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .remove(this)
                 .commit();
-        MainActivity.dialogVisible = false;
     }
 
     private void onButtonConfirm() {
@@ -278,6 +274,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     @Override
     public void onDestroyView() {
         endFrameAnimation();
+        MainActivity.dialogVisible  = false;
         super.onDestroyView();
     }
 }
