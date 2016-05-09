@@ -54,8 +54,9 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
         bindElements();
-        checkPreferences();
+        //checkPreferences();
 
     }
 

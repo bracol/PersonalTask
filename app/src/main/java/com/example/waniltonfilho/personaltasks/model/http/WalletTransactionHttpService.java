@@ -2,6 +2,7 @@ package com.example.waniltonfilho.personaltasks.model.http;
 
 import android.util.Log;
 
+import com.example.waniltonfilho.personaltasks.model.entities.SumWalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
@@ -19,7 +20,6 @@ import java.util.List;
  * Created by wanilton.filho on 13/04/2016.
  */
 public class WalletTransactionHttpService {
-    public static String URL = ConnectionUtil.URL_WALLET + "wts/";
 
     private WalletTransactionHttpService() {
         super();
@@ -30,7 +30,7 @@ public class WalletTransactionHttpService {
 
 
         try {
-            java.net.URL url = new URL(URL + wallet_id);
+            java.net.URL url = new URL(ConnectionUtil.URL_WALLET + "wts/" + wallet_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -64,7 +64,7 @@ public class WalletTransactionHttpService {
 
     public static void postWalletTransaction(WalletTransaction walletTransaction) {
         try {
-            URL url = new URL(URL);
+            URL url = new URL(ConnectionUtil.URL_WALLET + "wts/");
             final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
@@ -91,7 +91,7 @@ public class WalletTransactionHttpService {
 
 
         try {
-            java.net.URL url = new URL(URL + wallet_id);
+            java.net.URL url = new URL(ConnectionUtil.URL_WALLET + "wts/" + wallet_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -121,6 +121,35 @@ public class WalletTransactionHttpService {
             }
         }
         return lastList;
+    }
+
+    public static SumWalletTransaction getSumMonthWalletTransaction(String wallet_id, String year, String month) {
+        List<SumWalletTransaction> listWts = null;
+
+
+        try {
+            java.net.URL url = new URL(ConnectionUtil.URL_WALLET + "wts/sum/" + wallet_id + "/" + year + "/" + month);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            int responseCode = conn.getResponseCode();
+
+            //Log.i("getAdressByZipCode", "Codigo de retorno de requisição de cep: " + responseCode);
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream inputStream = conn.getInputStream();
+                ObjectMapper objectMapper = new ObjectMapper();
+                CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, SumWalletTransaction.class);
+                listWts = objectMapper.readValue(inputStream, collectionType);
+            }
+            conn.disconnect();
+
+        } catch (Exception e) {
+            //faz aparecer mensagem no logcat do android
+            Log.e(WalletHttpService.class.getName() + "-------------------", e.getMessage());
+        }
+
+        return listWts.size() > 0 ? listWts.get(0) : null;
     }
 
 //    public static List<WalletTransaction> getSumCategory(String month) {

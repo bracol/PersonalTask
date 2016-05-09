@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,8 +29,10 @@ import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletF
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWtsSumMonth;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
+import com.example.waniltonfilho.personaltasks.model.entities.SumWalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
@@ -42,6 +43,8 @@ import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +66,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private LinearLayout linearLayoutLogged;
     private ImageView mImgViewLogout;
     private TextView mTvName;
+    private boolean isOnline;
 
 
     @Override
@@ -127,6 +131,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mWallet = WalletService.getWallet();
                 bindComponents();
             }
+            isOnline = false;
         } else {
             if (ConnectionUtil.isConnected(this)) {
                 getHttpLogin(user);
@@ -135,6 +140,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 clearPreferences();
                 startActivity(new Intent(MainActivity.this, LoginMainActivity.class));
             }
+            isOnline = true;
         }
     }
 
@@ -173,9 +179,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void bindTextViewMoney() {
-        MyValueFormatter myValueFormatter = new MyValueFormatter();
+        final MyValueFormatter myValueFormatter = new MyValueFormatter();
         mTextViewMoney = (TextView) findViewById(R.id.textViewMoney);
-        mTextViewMoney.setText(myValueFormatter.getMaskFormatted(mWallet.getValue()));
+        if (isOnline) {
+            new TaskGetWtsSumMonth(mWallet.get_id(), getActualDate()[0], getActualDate()[1]) {
+                @Override
+                protected void onPostExecute(SumWalletTransaction sumWalletTransaction) {
+                    super.onPostExecute(sumWalletTransaction);
+                    if (sumWalletTransaction != null) {
+                        mTextViewMoney.setText(myValueFormatter.getMaskFormatted(sumWalletTransaction.getPrice()));
+                    } else {
+                        mTextViewMoney.setText(myValueFormatter.getMaskFormatted(0f));
+                    }
+                }
+            }.execute();
+        } else {
+            mTextViewMoney.setText(myValueFormatter.getMaskFormatted(mWallet.getValue()));
+        }
+
+
     }
 
     private void bindRecyclerView() {
@@ -363,5 +385,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private String[] getActualDate() {
+        String[] actualDate;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dateFormated = simpleDateFormat.format(date);
+        String mes = dateFormated.substring(5, 7);
+        String ano = dateFormated.substring(0, 4);
+        actualDate = new String[]{mes, ano};
+
+        return actualDate;
     }
 }
