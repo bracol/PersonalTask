@@ -64,4 +64,5 @@
     <string name="lbl_no">No</string>
     <string name="info_connection">No Connection</string>
     <string name="action_save_user">User save successful!</string>
+    <string name="hint_recurrence">Number of months</string>
 </resources>

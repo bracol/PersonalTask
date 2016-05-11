@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletFragment;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLastTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
@@ -207,7 +208,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mRecyclerView.setAdapter(new WalletTransactionAdapter(mListTransactions, this));
         } else {
-            new TaskGetWalletTransaction(mWallet.get_id()) {
+            new TaskGetLastTransaction(mWallet.get_id()) {
 
                 ProgressDialog dialog;
 
@@ -394,7 +395,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         String dateFormated = simpleDateFormat.format(date);
         String mes = dateFormated.substring(5, 7);
         String ano = dateFormated.substring(0, 4);
-        actualDate = new String[]{mes, ano};
+        actualDate = new String[]{ano, mes};
 
         return actualDate;
     }

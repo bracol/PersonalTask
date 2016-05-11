@@ -34,6 +34,7 @@ import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transact
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,6 +59,8 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private RecyclerView recyclerViewWallet;
     private List<Category> mCategories;
     private Wallet mWallet;
+    private FloatingActionButton fab;
+    private EditText mEditTextRecurrence;
 
     public ChangeWalletFragment() {
     }
@@ -80,6 +83,9 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         editTextPrice = (EditText) v.findViewById(R.id.editTextPriceWallet);
         mTextViewMoney = (TextView) getActivity().findViewById(R.id.textViewMoney);
         recyclerViewWallet = (RecyclerView) getActivity().findViewById(R.id.recyclerLastTransaction);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fabAddTransaction);
+        mEditTextRecurrence = (EditText) v.findViewById(R.id.editTextRecorrencia);
+        fab.setVisibility(View.GONE);
 
         editTextPrice.addTextChangedListener(new TextWatcher() {
             String current = "";
@@ -176,6 +182,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void removeFragment() {
+        fab.setVisibility(View.VISIBLE);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .remove(this)
@@ -183,13 +190,14 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     }
 
     private void onButtonConfirm() {
+        Integer qtMonth = mEditTextRecurrence.getText().toString().equals("") ? 1 : Integer.parseInt(mEditTextRecurrence.getText().toString());
         bindWalletTransaction();
         if (mWalletTransaction != null) {
             if (mWallet == null) {
                 WalletTransactionService.save(mWalletTransaction, 0);
             } else {
                 mWalletTransaction.setWallet_id(mWallet.get_id());
-                new TaskPostWalletTransaction(mWalletTransaction).execute();
+                new TaskPostWalletTransaction(mWalletTransaction, qtMonth).execute();
             }
             updateTransactions();
             removeFragment();

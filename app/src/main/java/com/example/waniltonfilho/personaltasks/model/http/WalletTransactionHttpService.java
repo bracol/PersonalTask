@@ -3,7 +3,6 @@ package com.example.waniltonfilho.personaltasks.model.http;
 import android.util.Log;
 
 import com.example.waniltonfilho.personaltasks.model.entities.SumWalletTransaction;
-import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,44 +48,10 @@ public class WalletTransactionHttpService {
             Log.e(WalletHttpService.class.getName() + "-------------------", e.getMessage());
         }
 
-        List<WalletTransaction> lastList = new ArrayList<>();
-        int listaSize = listWts.size();
-
-        if (listaSize > 0) {
-            for (int i = 1; i <= 2; i++) {
-                if (i <= listaSize)
-                    lastList.add(listWts.get(listaSize - i));
-            }
-        }
-        return lastList;
+        return listWts;
     }
 
-
-    public static void postWalletTransaction(WalletTransaction walletTransaction) {
-        try {
-            URL url = new URL(ConnectionUtil.URL_WALLET + "wts/");
-            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-
-            OutputStream os = conn.getOutputStream();
-            os.write(new ObjectMapper().writeValueAsBytes(walletTransaction));
-            os.flush();
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-            }
-
-            conn.disconnect();
-
-
-        } catch (Exception e) {
-            Log.e(WalletHttpService.class.getName(), e.getMessage());
-        }
-    }
-
-    public static List<WalletTransaction> getSumCategoryWalletTransaction(String wallet_id) {
+    public static List<WalletTransaction> getLastWalletTransaction(String wallet_id) {
         List<WalletTransaction> listWts = new ArrayList<>();
 
 
@@ -112,15 +77,44 @@ public class WalletTransactionHttpService {
 
         List<WalletTransaction> lastList = new ArrayList<>();
         int listaSize = listWts.size();
+        WalletTransaction lastWallet = null;
 
         if (listaSize > 0) {
-            for (WalletTransaction w1 : listWts) {
-                for(WalletTransaction w2 : lastList){
-
+            for (int i = 1; i <= 3; i++) {
+                if (i <= listaSize) {
+                    if (lastWallet == null || !(lastWallet.getName().equals(listWts.get(listaSize - i).getName()) && lastWallet.getPrice() == listWts.get(listaSize - i).getPrice() && lastWallet.getCategory() == (listWts.get(listaSize - i).getCategory()))) {
+                        lastList.add(listWts.get(listaSize - i));
+                        lastWallet = listWts.get(listaSize - i);
+                    }
                 }
             }
         }
         return lastList;
+    }
+
+
+    public static void postWalletTransaction(WalletTransaction walletTransaction, Integer qtMonth) {
+        try {
+            URL url = new URL(ConnectionUtil.URL_WALLET + "wts/" + qtMonth);
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            OutputStream os = conn.getOutputStream();
+            os.write(new ObjectMapper().writeValueAsBytes(walletTransaction));
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            conn.disconnect();
+
+
+        } catch (Exception e) {
+            Log.e(WalletHttpService.class.getName(), e.getMessage());
+        }
     }
 
     public static SumWalletTransaction getSumMonthWalletTransaction(String wallet_id, String year, String month) {

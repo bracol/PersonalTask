@@ -32,6 +32,7 @@
     <string name="lbl_no">Não</string>
     <string name="info_connection">Sem conexão</string>
     <string name="action_save_user">Usuário salvo com sucesso!</string>
+    <string name="hint_recurrence">Quantidade de meses</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

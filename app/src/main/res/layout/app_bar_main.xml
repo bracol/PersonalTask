@@ -20,7 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/app_bar"
-        android:background="@drawable/wallpaper3"/>
+        />
+    <!--android:background="@drawable/wallpaper3"-->
+
 
 
     <RelativeLayout
@@ -29,7 +31,7 @@
         android:layout_height="220dp"
         android:layout_below="@+id/app_bar"
         android:padding="@dimen/padding_layout_button"
-        android:background="#CC000000"
+        android:background="#E63f51b5"
         >
 
         <TextView
@@ -65,9 +67,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerLastTransaction"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/relativeLayoutPrincipal"
-        android:background="#99FFFFFF"
+        android:background="#E6FFFFFF"
         />
 
 
@@ -123,5 +125,7 @@
     <FrameLayout
         android:id="@+id/frameChange"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+    </FrameLayout>
 </RelativeLayout>

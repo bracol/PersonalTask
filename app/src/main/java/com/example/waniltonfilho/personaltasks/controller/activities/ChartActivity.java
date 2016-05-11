@@ -263,14 +263,14 @@ public class ChartActivity extends BaseActivity {
                 getWindowManager().getDefaultDisplay().getSize(size);
                 float eventX = event.getX();
                 if (eventX < 200) {
+                    mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                     Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_from_left);
                     relativeContainer.startAnimation(animation);
-                    mMonthTitle.setText(mManipulateList.swipeLeft(mMonthTitle.getText().toString()));
                 }
                 if (eventX > size.x - 200) {
-                    Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_to_right);
-                    relativeContainer.startAnimation(animation);
                     mMonthTitle.setText(mManipulateList.swipeRight(mMonthTitle.getText().toString()));
+                    Animation animation = AnimationUtils.loadAnimation(ChartActivity.this, R.anim.swipe_from_right);
+                    relativeContainer.startAnimation(animation);
                 }
                 verifyGraphState();
                 return false;

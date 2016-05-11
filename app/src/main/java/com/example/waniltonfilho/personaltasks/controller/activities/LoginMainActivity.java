@@ -56,7 +56,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         }
 
         bindElements();
-        //checkPreferences();
+        checkPreferences();
 
     }
 

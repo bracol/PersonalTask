@@ -11,14 +11,16 @@ import com.example.waniltonfilho.personaltasks.model.http.WalletTransactionHttpS
 public class TaskPostWalletTransaction extends AsyncTask<Void, Void, Void> {
 
     private WalletTransaction mWalletTransaction;
+    private Integer mQtMonth;
 
-    public TaskPostWalletTransaction(WalletTransaction mWt) {
+    public TaskPostWalletTransaction(WalletTransaction mWt, Integer qtMonth) {
         mWalletTransaction = mWt;
+        mQtMonth = qtMonth;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        WalletTransactionHttpService.postWalletTransaction(mWalletTransaction);
+        WalletTransactionHttpService.postWalletTransaction(mWalletTransaction, mQtMonth);
         return null;
     }
 }
