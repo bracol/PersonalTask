@@ -21,11 +21,6 @@ public class TaskGetLastTransaction extends AsyncTask<Void, Void, List<WalletTra
 
     @Override
     protected List<WalletTransaction> doInBackground(Void... params) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return WalletTransactionHttpService.getLastWalletTransaction(mWalletID);
     }
 }

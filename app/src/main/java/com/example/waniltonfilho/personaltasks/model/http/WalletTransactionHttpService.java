@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.waniltonfilho.personaltasks.model.entities.SumWalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
+import com.example.waniltonfilho.personaltasks.util.StringUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -80,11 +81,11 @@ public class WalletTransactionHttpService {
         WalletTransaction lastWallet = null;
 
         if (listaSize > 0) {
-            for (int i = 1; i <= 3; i++) {
-                if (i <= listaSize) {
-                    if (lastWallet == null || !(lastWallet.getName().equals(listWts.get(listaSize - i).getName()) && lastWallet.getPrice() == listWts.get(listaSize - i).getPrice() && lastWallet.getCategory() == (listWts.get(listaSize - i).getCategory()))) {
+            for (int i = 1; lastList.size() < 3 && i <= listaSize; i++) {
+                if (i <= listaSize ) {
+//                    if (lastWallet == null || (lastWallet.getName().equals(listWts.get(listaSize - i).getName()) && lastWallet.getPrice().equals(listWts.get(listaSize - i).getPrice()) && lastWallet.getCategory().equals(listWts.get(listaSize - i).getCategory())) == false) {
+                    if (StringUtil.compareMonths(listWts.get(listaSize - i).getDate())){
                         lastList.add(listWts.get(listaSize - i));
-                        lastWallet = listWts.get(listaSize - i);
                     }
                 }
             }

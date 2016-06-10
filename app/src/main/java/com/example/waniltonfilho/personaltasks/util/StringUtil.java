@@ -5,6 +5,9 @@ import android.widget.EditText;
 
 import com.example.waniltonfilho.personaltasks.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Wanilton on 06/03/2016.
  */
@@ -32,5 +35,31 @@ public class StringUtil {
             editText.setError(context.getString(R.string.error_valid_value));
             return false;
         }
+    }
+
+    public static String[] getActualMonthYear() {
+        String[] actualDate;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dateFormated = simpleDateFormat.format(date);
+        String mes = dateFormated.substring(5, 7);
+        String ano = dateFormated.substring(0, 4);
+        actualDate = new String[]{ano, mes};
+
+        return actualDate;
+    }
+
+    public static boolean compareMonths(String date1) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date2 = new Date();
+        String date2Formated = simpleDateFormat.format(date2);
+        String mes1 = date1.substring(5, 7);
+        String mes2 = date2Formated.substring(5, 7);
+//        String ano = dateFormated.substring(0, 4);
+//        String dia = dateFormated.substring(8, 10);
+//        String data2 = ano + "-" + mes + "-" +  dia;
+
+
+        return mes1.equals(mes2);
     }
 }

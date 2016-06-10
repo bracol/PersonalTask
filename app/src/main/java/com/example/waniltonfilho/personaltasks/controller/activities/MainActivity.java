@@ -29,7 +29,6 @@ import com.example.waniltonfilho.personaltasks.controller.fragment.ChangeWalletF
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLastTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLogin;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWallet;
-import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWtsSumMonth;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
@@ -37,15 +36,13 @@ import com.example.waniltonfilho.personaltasks.model.entities.SumWalletTransacti
 import com.example.waniltonfilho.personaltasks.model.entities.User;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
+import com.example.waniltonfilho.personaltasks.util.StringUtil;
 import com.melnykov.fab.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -124,7 +121,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void checkWallet() {
         User user = getPreferenceLogin();
         if (user == null) {
-            if (WalletRepository.getWallet() == null) {
+            if (WalletService.getWallet() == null) {
                 mWallet = new Wallet();
                 mWallet.setValue(0f);
                 WalletService.save(mWallet);
@@ -162,8 +159,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else {
                     bindComponents();
                 }
-
-                super.onPostExecute(wallet);
             }
         }.execute();
     }
@@ -183,7 +178,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         final MyValueFormatter myValueFormatter = new MyValueFormatter();
         mTextViewMoney = (TextView) findViewById(R.id.textViewMoney);
         if (isOnline) {
-            new TaskGetWtsSumMonth(mWallet.get_id(), getActualDate()[0], getActualDate()[1]) {
+            new TaskGetWtsSumMonth(mWallet.get_id(), StringUtil.getActualMonthYear()[0], StringUtil.getActualMonthYear()[1]) {
                 @Override
                 protected void onPostExecute(SumWalletTransaction sumWalletTransaction) {
                     super.onPostExecute(sumWalletTransaction);
@@ -217,12 +212,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     dialog = new ProgressDialog(MainActivity.this);
                     dialog.setMessage("Loading...");
                     dialog.show();
-                    super.onPreExecute();
                 }
 
                 @Override
                 protected void onPostExecute(List<WalletTransaction> transactions) {
-                    super.onPostExecute(transactions);
                     mListTransactions = transactions;
                     mRecyclerView = (RecyclerView) findViewById(R.id.recyclerLastTransaction);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -259,12 +252,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 dialog = new ProgressDialog(MainActivity.this);
                 dialog.setMessage("Loading...");
                 dialog.show();
-                super.onPreExecute();
             }
 
             @Override
             protected void onPostExecute(User user) {
-                super.onPostExecute(user);
                 if (user != null) {
                     mUser = user;
                     getHttpWallet();
@@ -388,15 +379,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onKeyDown(keyCode, event);
     }
 
-    private String[] getActualDate() {
-        String[] actualDate;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String dateFormated = simpleDateFormat.format(date);
-        String mes = dateFormated.substring(5, 7);
-        String ano = dateFormated.substring(0, 4);
-        actualDate = new String[]{ano, mes};
 
-        return actualDate;
-    }
 }

@@ -78,7 +78,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mCardViewLoginSign = (CardView) findViewById(R.id.cardViewSignLogin);
 
 
-
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
     }
@@ -88,17 +87,16 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         String login = sharedPref.getString("login", null);
         String pass = sharedPref.getString("pass", null);
         String name = sharedPref.getString("name", null);
-        if(login != null){
+        if (login != null) {
             mUser = new User();
             mUser.setName(name);
             mUser.setUserName(login);
             mUser.setPassword(pass);
             goToMainActivity();
-        } else{
+        } else {
             bindElements();
         }
     }
-
 
 
     private void attempLogin() {
@@ -116,18 +114,18 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected void onPreExecute() {
-                dialog = new ProgressDialog(LoginMainActivity.this);
-                dialog.setMessage("Loading...");
-                dialog.show();
+//                dialog = new ProgressDialog(LoginMainActivity.this);
+//                dialog.setMessage("Loading...");
+//                dialog.show();
                 super.onPreExecute();
             }
 
             @Override
             protected void onPostExecute(User user) {
-                super.onPostExecute(user);
+//                dialog.dismiss();
                 mUser = user;
-                dialog.dismiss();
                 goToMainActivity();
+                super.onPostExecute(user);
             }
         }.execute();
     }
@@ -154,7 +152,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
     }
-
 
 
     private void startOffline() {

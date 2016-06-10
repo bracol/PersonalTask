@@ -24,13 +24,14 @@ import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.activities.MainActivity;
 import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapter;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLastTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskUpdateWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
-import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletRepository;
+import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
@@ -209,7 +210,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
     private void changeWalletTextValue() {
         final MyValueFormatter myValueFormatter = new MyValueFormatter();
         if (mWallet == null) {
-            Wallet wallet = WalletRepository.getWallet();
+            Wallet wallet = WalletService.getWallet();
             mTextViewMoney.setText(myValueFormatter.getMaskFormatted(wallet.getValue()));
         } else {
             mWallet.setValue(mWallet.getValue() + Float.parseFloat(MyValueFormatter.formatPrice(editTextPrice.getText().toString())));
@@ -255,7 +256,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             adapter.setItens(mListTransactions);
             adapter.notifyDataSetChanged();
         } else {
-            new TaskGetWalletTransaction(mWallet.get_id()) {
+            new TaskGetLastTransaction(mWallet.get_id()) {
 
                 ProgressDialog dialog;
 
