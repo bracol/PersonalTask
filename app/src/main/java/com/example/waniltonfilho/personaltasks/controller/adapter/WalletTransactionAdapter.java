@@ -1,18 +1,26 @@
 package com.example.waniltonfilho.personaltasks.controller.adapter;
 
 import android.app.Activity;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.waniltonfilho.personaltasks.R;
+import com.example.waniltonfilho.personaltasks.controller.activities.ListActivity;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
+import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
+import com.example.waniltonfilho.personaltasks.util.ILongClickListener;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 
 import java.text.DateFormat;
@@ -29,7 +37,7 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
 
     private List<WalletTransaction> mTransactions;
     private Activity mContext;
-    private List<WalletTransaction> itens;
+    private WalletTransaction itemSelected;
 
 
     public WalletTransactionAdapter(List<WalletTransaction> transactions, Activity context) {
@@ -72,6 +80,12 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         MyValueFormatter formatter = new MyValueFormatter();
         holder.mTextViewValue.setText(formatter.getMaskFormatted(walletTransaction.getPrice()));
         holder.mTextViewName.setText(walletTransaction.getName() == null ? "Transação" : walletTransaction.getName().toString());
+        holder.setLongClickListener(new ILongClickListener() {
+            @Override
+            public void onItemLongClick(int pos) {
+                itemSelected = mTransactions.get(pos);
+            }
+        });
     }
 
     @Override
@@ -79,15 +93,23 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         return mTransactions.size();
     }
 
+    public WalletTransaction getItem(){
+        return itemSelected;
+    }
+
+    public void getItemSelected(MenuItem item){
+    }
+
     public void setItens(List<WalletTransaction> itens) {
         mTransactions = itens;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnCreateContextMenuListener {
         ImageView mImageViewTransactionCategory;
         TextView mTextViewName;
         TextView mTextViewDate;
         TextView mTextViewValue;
+        ILongClickListener longClickListener;
 
         public MyViewHolder(View v) {
             super(v);
@@ -95,6 +117,26 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
             mTextViewDate = (TextView) v.findViewById(R.id.textViewDate);
             mTextViewName = (TextView) v.findViewById(R.id.textViewName);
             mTextViewValue = (TextView) v.findViewById(R.id.textViewValue);
+            if(mContext instanceof ListActivity) {
+                v.setOnLongClickListener(this);
+                v.setOnCreateContextMenuListener(this);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            this.longClickListener.onItemLongClick(getLayoutPosition());
+            return false;
+        }
+
+        public void setLongClickListener(ILongClickListener lc){
+            this.longClickListener = lc;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle(R.string.action_select_action);
+            menu.add(0,0, 0, R.string.action_delete_transaction);
         }
     }
 }

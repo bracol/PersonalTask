@@ -3,8 +3,13 @@ package com.example.waniltonfilho.personaltasks.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Wanilton on 28/02/2016.
@@ -29,7 +34,13 @@ public class Wallet implements Parcelable {
     }
 
     public Float getValue() {
-        return value;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        Date date = new Date();
+        Float totalValue = 0f;
+        List<WalletTransaction> wts = WalletTransactionService.getMonthTransaction(simpleDateFormat.format(date));
+        for(WalletTransaction wt : wts)
+            totalValue += wt.getPrice();
+        return totalValue;
     }
 
     public void setValue(Float value) {

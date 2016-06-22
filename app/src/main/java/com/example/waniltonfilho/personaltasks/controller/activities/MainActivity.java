@@ -44,6 +44,7 @@ import com.example.waniltonfilho.personaltasks.util.StringUtil;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by wanilton.filho on 22/01/2016.
@@ -65,6 +66,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ImageView mImgViewLogout;
     private TextView mTvName;
     private boolean isOnline;
+    private TextView mTextViewMonthInfo;
 
 
     @Override
@@ -84,6 +86,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         bindLinearLogged();
         bindTvName();
         bindBtnLogout();
+        bindTextViewInfoMonth();
+    }
+
+    private void bindTextViewInfoMonth() {
+        mTextViewMonthInfo = (TextView) findViewById(R.id.textViewMoneyInfo);
+        if (Locale.getDefault().equals(Locale.US))
+            mTextViewMonthInfo.setText(StringUtil.getActualMonthYear()[0] + "/" + StringUtil.getActualMonthYear()[1] + " - " + getResources().getString(R.string.info_money));
+        else
+            mTextViewMonthInfo.setText(StringUtil.getActualMonthYear()[1] + "/" + StringUtil.getActualMonthYear()[0] + " - " + getResources().getString(R.string.info_money));
     }
 
     private void bindLinearLogged() {

@@ -52,6 +52,7 @@ public class WalletTransactionHttpService {
         return listWts;
     }
 
+
     public static List<WalletTransaction> getLastWalletTransaction(String wallet_id) {
         List<WalletTransaction> listWts = new ArrayList<>();
 
@@ -94,6 +95,30 @@ public class WalletTransactionHttpService {
     }
 
 
+    public static void deleteWalletTransaction(WalletTransaction wt) {
+        try {
+            URL url = new URL(ConnectionUtil.URL_WALLET + "wts/" + wt.getId());
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod("DELETE");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            OutputStream os = conn.getOutputStream();
+            os.write(new ObjectMapper().writeValueAsBytes(wt));
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            conn.disconnect();
+
+
+        } catch (Exception e) {
+            Log.e(WalletHttpService.class.getName(), e.getMessage());
+        }
+    }
+
     public static void postWalletTransaction(WalletTransaction walletTransaction, Integer qtMonth) {
         try {
             URL url = new URL(ConnectionUtil.URL_WALLET + "wts/" + qtMonth);
@@ -117,6 +142,7 @@ public class WalletTransactionHttpService {
             Log.e(WalletHttpService.class.getName(), e.getMessage());
         }
     }
+
 
     public static SumWalletTransaction getSumMonthWalletTransaction(String wallet_id, String year, String month) {
         List<SumWalletTransaction> listWts = null;

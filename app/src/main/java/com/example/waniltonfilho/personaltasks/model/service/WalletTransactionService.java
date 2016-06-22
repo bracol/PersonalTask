@@ -3,8 +3,12 @@ package com.example.waniltonfilho.personaltasks.model.service;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.wallet_transaction.WalletTransactionRepository;
+import com.example.waniltonfilho.personaltasks.util.StringUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,9 +26,24 @@ public class WalletTransactionService {
         return walletTransactions;
     }
 
-    public static void save(WalletTransaction walletTransaction, int operation){
+    public static void save(WalletTransaction walletTransaction, int qtMes){
         Float newValue;
-        WalletTransactionRepository.save(walletTransaction);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date actualDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(actualDate);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int year = cal.get(Calendar.YEAR);
+
+        for (int i = 0; i < qtMes; i++) {
+            Date date = StringUtil.setDate(year, month + i, day);
+            String formatedDate = sdf.format(date);
+            walletTransaction.setDate(formatedDate);
+            WalletTransactionRepository.save(walletTransaction);
+        }
+
+
         Wallet wallet = WalletService.getWallet();
         Float actualValue = wallet.getValue();
         newValue = actualValue + walletTransaction.getPrice();
@@ -44,16 +63,19 @@ public class WalletTransactionService {
         int listaSize = walletTransactions.size();
 
         if(listaSize > 0){
-            for(int i = 1; i <= cont; i++){
-                if (i <= listaSize)
-                    lastList.add(walletTransactions.get(listaSize - i));
+            for(int i = 1; lastList.size() < 3 && i <= listaSize; i++) {
+                if (i <= listaSize ) {
+                    if (StringUtil.compareMonths(walletTransactions.get(listaSize - i).getDate())){
+                        lastList.add(walletTransactions.get(listaSize - i));
+                    }
+                }
             }
         }
         return lastList;
     }
 
-    public static List<WalletTransaction> getMonthTransaction(String month){
-        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getByMonth(month);
+    public static List<WalletTransaction> getMonthTransaction(String yearMonth){
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getByMonth(yearMonth);
 //        for (WalletTransaction walletTransaction : walletTransactions) {
 //            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
 //        }
@@ -68,8 +90,8 @@ public class WalletTransactionService {
         }
     }
 
-    public static List<WalletTransaction> getSumCategoryService(String month){
-        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getSumCategory(month);
+    public static List<WalletTransaction> getSumCategoryService(String yearMonth){
+        List<WalletTransaction> walletTransactions = WalletTransactionRepository.getSumCategory(yearMonth);
 //        for (WalletTransaction walletTransaction : walletTransactions) {
 //            walletTransaction.setCategory(CategoryRepository.getById(walletTransaction.getCategory().getId()));
 //        }

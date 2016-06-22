@@ -33,6 +33,9 @@
     <string name="info_connection">Sem conexão</string>
     <string name="action_save_user">Usuário salvo com sucesso!</string>
     <string name="hint_recurrence">Quantidade de meses</string>
+    <string name="action_select_action">Selecione uma ação</string>
+    <string name="action_delete_transaction">Deletar</string>
+    <string name="action_transaction_deleted">Transação deletada com sucesso.</string>
     <string-array name="tabs">
         <item>Carteira</item>
         <item>Dívida</item>

@@ -6,6 +6,7 @@ import android.widget.EditText;
 import com.example.waniltonfilho.personaltasks.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -53,6 +54,8 @@ public class StringUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date2 = new Date();
         String date2Formated = simpleDateFormat.format(date2);
+        String year1 = date1.substring(0, 4);
+        String year2 = date2Formated.substring(0, 4);
         String mes1 = date1.substring(5, 7);
         String mes2 = date2Formated.substring(5, 7);
 //        String ano = dateFormated.substring(0, 4);
@@ -60,6 +63,18 @@ public class StringUtil {
 //        String data2 = ano + "-" + mes + "-" +  dia;
 
 
-        return mes1.equals(mes2);
+        return mes1.equals(mes2) && year1.equals(year2);
+    }
+
+    public static Date setDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }

@@ -65,4 +65,7 @@
     <string name="info_connection">No Connection</string>
     <string name="action_save_user">User save successful!</string>
     <string name="hint_recurrence">Number of months</string>
+    <string name="action_select_action">Select an action</string>
+    <string name="action_delete_transaction">Delete</string>
+    <string name="action_transaction_deleted">Transaction deleted successful.</string>
 </resources>

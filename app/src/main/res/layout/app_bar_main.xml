@@ -41,7 +41,6 @@
             android:gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:padding="@dimen/padding_edittext_bottom"
-            android:text="@string/info_money"
             android:textColor="#DEFFFFFF" />
 
         <View
@@ -70,6 +69,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/relativeLayoutPrincipal"
         android:background="#E6FFFFFF"
+        android:clickable="false"
+        android:longClickable="false"
         />
 
 

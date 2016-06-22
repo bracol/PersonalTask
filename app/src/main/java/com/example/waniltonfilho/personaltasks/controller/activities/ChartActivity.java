@@ -24,6 +24,7 @@ import com.example.waniltonfilho.personaltasks.model.entities.GroupCategoryTrans
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.persistance.category.CategoryRepository;
+import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.github.mikephil.charting.animation.Easing;
@@ -52,6 +53,8 @@ public class ChartActivity extends BaseActivity {
     private List<GroupCategoryTransaction> mGroupCategories;
     private List<WalletTransaction> mListaDadosGrafico;
     private Wallet mWallet;
+    private TextView mTvChartMonthTotal;
+    private MyValueFormatter myValueFormatter;
 
     // cores do grafico
     private final int[] CORES_GRAFICO = {Color.rgb(180, 0, 157), Color.rgb(0, 103, 208), Color.rgb(255, 54, 6),
@@ -78,7 +81,10 @@ public class ChartActivity extends BaseActivity {
     private void attGraphOffline() {
         String tv = mMonthTitle.getText().toString();
         String month = tv.substring(0, 2);
-        mListaDadosGrafico = WalletTransactionService.getSumCategoryService(month);
+        String year = tv.substring(3, 7);
+        String yearMonth = year + "-" + month;
+
+        mListaDadosGrafico = WalletTransactionService.getSumCategoryService(yearMonth);
         if (mListaDadosGrafico.size() > 0) {
             mInfoTransaction.setVisibility(View.INVISIBLE);
             mChart.setVisibility(View.VISIBLE);
@@ -92,8 +98,6 @@ public class ChartActivity extends BaseActivity {
 
         // volume
         List<Entry> yAxis = new ArrayList<>();
-
-        MyValueFormatter myValueFormatter = new MyValueFormatter();
 
         // popular eixos do grafico
         if (mListaDadosGrafico != null && mListaDadosGrafico.size() > 0) {
@@ -138,6 +142,7 @@ public class ChartActivity extends BaseActivity {
                 super.onPostExecute(groupTransactions);
                 mGroupCategories = groupTransactions;
                 attOnline();
+                updateTotalValue();
                 dialog.dismiss();
             }
         }.execute();
@@ -184,14 +189,32 @@ public class ChartActivity extends BaseActivity {
         mChart.setData(pieData);
     }
 
+    private void updateTotalValue() {
+        if(mWallet == null){
+            mTvChartMonthTotal.setText(myValueFormatter.getMaskFormatted(getTotalMonthOffline(mListaDadosGrafico)));
+        } else {
+            Float totalOnline = 0f;
+            for (GroupCategoryTransaction c : mGroupCategories){
+                totalOnline += c.getTotal();
+            }
+            mTvChartMonthTotal.setText(myValueFormatter.getMaskFormatted(totalOnline));
+        }
+    }
+
     private void bindCompontents() {
         mCategories = Category.getCategories();
+        myValueFormatter = new MyValueFormatter();
         bindToolbar();
+        bindTvChartMonthTotal();
         bindRelativeContainer();
         bindTextViewInfoMonth();
         bindTextViewMonth();
         bindGraph();
 
+    }
+
+    private void bindTvChartMonthTotal() {
+        mTvChartMonthTotal = (TextView) findViewById(R.id.tvGraphMonthTotal);
     }
 
     private void bindTextViewInfoMonth() {
@@ -203,7 +226,6 @@ public class ChartActivity extends BaseActivity {
     }
 
     private void bindGraph() {
-        mListaDadosGrafico = WalletTransactionService.getSumCategoryService(mMonthTitle.getText().toString());
         mChart = (PieChart) findViewById(R.id.chart);
         mChart.setDescription("");
         // remover a legenda dos segmentos do grafico
@@ -227,6 +249,7 @@ public class ChartActivity extends BaseActivity {
     private void verifyGraphState() {
         if (mWallet == null){
             attGraphOffline();
+            updateTotalValue();
         }else{
             attGraphOnline();
         }
@@ -276,5 +299,12 @@ public class ChartActivity extends BaseActivity {
                 return false;
             }
         });
+    }
+
+    public float getTotalMonthOffline(List<WalletTransaction> wts) {
+        Float totalMonthOffline = 0f;
+        for (WalletTransaction wt : wts)
+            totalMonthOffline += wt.getPrice();
+        return totalMonthOffline;
     }
 }

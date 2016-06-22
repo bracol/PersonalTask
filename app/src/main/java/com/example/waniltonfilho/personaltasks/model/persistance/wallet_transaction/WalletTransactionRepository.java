@@ -61,12 +61,12 @@ public class WalletTransactionRepository {
         return values;
     }
 
-    public static List<WalletTransaction> getByMonth(String month) {
+    public static List<WalletTransaction> getByMonth(String yearMonth) {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
 
-        String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
-        String[] params = {month};
+        String where = "strftime('%Y-%m', " + WalletTransactionContract.DATE + ") = ? ";
+        String[] params = {yearMonth};
         String orderBy = WalletTransactionContract.ID + " DESC";
 
         Cursor cursor = db.query(WalletTransactionContract.TABLE, WalletTransactionContract.COLUMNS, where, params, null, null, orderBy);
@@ -108,13 +108,13 @@ public class WalletTransactionRepository {
         return transaction;
     }
 
-    public static List<WalletTransaction> getSumCategory(String month) {
+    public static List<WalletTransaction> getSumCategory(String yearMonth) {
 //        SELECT dept, sum(salary) FROM employees where strftime('%m', hired_on) = '02' group by dept;;
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance();
         SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
 
-        String where = "strftime('%m', " + WalletTransactionContract.DATE + ") = ? ";
-        String[] params = {month};
+        String where = "strftime('%Y-%m', " + WalletTransactionContract.DATE + ") = ? ";
+        String[] params = {yearMonth};
         String[] colum = {"sum(" + WalletTransactionContract.PRICE + "), " + WalletTransactionContract.CATEGORY_ID};
         String groupBy = WalletTransactionContract.CATEGORY_ID;
 

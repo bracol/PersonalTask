@@ -27,7 +27,7 @@
     <RelativeLayout
         android:id="@+id/listContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:layout_below="@id/tvListMonth">
 
         <com.github.mikephil.charting.charts.PieChart
@@ -44,6 +44,38 @@
             android:text="@string/info_empty_transactions"
             android:textSize="16pt"
             android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/listContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/relative_layout_money_padding"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="24sp"
+            android:text="TOTAL"
+            />
+
+        <TextView
+            android:id="@+id/tvGraphMonthTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="24sp"
+            />
 
     </RelativeLayout>
 

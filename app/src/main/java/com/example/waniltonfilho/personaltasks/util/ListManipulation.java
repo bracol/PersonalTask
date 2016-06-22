@@ -16,9 +16,12 @@ public class ListManipulation {
 
     private List<WalletTransaction> mListTransaction;
     private String mMonth;
+    private String mYear;
+    private float totalMonth = 0;
 
-    public ListManipulation(String month, List<WalletTransaction> transactions) {
+    public ListManipulation(String month, String year, List<WalletTransaction> transactions) {
         mMonth = month;
+        mYear = year;
         mListTransaction = transactions;
     }
 
@@ -26,14 +29,16 @@ public class ListManipulation {
         List<WalletTransaction> listByMonth = new ArrayList<>();
 
         for (WalletTransaction wt : mListTransaction) {
-            if (mMonth.equals(wt.getDate().substring(5, 7))) {
+            if (mMonth.equals(wt.getDate().substring(5, 7)) && mYear.equals(wt.getDate().substring(0, 4))) {
                 listByMonth.add(wt);
+                totalMonth += wt.getPrice();
             }
         }
 
         return listByMonth;
     }
 
-
-
+    public float getTotalMonth() {
+        return totalMonth;
+    }
 }

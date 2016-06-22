@@ -3,9 +3,12 @@ package com.example.waniltonfilho.personaltasks.controller.activities;
 import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,12 +18,14 @@ import android.widget.TextView;
 
 import com.example.waniltonfilho.personaltasks.R;
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskDeleteWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.MonthList;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
 import com.example.waniltonfilho.personaltasks.util.ListManipulation;
+import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,12 +42,17 @@ public class ListActivity extends BaseActivity {
     private Toolbar mToolbar;
     private TextView mMonthTitle;
     private TextView mInfoTransaction;
+    private TextView mTvListMonthTotal;
     private MonthList mManipulateList;
     private RecyclerView mRecyclerView;
+    private WalletTransactionAdapter walletTransactionAdapter;
     private RelativeLayout relativeContainer;
     private Wallet mWallet;
     private String mMonth;
     private String mYear;
+    private List<WalletTransaction> mWalletTransactionsWeb;
+    private ListManipulation listManipulation;
+    private MyValueFormatter myValueFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +64,29 @@ public class ListActivity extends BaseActivity {
     private void bindComponents() {
         initWallet();
         bindToolbar();
+        bindValueFormat();
+        bindTvListMonthTotal();
         bindRelativeContainer();
         bindTextViewInfoMonth();
         bindTextViewMonth();
         bindRecyclerViewList();
+        if (mWallet != null) {
+            getList();
+        }
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void bindValueFormat() {
+        myValueFormatter = new MyValueFormatter();
+    }
+
+    private void bindTvListMonthTotal() {
+        mTvListMonthTotal = (TextView) findViewById(R.id.tvListMonthTotal);
     }
 
     private void initWallet() {
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if (extras != null) {
             mWallet = extras.getParcelable(MainActivity.WALLET_PARAM);
 
         }
@@ -84,8 +107,8 @@ public class ListActivity extends BaseActivity {
             @Override
             protected void onPostExecute(List<WalletTransaction> transactions) {
                 super.onPostExecute(transactions);
-                ListManipulation listManipulation = new ListManipulation(mMonth, transactions);
-                updateList(listManipulation.getByMonth());
+                mWalletTransactionsWeb = transactions;
+                listVerify();
                 dialog.dismiss();
 
             }
@@ -136,20 +159,28 @@ public class ListActivity extends BaseActivity {
     private void listVerify() {
         String tv = mMonthTitle.getText().toString();
         mMonth = tv.substring(0, 2);
-        if(mWallet == null){
-            List<WalletTransaction> mTransactionsMonth = WalletTransactionService.getMonthTransaction(mMonth);
+        mYear = tv.substring(3, 7);
+        String monthYear = mYear + "-" + mMonth;
+
+        if (mWallet == null) {
+            List<WalletTransaction> mTransactionsMonth = WalletTransactionService.getMonthTransaction(monthYear);
             updateList(mTransactionsMonth);
-        } else {
-            getList();
+            mTvListMonthTotal.setText(myValueFormatter.getMaskFormatted(getTotalMonthOffline(mTransactionsMonth)));
+        } else if (mWalletTransactionsWeb != null) {
+            listManipulation = new ListManipulation(mMonth, mYear, mWalletTransactionsWeb);
+            updateList(listManipulation.getByMonth());
+            mTvListMonthTotal.setText(myValueFormatter.getMaskFormatted(listManipulation.getTotalMonth()));
         }
 
     }
 
-    private void bindRecyclerViewList(){
+    private void bindRecyclerViewList() {
         List<WalletTransaction> transactions = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewMonth);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new WalletTransactionAdapter(transactions, this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        walletTransactionAdapter = new WalletTransactionAdapter(transactions, this);
+        mRecyclerView.setAdapter(walletTransactionAdapter);
         listVerify();
     }
 
@@ -181,5 +212,34 @@ public class ListActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        walletTransactionAdapter.getItemSelected(item);
+        WalletTransaction w = walletTransactionAdapter.getItem();
+        deleteTransaction(w);
+        Snackbar.make(mRecyclerView, R.string.action_transaction_deleted, Snackbar.LENGTH_SHORT).show();
+        return super.onContextItemSelected(item);
+    }
 
+    private void deleteTransaction(WalletTransaction w) {
+        if (mWallet == null) {
+            WalletTransactionService.delete(w);
+            listVerify();
+        } else {
+            new TaskDeleteWalletTransaction(w) {
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    listVerify();
+                }
+            }.execute();
+        }
+    }
+
+    public float getTotalMonthOffline(List<WalletTransaction> wts) {
+        Float totalMonthOffline = 0f;
+        for (WalletTransaction wt : wts)
+            totalMonthOffline += wt.getPrice();
+        return totalMonthOffline;
+    }
 }

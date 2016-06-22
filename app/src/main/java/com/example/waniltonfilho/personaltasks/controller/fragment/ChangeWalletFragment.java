@@ -195,7 +195,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
         bindWalletTransaction();
         if (mWalletTransaction != null) {
             if (mWallet == null) {
-                WalletTransactionService.save(mWalletTransaction, 0);
+                WalletTransactionService.save(mWalletTransaction, qtMonth);
             } else {
                 mWalletTransaction.setWallet_id(mWallet.get_id());
                 new TaskPostWalletTransaction(mWalletTransaction, qtMonth).execute();
