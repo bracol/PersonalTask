@@ -26,13 +26,16 @@ import com.example.waniltonfilho.personaltasks.controller.adapter.CategoryAdapte
 import com.example.waniltonfilho.personaltasks.controller.adapter.WalletTransactionAdapter;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetLastTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWalletTransaction;
+import com.example.waniltonfilho.personaltasks.controller.tasks.TaskGetWtsSumMonth;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskPostWalletTransaction;
 import com.example.waniltonfilho.personaltasks.controller.tasks.TaskUpdateWallet;
 import com.example.waniltonfilho.personaltasks.model.entities.Category;
+import com.example.waniltonfilho.personaltasks.model.entities.SumWalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.entities.Wallet;
 import com.example.waniltonfilho.personaltasks.model.entities.WalletTransaction;
 import com.example.waniltonfilho.personaltasks.model.service.WalletService;
 import com.example.waniltonfilho.personaltasks.model.service.WalletTransactionService;
+import com.example.waniltonfilho.personaltasks.util.ConnectionUtil;
 import com.example.waniltonfilho.personaltasks.util.MyValueFormatter;
 import com.example.waniltonfilho.personaltasks.util.StringUtil;
 import com.melnykov.fab.FloatingActionButton;
@@ -175,6 +178,7 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
                 onButtonConfirm();
                 break;
         }
+        StringUtil.closeKeyboard(getActivity());
     }
 
     private void onButtonCancel() {
@@ -214,24 +218,35 @@ public class ChangeWalletFragment extends Fragment implements View.OnClickListen
             mTextViewMoney.setText(myValueFormatter.getMaskFormatted(wallet.getValue()));
         } else {
             mWallet.setValue(mWallet.getValue() + Float.parseFloat(MyValueFormatter.formatPrice(editTextPrice.getText().toString())));
-            new TaskUpdateWallet(mWallet) {
-                ProgressDialog dialog;
-
+            new TaskGetWtsSumMonth(mWallet.get_id(), StringUtil.getActualMonthYear()[0], StringUtil.getActualMonthYear()[1]) {
                 @Override
-                protected void onPreExecute() {
-                    dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage(getActivity().getString(R.string.log_info_att_wallet));
-                    dialog.show();
-                    super.onPreExecute();
-                }
-
-                @Override
-                protected void onPostExecute(Wallet wallet) {
-                    mWallet = wallet;
-                    mTextViewMoney.setText(myValueFormatter.getMaskFormatted(mWallet.getValue()));
-                    dialog.dismiss();
+                protected void onPostExecute(SumWalletTransaction sumWalletTransaction) {
+                    super.onPostExecute(sumWalletTransaction);
+                    if (sumWalletTransaction != null) {
+                        mTextViewMoney.setText(myValueFormatter.getMaskFormatted(sumWalletTransaction.getPrice()));
+                    } else {
+                        mTextViewMoney.setText(myValueFormatter.getMaskFormatted(0f));
+                    }
                 }
             }.execute();
+//            new TaskUpdateWallet(mWallet) {
+//                ProgressDialog dialog;
+//
+//                @Override
+//                protected void onPreExecute() {
+//                    dialog = new ProgressDialog(getActivity());
+//                    dialog.setMessage(getActivity().getString(R.string.log_info_att_wallet));
+//                    dialog.show();
+//                    super.onPreExecute();
+//                }
+//
+//                @Override
+//                protected void onPostExecute(Wallet wallet) {
+//                    mWallet = wallet;
+//                    mTextViewMoney.setText(myValueFormatter.getMaskFormatted(mWallet.getValue()));
+//                    dialog.dismiss();
+//                }
+//            }.execute();
 
         }
     }

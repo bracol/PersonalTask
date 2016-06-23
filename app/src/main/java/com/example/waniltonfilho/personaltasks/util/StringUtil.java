@@ -1,6 +1,8 @@
 package com.example.waniltonfilho.personaltasks.util;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.waniltonfilho.personaltasks.R;
@@ -76,5 +78,10 @@ public class StringUtil {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
+    }
+
+    public static void closeKeyboard(Activity context){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 }

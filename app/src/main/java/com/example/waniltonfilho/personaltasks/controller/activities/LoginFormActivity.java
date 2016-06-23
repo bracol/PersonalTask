@@ -122,13 +122,19 @@ public class LoginFormActivity extends BaseActivity implements View.OnClickListe
         } catch (Exception e){
             Toast.makeText(getBaseContext(), "Ocorreu um erro e o login não foi salvo!", Toast.LENGTH_SHORT).show();
         }
+        try {
+            Thread.sleep(1000);
+            finish();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
 
     private void onPauseAnimation() {
-        Animation swipeToRightAnimation = AnimationUtils.loadAnimation(this, R.anim.swipe_to_right);
-        mCardViewLoginForm.startAnimation(swipeToRightAnimation);
+            Animation swipeToLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.swipe_to_left);
+            mCardViewLoginForm.startAnimation(swipeToLeftAnimation);
     }
 
     private void onResumeAnimation() {
