@@ -15,6 +15,7 @@
     fab:cardCornerRadius="4dp"
     fab:cardElevation="4dp">
 
+
     <LinearLayout
         android:id="@+id/linear_login_register_form"
         android:layout_width="292dp"

@@ -114,15 +114,15 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected void onPreExecute() {
-//                dialog = new ProgressDialog(LoginMainActivity.this);
-//                dialog.setMessage("Loading...");
-//                dialog.show();
+                dialog = new ProgressDialog(LoginMainActivity.this);
+                dialog.setMessage("Loading...");
+                dialog.show();
                 super.onPreExecute();
             }
 
             @Override
             protected void onPostExecute(User user) {
-//                dialog.dismiss();
+                dialog.dismiss();
                 mUser = user;
                 goToMainActivity();
                 super.onPostExecute(user);
