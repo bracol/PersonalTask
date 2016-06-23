@@ -221,7 +221,7 @@ public class ListActivity extends BaseActivity {
         return super.onContextItemSelected(item);
     }
 
-    private void deleteTransaction(WalletTransaction w) {
+    private void deleteTransaction(final WalletTransaction w) {
         if (mWallet == null) {
             WalletTransactionService.delete(w);
             listVerify();
@@ -230,6 +230,7 @@ public class ListActivity extends BaseActivity {
                 @Override
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
+                    mWalletTransactionsWeb.remove(w);
                     listVerify();
                 }
             }.execute();
